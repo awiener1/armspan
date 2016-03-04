@@ -17,10 +17,6 @@ namespace Span
             //change this to implement a better hashing function
             m_id = "c" + m_num.ToString("x8");
         }
-        public Category()
-        {
-
-        }
 
         public string Name
         {

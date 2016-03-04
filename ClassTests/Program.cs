@@ -31,9 +31,6 @@ namespace ClassTests
                 Console.WriteLine(cat);
             }
 
-            Span.Category newcat = (Span.Category)Span.JSONCapable.FromString(cats[0].ToString(), Type.GetType("Span.Category"));
-            Console.WriteLine(newcat.Color);
-
         }
     }
 }

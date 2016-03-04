@@ -10,11 +10,11 @@ namespace Span
     {
         public static JavaScriptSerializer jss = new JavaScriptSerializer();
 
-        public static Object FromString(string json, Type type)
-        {
-            Object obj = jss.Deserialize(json, type);
-            return obj;
-        }
+        //public static Object FromString(string json, Type type)
+        //{
+        //    Object obj = jss.Deserialize(json, type);
+        //    return obj;
+        //}
 
         public override string ToString()
         {
