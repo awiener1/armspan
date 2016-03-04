@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
-using System.Web.Script.Serialization;
 
 namespace Span
 {
-    class Category
+    class Category : JSONCapable
     {
         public Category(string a_name, Color a_color)
         {
@@ -17,6 +16,10 @@ namespace Span
 
             //change this to implement a better hashing function
             m_id = "c" + m_num.ToString("x8");
+        }
+        public Category()
+        {
+
         }
 
         public string Name
@@ -58,12 +61,6 @@ namespace Span
             {
                 return m_id;
             }
-        }
-
-        public override string ToString()
-        {
-            JavaScriptSerializer jss = new JavaScriptSerializer();
-            return jss.Serialize(this);
         }
 
 
