@@ -1,0 +1,5 @@
+G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\ClassTests\bin\Debug\ClassTests.exe
+G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\ClassTests\bin\Debug\ClassTests.pdb
+G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\ClassTests\obj\x86\Debug\ClassTests.exe
+G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\ClassTests\obj\x86\Debug\ClassTests.pdb
+G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\ClassTests\bin\Debug\ClassTests.exe.config
