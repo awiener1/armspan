@@ -46,8 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlarmSettings.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="JSONCapable.cs" />
+    <Compile Include="Occurrence.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

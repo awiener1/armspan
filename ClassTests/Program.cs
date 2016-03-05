@@ -31,6 +31,31 @@ namespace ClassTests
                 Console.WriteLine(cat);
             }
 
+            List<Span.Occurrence> ocrs = new List<Span.Occurrence>();
+            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(2), DateTime.Today.AddDays(2.1), "none yet"));
+            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(2.05), DateTime.Today.AddDays(2.15), "none yet"));
+            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(1.9), DateTime.Today.AddDays(2.15), "none yet"));
+            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(2), DateTime.Today.AddDays(2.15), "none yet"));
+            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(2.05), DateTime.Today.AddDays(2.08), "none yet"));
+            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(2.05), DateTime.Today.AddDays(2.1), "none yet"));
+            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(2), DateTime.Today.AddDays(2.1), "none yet"));
+            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(1.9), DateTime.Today.AddDays(2.08), "none yet"));
+            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(1.9), DateTime.Today.AddDays(2.1), "none yet"));
+            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(2), DateTime.Today.AddDays(2.08), "none yet"));
+            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(2.1), DateTime.Today.AddDays(3), "none yet"));//*
+            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(1), DateTime.Today.AddDays(2), "none yet"));
+            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(0.5), DateTime.Today.AddDays(1), "none yet"));
+            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(3), DateTime.Today.AddDays(4), "none yet"));
+            foreach (Span.Occurrence ocr in ocrs)
+            {
+                Console.WriteLine(ocr);
+            }
+            for (int i = 1; i < ocrs.Count; i++)
+            {
+                Console.WriteLine(ocrs[0].Overlaps(ocrs[i]));
+            }
+            
+
         }
     }
 }
