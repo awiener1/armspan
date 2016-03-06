@@ -42,20 +42,21 @@ namespace ClassTests
             }
 
             List<Span.Occurrence> ocrs = new List<Span.Occurrence>();
-            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(2), DateTime.Today.AddDays(2.1), "none yet"));
-            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(2.05), DateTime.Today.AddDays(2.15), "none yet"));
-            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(1.9), DateTime.Today.AddDays(2.15), "none yet"));
-            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(2), DateTime.Today.AddDays(2.15), "none yet"));
-            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(2.05), DateTime.Today.AddDays(2.08), "none yet"));
-            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(2.05), DateTime.Today.AddDays(2.1), "none yet"));
-            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(2), DateTime.Today.AddDays(2.1), "none yet"));
-            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(1.9), DateTime.Today.AddDays(2.08), "none yet"));
-            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(1.9), DateTime.Today.AddDays(2.1), "none yet"));
-            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(2), DateTime.Today.AddDays(2.08), "none yet"));
-            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(2.1), DateTime.Today.AddDays(3), "none yet"));//*
-            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(1), DateTime.Today.AddDays(2), "none yet"));
-            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(0.5), DateTime.Today.AddDays(1), "none yet"));
-            ocrs.Add(new Span.Occurrence(false, DateTime.Today.AddDays(3), DateTime.Today.AddDays(4), "none yet"));
+            DateTime isnow = DateTime.Now;
+            ocrs.Add(new Span.Occurrence(false, isnow.AddDays(2), isnow.AddDays(2.1), "none yet"));
+            ocrs.Add(new Span.Occurrence(false, isnow.AddDays(2.05), isnow.AddDays(2.15), "none yet"));
+            ocrs.Add(new Span.Occurrence(false, isnow.AddDays(1.9), isnow.AddDays(2.15), "none yet"));
+            ocrs.Add(new Span.Occurrence(false, isnow.AddDays(2), isnow.AddDays(2.15), "none yet"));
+            ocrs.Add(new Span.Occurrence(false, isnow.AddDays(2.05), isnow.AddDays(2.08), "none yet"));
+            ocrs.Add(new Span.Occurrence(false, isnow.AddDays(2.05), isnow.AddDays(2.1), "none yet"));
+            ocrs.Add(new Span.Occurrence(false, isnow.AddDays(2), isnow.AddDays(2.1), "none yet"));
+            ocrs.Add(new Span.Occurrence(false, isnow.AddDays(1.9), isnow.AddDays(2.08), "none yet"));
+            ocrs.Add(new Span.Occurrence(false, isnow.AddDays(1.9), isnow.AddDays(2.1), "none yet"));
+            ocrs.Add(new Span.Occurrence(false, isnow.AddDays(2), isnow.AddDays(2.08), "none yet"));
+            ocrs.Add(new Span.Occurrence(false, isnow.AddDays(2.1), isnow.AddDays(3), "none yet"));//*
+            ocrs.Add(new Span.Occurrence(false, isnow.AddDays(1), isnow.AddDays(2), "none yet"));
+            ocrs.Add(new Span.Occurrence(false, isnow.AddDays(0.5), isnow.AddDays(1), "none yet"));
+            ocrs.Add(new Span.Occurrence(false, isnow.AddDays(3), isnow.AddDays(4), "none yet"));
             foreach (Span.Occurrence ocr in ocrs)
             {
                 Console.WriteLine(ocr);
@@ -64,7 +65,19 @@ namespace ClassTests
             {
                 Console.WriteLine(ocrs[0].Overlaps(ocrs[i]));
             }
-            
+
+            Span.AlarmSettings als = new Span.AlarmSettings(ocrs[0].Id);
+            als.Alarms.Add(new Tuple<Span.AlarmSettings.When, uint, Span.AlarmSettings.Length>(Span.AlarmSettings.When.Before, 30, Span.AlarmSettings.Length.Minutes));
+            als.Alarms.Add(new Tuple<Span.AlarmSettings.When, uint, Span.AlarmSettings.Length>(Span.AlarmSettings.When.Before, 2, Span.AlarmSettings.Length.Hours));
+            als.Alarms.Add(new Tuple<Span.AlarmSettings.When, uint, Span.AlarmSettings.Length>(Span.AlarmSettings.When.Before, 1, Span.AlarmSettings.Length.Days));
+            als.Alarms.Add(new Tuple<Span.AlarmSettings.When, uint, Span.AlarmSettings.Length>(Span.AlarmSettings.When.During, 30, Span.AlarmSettings.Length.Minutes));
+            als.Alarms.Add(new Tuple<Span.AlarmSettings.When, uint, Span.AlarmSettings.Length>(Span.AlarmSettings.When.After, 30, Span.AlarmSettings.Length.Minutes));
+
+            List<DateTime> times = new List<DateTime>(als.AlarmTimes);
+            foreach (DateTime time in times)
+            {
+                Console.WriteLine(time.ToShortDateString() + " " + time.ToShortTimeString());
+            }
 
         }
     }

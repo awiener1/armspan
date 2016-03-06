@@ -103,6 +103,7 @@ namespace Span
             EndActual = EndIntended;
             Status = (DateTime.Now.CompareTo(StartActual) > 0) ? OccurrenceStatus.On_Time : OccurrenceStatus.Future;
             m_parent = a_parent;
+            All.Add(m_id, this);
         }
 
         /**
@@ -230,6 +231,11 @@ namespace Span
          */
         public string ParentId { get { return m_parent; } }
 
+        /**
+         * Gets a Dictionary containing all Occurrences by Id.
+         */
+        public static Dictionary<string, Occurrence> All { get { return all; } }
+
         private static uint num = 1;
         private uint m_numId;
         private string m_id;
@@ -237,5 +243,6 @@ namespace Span
         private DateTime m_actualStart, m_actualEnd, m_createStart, m_createEnd;
         private OccurrenceStatus m_status;
         private string m_parent;
+        private static Dictionary<string, Occurrence> all = new Dictionary<string, Occurrence>();
     }
 }

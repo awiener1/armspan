@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections.ObjectModel;
 
 namespace Span
 {
@@ -105,8 +106,62 @@ namespace Span
             m_parent = a_parent;
         }
 
-        //private void updateAlarms() //takes Alarms and turns it into AlarmTimes by checking the parent
-        //TODO: set up a static list of occurrences
+        //TODO: change alarms from tuples to their own class
+        //of When, uint, Length, and bool m_dealtWith.
+        //that way, when the alarm has gone off, it won't go
+        //off a second time unless explicitly told to do so.
+        //It might also make constructors easier.
+
+        /**
+         * Updates the AlarmTimes list based on the current Alarms
+         * list and the Occurrence's time settings.
+         * 
+         * @date March 6, 2016
+         */
+        private void updateAlarms()
+        {
+
+            Occurrence parent = Occurrence.All[ParentId];
+            m_alarmTimes = new List<DateTime>();
+            foreach (Tuple<When, uint, Length> alarm in Alarms){
+                DateTime target = new DateTime();
+                TimeSpan offset = new TimeSpan();
+                //convert Length units into TimeSpan units
+                switch(alarm.Item3)
+                {
+                    case Length.Minutes:
+                        offset = new TimeSpan(0, (int)alarm.Item2, 0);
+                        break;
+                    case Length.Hours:
+                        offset = new TimeSpan((int)alarm.Item2, 0, 0);
+                        break;
+                    case Length.Days:
+                        offset = new TimeSpan((int)alarm.Item2, 0, 0, 0);
+                        break;
+                    case Length.Weeks:
+                        offset = new TimeSpan((int)alarm.Item2 * 7, 0, 0, 0);
+                        break;
+                }
+                //convert When into start or end time
+                switch (alarm.Item1)
+                {
+                    case When.Before:
+                        //should happen **before** start time
+                        offset = offset.Negate();
+                        goto case When.During;
+                    case When.During:
+                        target = parent.StartActual;
+                        break;
+                    case When.After:
+                        target = parent.EndActual;
+                        break;
+                }
+                target = target.Add(offset);
+                m_alarmTimes.Add(target);
+            }
+            m_alarmTimes.Sort();
+        }
+        
 
 
         /**
@@ -133,6 +188,20 @@ namespace Span
                 m_alarms = value;
             }
 
+        }
+
+        /**
+         * Gets the list of alarm settings to use, in
+         * the form of a read-only, sorted list of DateTime
+         * structs. 
+         */
+        public ReadOnlyCollection<DateTime> AlarmTimes
+        {
+            get
+            {
+                updateAlarms();
+                return new ReadOnlyCollection<DateTime>(m_alarmTimes);
+            }
         }
 
         /**
