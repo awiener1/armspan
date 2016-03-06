@@ -23,22 +23,25 @@ namespace Span
          */
         public enum When
         {
-            Before, /**
-                     * The alarm will go off before the beginning
-                     * of the occurrence by the specified amount
-                     * of time.
-                     */
-            During, /**
-                     * The alarm will go off after the beginning
-                     * of the occurrence by the specified amount
-                     * of time, assuming the occurrence has not
-                     * yet ended.
-                     */
-            After   /**
-                     * The alarm will go off after the end
-                     * of the occurrence by the specified amount
-                     * of time.
-                     */
+            /**
+             * The alarm will go off before the beginning
+             * of the occurrence by the specified amount
+             * of time.
+             */
+            Before,
+            /**
+             * The alarm will go off after the beginning
+             * of the occurrence by the specified amount
+             * of time, assuming the occurrence has not
+             * yet ended.
+             */
+            During,
+            /**
+             * The alarm will go off after the end
+             * of the occurrence by the specified amount
+             * of time.
+             */
+            After   
         };
 
         /**
@@ -47,22 +50,26 @@ namespace Span
          */
         public enum Length
         {
-            Minutes, /**
-                      * The alarm will go off in the specified
-                      * number of minutes.
-                      */
-            Hours,   /**
-                      * The alarm will go off in the specified
-                      * number of hours.
-                      */
-            Days,    /**
-                      * The alarm will go off in the specified
-                      * number of days.
-                      */
-            Weeks    /**
-                      * The alarm will go off in the specified
-                      * number of weeks.
-                      */
+            /**
+             * The alarm will go off in the specified
+             * number of minutes.
+             */
+            Minutes, 
+            /**
+             * The alarm will go off in the specified
+             * number of hours.
+             */
+            Hours,   
+            /**
+             * The alarm will go off in the specified
+             * number of days.
+             */
+            Days,    
+            /**
+             * The alarm will go off in the specified
+             * number of weeks.
+             */
+            Weeks    
         };
 
         /**
@@ -103,8 +110,7 @@ namespace Span
 
 
         /**
-         * The list of alarm settings to use.
-         * 
+         * Gets or sets the list of alarm settings to use.
          * 
          * The list is made up of Tuples. Each 
          * contains a When parameter, an unsigned integer value, 
@@ -130,7 +136,7 @@ namespace Span
         }
 
         /**
-         * The id of the parent Occurrence to which
+         * Gets the id of the parent Occurrence to which
          * the alarm settings belong.
          */
         public string ParentId { get { return m_parent; } }
