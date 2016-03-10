@@ -16,62 +16,64 @@ using System.Collections.ObjectModel;
 
 namespace Span
 {
-    class AlarmSettings
+    /**
+        * Specifies if the alarm is set to go off before, during,
+        * or after the occurrence.
+        */
+    public enum When
     {
         /**
-         * Specifies if the alarm is set to go off before, during,
-         * or after the occurrence.
-         */
-        public enum When
-        {
-            /**
-             * The alarm will go off before the beginning
-             * of the occurrence by the specified amount
-             * of time.
-             */
-            Before,
-            /**
-             * The alarm will go off after the beginning
-             * of the occurrence by the specified amount
-             * of time, assuming the occurrence has not
-             * yet ended.
-             */
-            During,
-            /**
-             * The alarm will go off after the end
-             * of the occurrence by the specified amount
-             * of time.
-             */
-            After   
-        };
-
+            * The alarm will go off before the beginning
+            * of the occurrence by the specified amount
+            * of time.
+            */
+        Before,
         /**
-         * Denotes the unit of time in which to specify the
-         * time when the alarm will go off.
-         */
-        public enum Length
-        {
-            /**
-             * The alarm will go off in the specified
-             * number of minutes.
-             */
-            Minutes, 
-            /**
-             * The alarm will go off in the specified
-             * number of hours.
-             */
-            Hours,   
-            /**
-             * The alarm will go off in the specified
-             * number of days.
-             */
-            Days,    
-            /**
-             * The alarm will go off in the specified
-             * number of weeks.
-             */
-            Weeks    
-        };
+            * The alarm will go off after the beginning
+            * of the occurrence by the specified amount
+            * of time, assuming the occurrence has not
+            * yet ended.
+            */
+        During,
+        /**
+            * The alarm will go off after the end
+            * of the occurrence by the specified amount
+            * of time.
+            */
+        After   
+    };
+
+    /**
+        * Denotes the unit of time in which to specify the
+        * time when the alarm will go off.
+        */
+    public enum Length
+    {
+        /**
+            * The alarm will go off in the specified
+            * number of minutes.
+            */
+        Minutes, 
+        /**
+            * The alarm will go off in the specified
+            * number of hours.
+            */
+        Hours,   
+        /**
+            * The alarm will go off in the specified
+            * number of days.
+            */
+        Days,    
+        /**
+            * The alarm will go off in the specified
+            * number of weeks.
+            */
+        Weeks    
+    };
+
+    class AlarmSettings
+    {
+        
 
         /**
          * Creates an AlarmSettings object from a parent Occurrence
@@ -85,7 +87,7 @@ namespace Span
          * 
          * @date March 4, 2016
          */
-        public AlarmSettings(string a_parent, List<Tuple<When, uint, Length>> a_alarms)
+        public AlarmSettings(string a_parent, List<Alarm> a_alarms)
         {
             Alarms = a_alarms;
             m_parent = a_parent;
@@ -102,7 +104,7 @@ namespace Span
          */
         public AlarmSettings(string a_parent)
         {
-            Alarms = new List<Tuple<When, uint, Length>>();
+            Alarms = new List<Alarm>();
             m_parent = a_parent;
         }
 
@@ -123,27 +125,27 @@ namespace Span
 
             Occurrence parent = Occurrence.All[ParentId];
             m_alarmTimes = new List<DateTime>();
-            foreach (Tuple<When, uint, Length> alarm in Alarms){
+            foreach (Alarm alarm in Alarms){
                 DateTime target = new DateTime();
                 TimeSpan offset = new TimeSpan();
                 //convert Length units into TimeSpan units
-                switch(alarm.Item3)
+                switch(alarm.m_timeunit)
                 {
                     case Length.Minutes:
-                        offset = new TimeSpan(0, (int)alarm.Item2, 0);
+                        offset = new TimeSpan(0, (int)alarm.m_timelength, 0);
                         break;
                     case Length.Hours:
-                        offset = new TimeSpan((int)alarm.Item2, 0, 0);
+                        offset = new TimeSpan((int)alarm.m_timelength, 0, 0);
                         break;
                     case Length.Days:
-                        offset = new TimeSpan((int)alarm.Item2, 0, 0, 0);
+                        offset = new TimeSpan((int)alarm.m_timelength, 0, 0, 0);
                         break;
                     case Length.Weeks:
-                        offset = new TimeSpan((int)alarm.Item2 * 7, 0, 0, 0);
+                        offset = new TimeSpan((int)alarm.m_timelength * 7, 0, 0, 0);
                         break;
                 }
                 //convert When into start or end time
-                switch (alarm.Item1)
+                switch (alarm.m_relativeplace)
                 {
                     case When.Before:
                         //should happen **before** start time
@@ -177,7 +179,7 @@ namespace Span
          * has ended.
          * 
          */
-        public List<Tuple<When, uint, Length>> Alarms{
+        public List<Alarm> Alarms{
             get 
             {
                 return m_alarms;
@@ -211,8 +213,22 @@ namespace Span
         public string ParentId { get { return m_parent; } }
 
 
-        private List<Tuple<When, uint, Length>> m_alarms;
+        private List<Alarm> m_alarms;
         private List<DateTime> m_alarmTimes;
         private string m_parent;
+    }
+
+    struct Alarm
+    {
+        public When m_relativeplace;
+        public uint m_timelength;
+        public Length m_timeunit;
+
+        public Alarm(When a_relativeplace, uint a_timelength, Length a_timeunit)
+        {
+            m_relativeplace = a_relativeplace;
+            m_timelength = a_timelength;
+            m_timeunit = a_timeunit;
+        }
     }
 }

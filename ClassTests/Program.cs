@@ -67,11 +67,11 @@ namespace ClassTests
             }
 
             Span.AlarmSettings als = new Span.AlarmSettings(ocrs[0].Id);
-            als.Alarms.Add(new Tuple<Span.AlarmSettings.When, uint, Span.AlarmSettings.Length>(Span.AlarmSettings.When.Before, 30, Span.AlarmSettings.Length.Minutes));
-            als.Alarms.Add(new Tuple<Span.AlarmSettings.When, uint, Span.AlarmSettings.Length>(Span.AlarmSettings.When.Before, 2, Span.AlarmSettings.Length.Hours));
-            als.Alarms.Add(new Tuple<Span.AlarmSettings.When, uint, Span.AlarmSettings.Length>(Span.AlarmSettings.When.Before, 1, Span.AlarmSettings.Length.Days));
-            als.Alarms.Add(new Tuple<Span.AlarmSettings.When, uint, Span.AlarmSettings.Length>(Span.AlarmSettings.When.During, 30, Span.AlarmSettings.Length.Minutes));
-            als.Alarms.Add(new Tuple<Span.AlarmSettings.When, uint, Span.AlarmSettings.Length>(Span.AlarmSettings.When.After, 30, Span.AlarmSettings.Length.Minutes));
+            als.Alarms.Add(new Span.Alarm(Span.When.Before, 30, Span.Length.Minutes));
+            als.Alarms.Add(new Span.Alarm(Span.When.Before, 2, Span.Length.Hours));
+            als.Alarms.Add(new Span.Alarm(Span.When.Before, 1, Span.Length.Days));
+            als.Alarms.Add(new Span.Alarm(Span.When.During, 30, Span.Length.Minutes));
+            als.Alarms.Add(new Span.Alarm(Span.When.After, 30, Span.Length.Minutes));
 
             List<DateTime> times = new List<DateTime>(als.AlarmTimes);
             foreach (DateTime time in times)

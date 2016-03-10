@@ -14,66 +14,64 @@ using System.Linq;
 using System.Text;
 
 namespace Span
-{
+{   /**
+     * Specifies the status of the Occurrence
+     * in terms of time management.
+     */
+    public enum OccurrenceStatus
+    {
+        /**
+         * The Event has not occurred yet.
+         */
+        Future, 
+        /**
+         * The Event is / was on time.
+         */
+        On_Time, 
+        /**
+         * The Event has been canceled.
+         * 
+         * This means that the event is not
+         * occurring at all.
+         */
+        Canceled, 
+        /**
+         * The Event has been / is being ignored.
+         * 
+         * This means that the user is choosing not
+         * to partake in the event, though it is not
+         * necessarily canceled.
+         */
+        Ignored, 
+        /**
+         * The Event has been postponed.
+         * 
+         * This is distinct from the idea of being
+         * rescheduled, in that a rescheduled event can
+         * still occur on time. Postponing an event means
+         * either the event is starting late (preferably
+         * if the user is in charge of the event), or the user
+         * is late to the event.
+         */
+        Postponed, 
+        /**
+         * The Event has been deleted from the Timeline.
+         * 
+         * Unlike canceling or ignoring an event, deleting
+         * it removes the event from the timeline
+         * completely (from the user's perspective). 
+         * This cannot be undone. However, an
+         * event will have the status of Deleted before the
+         * program closes to prevent any possible errors
+         * caused by actually removing the data. Instead,
+         * deleted events will not be serialized to the
+         * save file.
+         */
+        Deleted
+    };
+
     class Occurrence : JSONCapable
     {
-
-        /**
-         * Specifies the status of the Occurrence
-         * in terms of time management.
-         */
-        public enum OccurrenceStatus
-        {
-            /**
-             * The Event has not occurred yet.
-             */
-            Future, 
-            /**
-             * The Event is / was on time.
-             */
-            On_Time, 
-            /**
-             * The Event has been canceled.
-             * 
-             * This means that the event is not
-             * occurring at all.
-             */
-            Canceled, 
-            /**
-             * The Event has been / is being ignored.
-             * 
-             * This means that the user is choosing not
-             * to partake in the event, though it is not
-             * necessarily canceled.
-             */
-            Ignored, 
-            /**
-             * The Event has been postponed.
-             * 
-             * This is distinct from the idea of being
-             * rescheduled, in that a rescheduled event can
-             * still occur on time. Postponing an event means
-             * either the event is starting late (preferably
-             * if the user is in charge of the event), or the user
-             * is late to the event.
-             */
-            Postponed, 
-            /**
-             * The Event has been deleted from the Timeline.
-             * 
-             * Unlike canceling or ignoring an event, deleting
-             * it removes the event from the timeline
-             * completely (from the user's perspective). 
-             * This cannot be undone. However, an
-             * event will have the status of Deleted before the
-             * program closes to prevent any possible errors
-             * caused by actually removing the data. Instead,
-             * deleted events will not be serialized to the
-             * save file.
-             */
-            Deleted
-        };
-
         /**
          * Creates a new Occurrence from the specified times and parent id.
          * 
