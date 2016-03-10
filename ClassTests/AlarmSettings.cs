@@ -83,7 +83,7 @@ namespace Span
          * these alarm settings belong.
          * 
          * @param a_alarms a list of alarm settings in the form of
-         * Tuples. 
+         * Alarm objects. 
          * 
          * @date March 4, 2016
          */
@@ -108,12 +108,6 @@ namespace Span
             m_parent = a_parent;
         }
 
-        //TODO: change alarms from tuples to their own class
-        //of When, uint, Length, and bool m_dealtWith.
-        //that way, when the alarm has gone off, it won't go
-        //off a second time unless explicitly told to do so.
-        //It might also make constructors easier.
-
         /**
          * Updates the AlarmTimes list based on the current Alarms
          * list and the Occurrence's time settings.
@@ -129,23 +123,23 @@ namespace Span
                 DateTime target = new DateTime();
                 TimeSpan offset = new TimeSpan();
                 //convert Length units into TimeSpan units
-                switch(alarm.m_timeunit)
+                switch(alarm.m_timeUnit)
                 {
                     case Length.Minutes:
-                        offset = new TimeSpan(0, (int)alarm.m_timelength, 0);
+                        offset = new TimeSpan(0, (int)alarm.m_timeLength, 0);
                         break;
                     case Length.Hours:
-                        offset = new TimeSpan((int)alarm.m_timelength, 0, 0);
+                        offset = new TimeSpan((int)alarm.m_timeLength, 0, 0);
                         break;
                     case Length.Days:
-                        offset = new TimeSpan((int)alarm.m_timelength, 0, 0, 0);
+                        offset = new TimeSpan((int)alarm.m_timeLength, 0, 0, 0);
                         break;
                     case Length.Weeks:
-                        offset = new TimeSpan((int)alarm.m_timelength * 7, 0, 0, 0);
+                        offset = new TimeSpan((int)alarm.m_timeLength * 7, 0, 0, 0);
                         break;
                 }
                 //convert When into start or end time
-                switch (alarm.m_relativeplace)
+                switch (alarm.m_relativePlace)
                 {
                     case When.Before:
                         //should happen **before** start time
@@ -168,15 +162,6 @@ namespace Span
 
         /**
          * Gets or sets the list of alarm settings to use.
-         * 
-         * The list is made up of Tuples. Each 
-         * contains a When parameter, an unsigned integer value, 
-         * and a Length parameter. Together, they specify the time 
-         * that one alarm goes off, as in the following statement:
-         * "The alarm will go off (uint) (Length) (When) the Occurrence".
-         * For example, if When = After, uint = 20 and Length = Minutes,
-         * the alarm should go off 20 minutes after the Occurrence
-         * has ended.
          * 
          */
         public List<Alarm> Alarms{
@@ -218,17 +203,82 @@ namespace Span
         private string m_parent;
     }
 
+    /**
+     * Represents one alarm that is displayed to the user in
+     * some fashion.
+     * 
+     * Each Alarm struct contains a When parameter (m_relativePlace),
+     * an unsigned integer value (m_timeLength), and a Length parameter
+     * (m_timeUnit). Together, they specify the time that one alarm goes
+     * off, as in the following statement:
+     * "The alarm will go off (uint) (Length) (When) the Occurrence".
+     * For example, if When = After, uint = 20 and Length = Minutes,
+     * the alarm should go off 20 minutes after the Occurrence
+     * has ended.
+     * 
+     */
     struct Alarm
     {
-        public When m_relativeplace;
-        public uint m_timelength;
-        public Length m_timeunit;
+        /**
+         * Specifies if the alarm should go off before, during, or
+         * after the Occurrence.
+         */
+        public When m_relativePlace;
 
-        public Alarm(When a_relativeplace, uint a_timelength, Length a_timeunit)
+        /**
+         * Specifies the quantity of time units before/during/after 
+         * the Occurrence when the alarm goes off.
+         */
+        public uint m_timeLength;
+
+        /**
+         * Specifies the time unit for m_timeLength, which can be
+         * Minutes, Hours, Days or Weeks. This program is not
+         * designed to track smaller units of time than minutes.
+         */
+        public Length m_timeUnit;
+
+        /**
+         * In general, denotes if the alarm has gone off yet. False
+         * by default.
+         * 
+         * More precisely, denotes if the alarm should be
+         * ignored in the future. For example, if the user
+         * sees an alarm five minutes before an event and
+         * postpones the event, the same alarm should
+         * go off again, five minutes before the event's rescheduled
+         * time. Similarly, the alarm should go off if the
+         * program has been closed and is reopened far after
+         * the alarm is due. However, the alarm should not go off
+         * if it previously went off, the user properly dealt with it
+         * and closed the program, and then reopened the program
+         * later.
+         */
+        public bool m_dealtWith;
+
+        /**
+         * Creates an Alarm at the specified relative time.
+         * 
+         * @param a_relativePlace specifies if the alarm should 
+         * go off before, during, or after the Occurrence.
+         * 
+         * @param a_timeLength specifies the quantity of time 
+         * units before/during/after the Occurrence when the 
+         * alarm goes off.
+         * 
+         * @param a_timeUnit specifies the time unit to use.
+         * 
+         * @param a_dealtWith denotes if the alarm has gone
+         * off yet. False by default.
+         * 
+         * @date March 9, 2016
+         */
+        public Alarm(When a_relativePlace, uint a_timeLength, Length a_timeUnit, bool a_dealtWith = false)
         {
-            m_relativeplace = a_relativeplace;
-            m_timelength = a_timelength;
-            m_timeunit = a_timeunit;
+            m_relativePlace = a_relativePlace;
+            m_timeLength = a_timeLength;
+            m_timeUnit = a_timeUnit;
+            m_dealtWith = a_dealtWith;
         }
     }
 }
