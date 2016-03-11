@@ -79,6 +79,34 @@ namespace ClassTests
                 Console.WriteLine(time.ToShortDateString() + " " + time.ToShortTimeString());
             }
 
+            List<Span.Occurrence> ocrpoly = new List<Span.Occurrence>();
+            ocrpoly.Add(new Span.Occurrence(false, isnow.AddDays(2), isnow.AddDays(2.1), "none yet"));
+            ocrpoly.Add(new Span.Occurrence(false, isnow.AddDays(2.05), isnow.AddDays(2.15), "none yet"));
+            ocrpoly.Add(new Span.TaskOccurrence(true, isnow.AddDays(1.9), isnow.AddDays(2.15), "none yet", 3));
+            ocrpoly.Add(new Span.Occurrence(false, isnow.AddDays(2), isnow.AddDays(2.15), "none yet"));
+            ocrpoly.Add(new Span.Occurrence(false, isnow.AddDays(2.05), isnow.AddDays(2.08), "none yet"));
+            ocrpoly.Add(new Span.TaskOccurrence(true, isnow.AddDays(2.05), isnow.AddDays(2.1), "none yet"));
+            ocrpoly.Add(new Span.Occurrence(false, isnow.AddDays(2), isnow.AddDays(2.1), "none yet"));
+            ocrpoly.Add(new Span.Occurrence(false, isnow.AddDays(1.9), isnow.AddDays(2.08), "none yet"));
+            ocrpoly.Add(new Span.Occurrence(false, isnow.AddDays(1.9), isnow.AddDays(2.1), "none yet"));
+            ocrpoly.Add(new Span.TaskOccurrence(true, isnow.AddDays(2), isnow.AddDays(2.08), "none yet", 7));
+            ocrpoly.Add(new Span.Occurrence(false, isnow.AddDays(2.1), isnow.AddDays(3), "none yet"));//*
+            ocrpoly.Add(new Span.TaskOccurrence(true, isnow.AddDays(1), isnow.AddDays(2), "none yet"));
+            ocrpoly.Add(new Span.Occurrence(false, isnow.AddDays(0.5), isnow.AddDays(1), "none yet"));
+            ocrpoly.Add(new Span.Occurrence(false, isnow.AddDays(3), isnow.AddDays(4), "none yet"));
+            foreach (Span.Occurrence ocr in ocrpoly)
+            {
+                if (ocr.IsTask)
+                {
+                    ((Span.TaskOccurrence)ocr).DoAgain();
+                }
+                Console.WriteLine(ocr);
+            }
+            for (int i = 1; i < ocrpoly.Count; i++)
+            {
+                Console.WriteLine(ocrpoly[0].Overlaps(ocrpoly[i]));
+            }
+
         }
     }
 }

@@ -238,9 +238,9 @@ namespace Span
         private uint m_numId;
         private string m_id;
         private bool m_isTask;
-        private DateTime m_actualStart, m_actualEnd, m_createStart, m_createEnd;
-        private OccurrenceStatus m_status;
+        protected DateTime m_actualStart, m_actualEnd, m_createStart, m_createEnd;
+        protected OccurrenceStatus m_status;
         private string m_parent;
-        private static Dictionary<string, Occurrence> all = new Dictionary<string, Occurrence>();
+        protected static Dictionary<string, Occurrence> all = new Dictionary<string, Occurrence>();
     }
 }
