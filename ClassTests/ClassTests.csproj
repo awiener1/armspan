@@ -50,6 +50,7 @@
     <Compile Include="Category.cs" />
     <Compile Include="JSONCapable.cs" />
     <Compile Include="Occurrence.cs" />
+    <Compile Include="Period.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaskOccurrence.cs" />

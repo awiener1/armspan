@@ -51,14 +51,9 @@ namespace Span
          */
         public uint Times
         {
-            get 
-            {
-                return m_times;
-            }
-            set
-            {
-                m_times = Math.Max(value, 1);
-            }
+            get { return m_times; }
+
+            set { m_times = Math.Max(value, 1); }
         }
 
         /**

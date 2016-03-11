@@ -107,6 +107,24 @@ namespace ClassTests
                 Console.WriteLine(ocrpoly[0].Overlaps(ocrpoly[i]));
             }
 
+            Console.WriteLine("===============");
+            Span.Period per = new Span.Period(3, Span.Frequency.Days, isnow, isnow.AddMonths(1), new DateTime(1, 1, 1, 8, 30, 0), new DateTime(1, 1, 1, 22, 00, 00), new TimeSpan(0, 40, 0), "no parent");
+            List<Span.Occurrence> ocrper = per.Occurrences;
+            foreach (Span.Occurrence ocr in ocrper)
+            {
+       
+                Console.WriteLine(ocr.StartIntended.ToString() + " " + ocr.EndIntended.ToString());
+            }
+            Console.WriteLine("HENCEFORTH I SUMMON UNTO THIS CONSOLE AN AVALANCHE");
+            per = new Span.Period(50, Span.Frequency.Minutes, isnow, isnow.AddDays(10), new DateTime(1, 1, 1, 8, 30, 0), new DateTime(1, 1, 1, 22, 00, 00), new TimeSpan(0, 40, 0), "no parent");
+            ocrper = per.Occurrences;
+            foreach (Span.Occurrence ocr in ocrper)
+            {
+
+                Console.WriteLine(ocr.StartIntended.ToString() + " " + ocr.EndIntended.ToString());
+            }
+
+
         }
     }
 }
