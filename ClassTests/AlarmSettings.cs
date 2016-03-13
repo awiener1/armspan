@@ -17,57 +17,57 @@ using System.Collections.ObjectModel;
 namespace Span
 {
     /**
-        * Specifies if the alarm is set to go off before, during,
-        * or after the occurrence.
-        */
+     * Specifies if the alarm is set to go off before, during,
+     * or after the occurrence.
+     */
     public enum When
     {
         /**
-            * The alarm will go off before the beginning
-            * of the occurrence by the specified amount
-            * of time.
-            */
+         * The alarm will go off before the beginning
+         * of the occurrence by the specified amount
+         * of time.
+         */
         Before,
         /**
-            * The alarm will go off after the beginning
-            * of the occurrence by the specified amount
-            * of time, assuming the occurrence has not
-            * yet ended.
-            */
+         * The alarm will go off after the beginning
+         * of the occurrence by the specified amount
+         * of time, assuming the occurrence has not
+         * yet ended.
+         */
         During,
         /**
-            * The alarm will go off after the end
-            * of the occurrence by the specified amount
-            * of time.
-            */
+         * The alarm will go off after the end
+         * of the occurrence by the specified amount
+         * of time.
+         */
         After   
     };
 
     /**
-        * Denotes the unit of time in which to specify the
-        * time when the alarm will go off.
-        */
+     * Denotes the unit of time in which to specify the
+     * time when the alarm will go off.
+     */
     public enum Length
     {
         /**
-            * The alarm will go off in the specified
-            * number of minutes.
-            */
+         * The alarm will go off in the specified
+         * number of minutes.
+         */
         Minutes, 
         /**
-            * The alarm will go off in the specified
-            * number of hours.
-            */
+         * The alarm will go off in the specified
+         * number of hours.
+         */
         Hours,   
         /**
-            * The alarm will go off in the specified
-            * number of days.
-            */
+         * The alarm will go off in the specified
+         * number of days.
+         */
         Days,    
         /**
-            * The alarm will go off in the specified
-            * number of weeks.
-            */
+         * The alarm will go off in the specified
+         * number of weeks.
+         */
         Weeks    
     };
 
@@ -123,6 +123,11 @@ namespace Span
                 DateTime target = new DateTime();
                 TimeSpan offset = new TimeSpan();
                 //convert Length units into TimeSpan units
+
+                //TODO: change this TimeSpan code to work with DST
+                //(the TimeSpan class doesn't pay attention to
+                //DST, only the DateTime class does. Likely removing
+                //the offset object altogether will help.
                 switch(alarm.m_timeUnit)
                 {
                     case Length.Minutes:

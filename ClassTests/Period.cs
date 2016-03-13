@@ -1,28 +1,92 @@
-﻿using System;
+﻿/**
+ * @file
+ * @author Allan Wiener
+ * 
+ * @section DESCRIPTION
+ * 
+ * The Period class defines a periodically reoccurring
+ * set of Occurrences.
+ * 
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace Span
 {
+
+    /**
+     * Denotes the unit of time in which to specify the
+     * frequency of the Period.
+     */
     enum Frequency
     {
-
+        /**
+         * The Occurrence will reoccur in the specified
+         * number of minutes.
+         */
         Minutes,
-
+        /**
+         * The Occurrence will reoccur in the specified
+         * number of hours.
+         */
         Hours,
-
+        /**
+         * The Occurrence will reoccur in the specified
+         * number of days.
+         */
         Days,
-
+        /**
+         * The Occurrence will reoccur in the specified
+         * number of weeks.
+         */
         Weeks,
-        
+        /**
+         * The Occurrence will reoccur in the specified
+         * number of months.
+         */
         Months,
-
+        /**
+         * The Occurrence will reoccur in the specified
+         * number of years.
+         */
         Years
     }
+
+   
     class Period
     {
 
+        /**
+         * Creates a new Period from the specified times, length, and parent id.
+         * 
+         * @param a_frequency specifies how often the Event will occur.
+         * 
+         * @param a_timeUnit denotes the time unit used for a_frequency.
+         * 
+         * @param a_startDate a DateTime struct specifying the day on
+         * which the Occurrences will start.
+         * 
+         * @param a_endDate a DateTime struct specifying the day on
+         * which the Occurrences will end, inclusively (that is, the final day
+         * on which they will occur).
+         * 
+         * @param a_startTime a DateTime struct specifying the earliest
+         * time the Occurrences may occur every day. This is also the time
+         * at which the first Occurrence will start.
+         * 
+         * @param a_endTime a DateTime struct specifying the latest
+         * time the Occurrences may occur every day.
+         * 
+         * @param a_length a TimeSpan struct specifying the length of 
+         * each Occurrence.
+         * 
+         * @param a_parent the id of the parent Event to which this
+         * Period belongs.
+         * 
+         * @date March 10, 2016
+         */
         public Period(uint a_frequency, Frequency a_timeUnit, DateTime a_startDate, DateTime a_endDate, DateTime a_startTime, DateTime a_endTime, TimeSpan a_length, string a_parent)
         {
             PeriodicFrequency = a_frequency;
@@ -35,6 +99,11 @@ namespace Span
             m_parent = a_parent;
         }
 
+        /**
+         * Gets the list of Occurrences specified by this Period.
+         */
+
+        //TODO: make this readonly
         public List<Occurrence> Occurrences
         {
             get
@@ -82,6 +151,10 @@ namespace Span
             }
         }
 
+        /**
+         * Gets or sets the frequency at which the Event will
+         * occur. Must be greater than or equal to 1.
+         */
         public uint PeriodicFrequency
         {
             get { return m_frequency; }
@@ -89,6 +162,10 @@ namespace Span
             set { m_frequency = Math.Max(value, 1); }
         }
 
+        /**
+         * Gets or sets the time unit used to describe the
+         * frequency.
+         */
         public Frequency TimeUnit
         {
             get { return m_timeUnit; }
@@ -96,6 +173,10 @@ namespace Span
             set  { m_timeUnit = value; }
         }
 
+        /**
+         * Gets or sets a DateTime struct specifying the day on
+         * which the Occurrences will start.
+         */
         public DateTime StartDate 
         {
             get { return m_startDate; }
@@ -103,6 +184,11 @@ namespace Span
             set { m_startDate = value; } 
         }
 
+        /**
+         * Gets or sets a DateTime struct specifying the earliest
+         * time the Occurrences may occur every day. This is also the time
+         * at which the first Occurrence will start.
+         */
         public DateTime StartTime
         {
             get { return m_startTime; }
@@ -110,6 +196,11 @@ namespace Span
             set { m_startTime = value; }
         }
 
+        /**
+         * Gets or sets a DateTime struct specifying the day on
+         * which the Occurrences will end, inclusively (that is, the final day
+         * on which they will occur).
+         */
         public DateTime EndDate
         {
             get { return m_endDate; }
@@ -117,6 +208,10 @@ namespace Span
             set { m_endDate = value; }
         }
 
+        /**
+         * Gets or sets a DateTime struct specifying the latest
+         * time the Occurrences may occur every day.
+         */
         public DateTime EndTime
         {
             get { return m_endTime; }
@@ -124,6 +219,10 @@ namespace Span
             set { m_endTime = value; }
         }
 
+        /**
+         * Gets or sets a TimeSpan struct specifying the length of 
+         * each Occurrence.
+         */
         public TimeSpan OccurrenceLength
         {
             get { return m_length; }
