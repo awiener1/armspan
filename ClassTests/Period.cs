@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections.ObjectModel;
 
 namespace Span
 {
@@ -99,55 +100,60 @@ namespace Span
             m_parent = a_parent;
         }
 
+        private void updateOccurrences()
+        {
+            m_occurrences = new List<Occurrence>();
+            //set up start/end dates
+            DateTime eachStartTime = StartDate.Date.Add(StartTime.TimeOfDay);
+            DateTime finalEndTime = EndDate.Date.Add(EndTime.TimeOfDay);
+            while (eachStartTime < finalEndTime)
+            {
+                DateTime eachEndTime = eachStartTime.Add(OccurrenceLength);
+                //check for overlap with non-working time
+                if (eachStartTime.TimeOfDay < EndTime.TimeOfDay
+                    && eachStartTime.TimeOfDay >= StartTime.TimeOfDay
+                    && eachEndTime.TimeOfDay <= EndTime.TimeOfDay
+                    && eachEndTime.TimeOfDay > StartTime.TimeOfDay)
+                {
+                    Occurrence newOcc = new Occurrence(false, eachStartTime, eachStartTime.Add(OccurrenceLength), m_parent);
+                    m_occurrences.Add(newOcc);
+                }
+                //increment by time unit (esp. for months and years)
+                switch (TimeUnit)
+                {
+                    case Frequency.Minutes:
+                        eachStartTime = eachStartTime.AddMinutes(PeriodicFrequency);
+                        break;
+                    case Frequency.Hours:
+                        eachStartTime = eachStartTime.AddHours(PeriodicFrequency);
+                        break;
+                    case Frequency.Days:
+                        eachStartTime = eachStartTime.AddDays(PeriodicFrequency);
+                        break;
+                    case Frequency.Weeks:
+                        eachStartTime = eachStartTime.AddDays(PeriodicFrequency * 7);
+                        break;
+                    case Frequency.Months:
+                        eachStartTime = eachStartTime.AddMonths((int)PeriodicFrequency);
+                        break;
+                    case Frequency.Years:
+                        eachStartTime = eachStartTime.AddYears((int)PeriodicFrequency);
+                        break;
+                }
+            }
+        }
+
         /**
          * Gets the list of Occurrences specified by this Period.
          */
 
         //TODO: make this readonly
-        public List<Occurrence> Occurrences
+        public ReadOnlyCollection<Occurrence> Occurrences
         {
             get
             {
-                List<Occurrence> outList = new List<Occurrence>();
-                //set up start/end dates
-                DateTime eachStartTime = StartDate.Date.Add(StartTime.TimeOfDay);
-                DateTime finalEndTime = EndDate.Date.Add(EndTime.TimeOfDay);
-                while (eachStartTime < finalEndTime)
-                {
-                    DateTime eachEndTime = eachStartTime.Add(OccurrenceLength);
-                    //check for overlap with non-working time
-                    if (eachStartTime.TimeOfDay < EndTime.TimeOfDay
-                        && eachStartTime.TimeOfDay >= StartTime.TimeOfDay
-                        && eachEndTime.TimeOfDay <= EndTime.TimeOfDay
-                        && eachEndTime.TimeOfDay > StartTime.TimeOfDay)
-                    {
-                        Occurrence newOcc = new Occurrence(false, eachStartTime, eachStartTime.Add(OccurrenceLength), m_parent);
-                        outList.Add(newOcc);
-                    }
-                    //increment by time unit (esp. for months and years)
-                    switch (TimeUnit)
-                    {
-                        case Frequency.Minutes:
-                            eachStartTime = eachStartTime.AddMinutes(PeriodicFrequency);
-                            break;
-                        case Frequency.Hours:
-                            eachStartTime = eachStartTime.AddHours(PeriodicFrequency);
-                            break;
-                        case Frequency.Days:
-                            eachStartTime = eachStartTime.AddDays(PeriodicFrequency);
-                            break;
-                        case Frequency.Weeks:
-                            eachStartTime = eachStartTime.AddDays(PeriodicFrequency * 7);
-                            break;
-                        case Frequency.Months:
-                            eachStartTime = eachStartTime.AddMonths((int)PeriodicFrequency);
-                            break;
-                        case Frequency.Years:
-                            eachStartTime = eachStartTime.AddYears((int)PeriodicFrequency);
-                            break;
-                    }
-                }
-                return outList;
+                updateOccurrences();
+                return new ReadOnlyCollection<Occurrence>(m_occurrences);
             }
         }
 
@@ -244,6 +250,7 @@ namespace Span
         private DateTime m_endTime;
         private TimeSpan m_length;
         private string m_parent;
+        private List<Occurrence> m_occurrences;
         //private bool exclude;
 
        
