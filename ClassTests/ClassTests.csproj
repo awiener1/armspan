@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="AlarmSettings.cs" />
     <Compile Include="Category.cs" />
+    <Compile Include="Event.cs" />
     <Compile Include="JSONCapable.cs" />
     <Compile Include="Occurrence.cs" />
     <Compile Include="Period.cs" />

@@ -115,6 +115,8 @@ namespace ClassTests
        
                 Console.WriteLine(ocr.StartIntended.ToString() + " " + ocr.EndIntended.ToString());
             }
+            List<Span.Period> perlist = new List<Span.Period>();
+            perlist.Add(per);
             Console.WriteLine("HENCEFORTH I SUMMON UNTO THIS CONSOLE AN AVALANCHE");
             per = new Span.Period(50, Span.Frequency.Minutes, isnow, isnow.AddDays(10), new DateTime(1, 1, 1, 8, 30, 0), new DateTime(1, 1, 1, 22, 00, 00), new TimeSpan(0, 40, 0), "no parent");
             ocrper = new List<Span.Occurrence>(per.Occurrences);
@@ -123,8 +125,46 @@ namespace ClassTests
 
                 Console.WriteLine(ocr.StartIntended.ToString() + " " + ocr.EndIntended.ToString());
             }
+            List <Span.Period> perlist2 = new List<Span.Period>(new Span.Period[]{per});
+            Console.WriteLine("oh, you don't even know what is happening next");
+            List<string> catsstring = new List<string>();
+            foreach (Span.Category cat in cats)
+            {
+                catsstring.Add(cat.Id);
+            }
+            Span.Event firstEvent = new Span.Event(false, "Visit the Guggenhaggin", ocrpoly, perlist,
+                "Stockton, NY", catsstring, als, 
+                "You know, this museum is an amalgamation of two totally different ones. I'd like to see how I intend to visit it.");
+            foreach (Span.Occurrence ocr in firstEvent.Occurrences)
+            {
+                Console.WriteLine(ocr.StartIntended.ToString() + " " + ocr.EndIntended.ToString());
+            }
+            Console.WriteLine("now let's identify conflicts");
+            Span.Event secondEvent = new Span.Event(false, "Trustees Banquet", new List<Span.Occurrence>(), perlist2,
+                "Roquefort Hall", catsstring, als,
+                "Bring some desserts - don't forget vegan options too. They will supply utensils; forego taking any. " +
+                "If you saw this event in the mockup and know what it's named after, I will be very surprised.");
+            Console.WriteLine(Span.Event.All.Count());
+            foreach (string outputter in firstEvent.getOverlapping().Item2)
+            {
+                if (outputter.StartsWith("e")){
+                    Span.Event thisEvt = Span.Event.All[outputter];
+                    Console.WriteLine("Event -> " + thisEvt.Name);
+                    Console.WriteLine("Conflicting categories: ");
+                    List<string> catprt = new List<string>();
+                    foreach (string id in firstEvent.Categories.Intersect(thisEvt.Categories))
+                    {
+                        catprt.Add(cats.Find(x => x.Id == id).Name);
+                    }
+                    Console.WriteLine(string.Join(", ", catprt));
 
-
+                }
+                if (outputter.StartsWith("o"))
+                {
+                    Span.Occurrence thisOcr = Span.Occurrence.All[outputter];
+                    Console.WriteLine("Occurrence -> " + thisOcr.StartActual.ToString() + " - " + thisOcr.EndActual.ToString());
+                }
+            } 
         }
     }
 }

@@ -100,6 +100,12 @@ namespace Span
             m_parent = a_parent;
         }
 
+        /**
+         * Updates the list of Occurrences specified by this Period
+         * based on the current settings.
+         * 
+         * @date March 10, 2016
+         */
         private void updateOccurrences()
         {
             m_occurrences = new List<Occurrence>();
@@ -146,8 +152,6 @@ namespace Span
         /**
          * Gets the list of Occurrences specified by this Period.
          */
-
-        //TODO: make this readonly
         public ReadOnlyCollection<Occurrence> Occurrences
         {
             get
