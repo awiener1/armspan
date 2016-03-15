@@ -21,10 +21,6 @@ namespace Span
          * Creates a new TaskOccurrence from the specified times, parent id,
          * and task quantity.
          * 
-         * @param a_isTask specifies if the Occurrence is a task.
-         * However, if it is a task, please use a TaskOccurrence object
-         * instead.
-         * 
          * @param a_createStart a DateTime struct specifying the starting
          * time of the Occurrence.
          * 
@@ -39,8 +35,8 @@ namespace Span
          * 
          * @date March 10, 2016
          */
-        public TaskOccurrence(bool a_isTask, DateTime a_createStart, DateTime a_createEnd, string a_parent, uint a_times = 1)
-            : base(a_isTask, a_createStart, a_createEnd, a_parent)
+        public TaskOccurrence(DateTime a_createStart, DateTime a_createEnd, string a_parent, uint a_times = 1)
+            : base(true, a_createStart, a_createEnd, a_parent)
         {
             Times = a_times;
         }
@@ -53,7 +49,20 @@ namespace Span
         {
             get { return m_times; }
 
-            set { m_times = Math.Max(value, 1); }
+            set 
+            { 
+                //parent exists, assume task for now
+                if (Event.All.ContainsKey(ParentId))
+                {
+                    m_times = Math.Max(value, ((TaskEvent)Event.All[ParentId]).Times); 
+                }
+                //to prevent crashing
+                else
+                {
+                    m_times = Math.Max(value, 1);
+                }
+
+            }
         }
 
         /**

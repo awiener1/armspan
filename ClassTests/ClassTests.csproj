@@ -54,6 +54,7 @@
     <Compile Include="Period.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TaskEvent.cs" />
     <Compile Include="TaskOccurrence.cs" />
   </ItemGroup>
   <ItemGroup>

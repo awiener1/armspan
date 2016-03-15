@@ -82,16 +82,16 @@ namespace ClassTests
             List<Span.Occurrence> ocrpoly = new List<Span.Occurrence>();
             ocrpoly.Add(new Span.Occurrence(false, isnow.AddDays(2), isnow.AddDays(2.1), "none yet"));
             ocrpoly.Add(new Span.Occurrence(false, isnow.AddDays(2.05), isnow.AddDays(2.15), "none yet"));
-            ocrpoly.Add(new Span.TaskOccurrence(true, isnow.AddDays(1.9), isnow.AddDays(2.15), "none yet", 3));
+            ocrpoly.Add(new Span.TaskOccurrence(isnow.AddDays(1.9), isnow.AddDays(2.15), "none yet", 3));
             ocrpoly.Add(new Span.Occurrence(false, isnow.AddDays(2), isnow.AddDays(2.15), "none yet"));
             ocrpoly.Add(new Span.Occurrence(false, isnow.AddDays(2.05), isnow.AddDays(2.08), "none yet"));
-            ocrpoly.Add(new Span.TaskOccurrence(true, isnow.AddDays(2.05), isnow.AddDays(2.1), "none yet"));
+            ocrpoly.Add(new Span.TaskOccurrence(isnow.AddDays(2.05), isnow.AddDays(2.1), "none yet"));
             ocrpoly.Add(new Span.Occurrence(false, isnow.AddDays(2), isnow.AddDays(2.1), "none yet"));
             ocrpoly.Add(new Span.Occurrence(false, isnow.AddDays(1.9), isnow.AddDays(2.08), "none yet"));
             ocrpoly.Add(new Span.Occurrence(false, isnow.AddDays(1.9), isnow.AddDays(2.1), "none yet"));
-            ocrpoly.Add(new Span.TaskOccurrence(true, isnow.AddDays(2), isnow.AddDays(2.08), "none yet", 7));
+            ocrpoly.Add(new Span.TaskOccurrence(isnow.AddDays(2), isnow.AddDays(2.08), "none yet", 7));
             ocrpoly.Add(new Span.Occurrence(false, isnow.AddDays(2.1), isnow.AddDays(3), "none yet"));//*
-            ocrpoly.Add(new Span.TaskOccurrence(true, isnow.AddDays(1), isnow.AddDays(2), "none yet"));
+            ocrpoly.Add(new Span.TaskOccurrence(isnow.AddDays(1), isnow.AddDays(2), "none yet"));
             ocrpoly.Add(new Span.Occurrence(false, isnow.AddDays(0.5), isnow.AddDays(1), "none yet"));
             ocrpoly.Add(new Span.Occurrence(false, isnow.AddDays(3), isnow.AddDays(4), "none yet"));
             foreach (Span.Occurrence ocr in ocrpoly)
@@ -164,7 +164,35 @@ namespace ClassTests
                     Span.Occurrence thisOcr = Span.Occurrence.All[outputter];
                     Console.WriteLine("Occurrence -> " + thisOcr.StartActual.ToString() + " - " + thisOcr.EndActual.ToString());
                 }
-            } 
+            }
+            Console.WriteLine("throw a task into the mix");
+            Span.TaskEvent thirdEvent = new Span.TaskEvent("Package Boxes of Files", 
+                new List<Span.Occurrence>(new Span.Occurrence[]{ocrpoly[2]}), 
+                new List<Span.Period>(), "Da Office", new List<string>(new string[]{cats[2].Id}), als,
+                "Remember they are moving me to the adjacent building and down two floors.", 4);
+            Tuple<uint, List<string>> ovrlps = thirdEvent.getOverlapping();
+            Console.WriteLine(ovrlps.Item2.Count());
+            foreach (string outputter in ovrlps.Item2)
+            {
+                if (outputter.StartsWith("e"))
+                {
+                    Span.Event thisEvt = Span.Event.All[outputter];
+                    Console.WriteLine("Event -> " + thisEvt.Name);
+                    Console.WriteLine("Conflicting categories: ");
+                    List<string> catprt = new List<string>();
+                    foreach (string id in thirdEvent.Categories.Intersect(thisEvt.Categories))
+                    {
+                        catprt.Add(cats.Find(x => x.Id == id).Name);
+                    }
+                    Console.WriteLine(string.Join(", ", catprt));
+
+                }
+                if (outputter.StartsWith("o"))
+                {
+                    Span.Occurrence thisOcr = Span.Occurrence.All[outputter];
+                    Console.WriteLine("Occurrence -> " + thisOcr.StartActual.ToString() + " - " + thisOcr.EndActual.ToString());
+                }
+            }
         }
     }
 }
