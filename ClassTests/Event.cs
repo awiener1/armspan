@@ -171,8 +171,6 @@ namespace Span
          * 
          * @date March 14, 2016
          */
-        //TODO: make this work with periods that are changed into
-        //manual occurrences
         private void updateOccurrences()
         {
             m_allOccurrences = new List<Occurrence>(m_manualOccurrences);
@@ -180,6 +178,16 @@ namespace Span
             {
                 foreach (Occurrence ocr in per.Occurrences)
                 {
+                    if (!ocr.IsChained)
+                    {
+                        if (!m_allOccurrences.Contains(ocr))
+                        {
+                            m_allOccurrences.Add(ocr);
+                            m_manualOccurrences.Add(ocr);
+                        }
+                        continue;
+
+                    }
                     if (ocr.Status == (OccurrenceStatus.Canceled | OccurrenceStatus.Deleted | OccurrenceStatus.Ignored)) continue;
                     bool unused = true;
                     foreach (Occurrence manualOcr in m_allOccurrences)

@@ -234,6 +234,29 @@ namespace Span
          */
         public static Dictionary<string, Occurrence> All { get { return all; } }
 
+        /**
+         * Specifies or sets whether the Occurrence is part of
+         * a periodic set of occurrences (a Period) or is
+         * manually defined. If the Occurrence has been
+         * periodically defined, it can be de-chained to
+         * become manually defined.
+         */
+        //TODO: deal with dechaining some more.
+        //idea: when one ocr is dechained,
+        //you could dechain all the ones before it,
+        //OR you could turn the preceding ones into
+        //a new period altogether. This wouldn't
+        //happen in this class, but say, in a
+        //controller class of some kind.
+        //And to make this easier, you could change the
+        //variable m_chained into the id of a Period,
+        //and set to null if dechained.
+        public bool IsChained
+        {
+            get { return m_chained; }
+            set { m_chained = value; }
+        }
+
         private static uint num = 1;
         private uint m_numId;
         private string m_id;
@@ -241,6 +264,7 @@ namespace Span
         protected DateTime m_actualStart, m_actualEnd, m_createStart, m_createEnd;
         protected OccurrenceStatus m_status;
         private string m_parent;
+        protected bool m_chained;
         protected static Dictionary<string, Occurrence> all = new Dictionary<string, Occurrence>();
     }
 }

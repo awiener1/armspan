@@ -193,6 +193,11 @@ namespace ClassTests
                     Console.WriteLine("Occurrence -> " + thisOcr.StartActual.ToString() + " - " + thisOcr.EndActual.ToString());
                 }
             }
+            perlist[0].TimeUnit = Span.Frequency.Hours;
+            foreach (Span.Occurrence ocr in perlist[0].Occurrences)
+            {
+                Console.WriteLine(ocr.StartIntended.ToString() + " " + ocr.EndIntended.ToString());
+            }
         }
     }
 }

@@ -98,6 +98,8 @@ namespace Span
             EndTime = a_endTime;
             OccurrenceLength = a_length;
             m_parent = a_parent;
+            m_needUpdate = true;
+            m_occurrences = null;
         }
 
         /**
@@ -108,6 +110,19 @@ namespace Span
          */
         private void updateOccurrences()
         {
+            if (!m_needUpdate) return;
+            //delete all chained occurrences. non-chained ones will remain elsewhere.
+            if (m_occurrences != null)
+            {
+                foreach (Occurrence ocr in m_occurrences)
+                {
+                    if (ocr.IsChained)
+                    {
+                        ocr.Status = OccurrenceStatus.Deleted;
+                    }
+                }
+
+            }
             m_occurrences = new List<Occurrence>();
             //set up start/end dates
             DateTime eachStartTime = StartDate.Date.Add(StartTime.TimeOfDay);
@@ -122,6 +137,7 @@ namespace Span
                     && eachEndTime.TimeOfDay > StartTime.TimeOfDay)
                 {
                     Occurrence newOcc = new Occurrence(false, eachStartTime, eachStartTime.Add(OccurrenceLength), m_parent);
+                    newOcc.IsChained = true;
                     m_occurrences.Add(newOcc);
                 }
                 //increment by time unit (esp. for months and years)
@@ -147,6 +163,7 @@ namespace Span
                         break;
                 }
             }
+            m_needUpdate = false;
         }
 
         /**
@@ -169,7 +186,11 @@ namespace Span
         {
             get { return m_frequency; }
 
-            set { m_frequency = Math.Max(value, 1); }
+            set 
+            { 
+                m_frequency = Math.Max(value, 1);
+                m_needUpdate = true;
+            }
         }
 
         /**
@@ -180,7 +201,11 @@ namespace Span
         {
             get { return m_timeUnit; }
 
-            set  { m_timeUnit = value; }
+            set  
+            { 
+                m_timeUnit = value;
+                m_needUpdate = true;
+            }
         }
 
         /**
@@ -191,7 +216,11 @@ namespace Span
         {
             get { return m_startDate; }
 
-            set { m_startDate = value; } 
+            set 
+            { 
+                m_startDate = value;
+                m_needUpdate = true;
+            } 
         }
 
         /**
@@ -203,7 +232,11 @@ namespace Span
         {
             get { return m_startTime; }
 
-            set { m_startTime = value; }
+            set 
+            { 
+                m_startTime = value;
+                m_needUpdate = true;
+            }
         }
 
         /**
@@ -215,7 +248,11 @@ namespace Span
         {
             get { return m_endDate; }
 
-            set { m_endDate = value; }
+            set 
+            { 
+                m_endDate = value;
+                m_needUpdate = true;
+            }
         }
 
         /**
@@ -226,7 +263,11 @@ namespace Span
         {
             get { return m_endTime; }
 
-            set { m_endTime = value; }
+            set 
+            { 
+                m_endTime = value;
+                m_needUpdate = true;
+            }
         }
 
         /**
@@ -237,7 +278,11 @@ namespace Span
         {
             get { return m_length; }
 
-            set { m_length = value; }
+            set 
+            { 
+                m_length = value;
+                m_needUpdate = true;
+            }
         }
 
         /**
@@ -255,6 +300,7 @@ namespace Span
         private TimeSpan m_length;
         private string m_parent;
         private List<Occurrence> m_occurrences;
+        private bool m_needUpdate;
         //private bool exclude;
 
        
