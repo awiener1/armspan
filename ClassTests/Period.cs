@@ -118,7 +118,7 @@ namespace Span
             {
                 foreach (Occurrence ocr in m_occurrences)
                 {
-                    if (ocr.IsChained)
+                    if (ocr.IsChained())
                     {
                         ocr.Status = OccurrenceStatus.Deleted;
                     }

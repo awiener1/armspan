@@ -205,13 +205,12 @@ namespace Span
          * the form of a read-only, sorted list of DateTime
          * structs. 
          */
-        public ReadOnlyCollection<DateTime> AlarmTimes
+        public ReadOnlyCollection<DateTime> AlarmTimes()
         {
-            get
-            {
-                updateAlarms();
-                return new ReadOnlyCollection<DateTime>(m_alarmTimes);
-            }
+         
+            updateAlarms();
+            return new ReadOnlyCollection<DateTime>(m_alarmTimes);
+            
         }
 
         /**

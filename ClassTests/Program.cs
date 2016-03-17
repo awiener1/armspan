@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using System.IO;
 using Span;
 
 namespace ClassTests
@@ -36,6 +37,9 @@ namespace ClassTests
 
             }
 
+            Occurrence loado = Occurrence.FromJSON(File.ReadAllText("iotest.txt"));
+            
+            
             bool makeEvt = true;
             while (makeEvt)
             {
@@ -46,6 +50,8 @@ namespace ClassTests
                 MakeEvent();
 
             }
+            File.WriteAllText("iotest.txt", 
+                Event.All.Values.ElementAt(0).ManualOccurrences[0].ToString());
 
         }
  

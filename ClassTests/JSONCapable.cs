@@ -23,11 +23,17 @@ namespace Span
          */
         public static JavaScriptSerializer jss = new JavaScriptSerializer();
 
-        //public static Object FromString(string json, Type type)
-        //{
-        //    Object obj = jss.Deserialize(json, type);
-        //    return obj;
-        //}
+        public static Object FromString(string json)
+        {
+            Object obj = jss.DeserializeObject(json);
+            return obj;
+        }
+
+        public static Dictionary<string, object> JSONDictionary(object JSONObject)
+        {
+            Dictionary<string, object> outputter = jss.ConvertToType<Dictionary<string, object>>(JSONObject);
+            return outputter;
+        }
 
         /**
          * Serializes the object to a JSON string.

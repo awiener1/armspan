@@ -105,6 +105,50 @@ namespace Span
             All.Add(m_id, this);
         }
 
+        protected Occurrence(){}
+
+
+        //TODO: document this and all other serialize code
+        public static Occurrence FromJSON(string json)
+        {
+            Dictionary<string, object> jsd = JSONDictionary(Occurrence.FromString(json));
+            OccurrenceStatus status = (OccurrenceStatus)jsd["Status"];
+            if (status == OccurrenceStatus.Deleted) return null; //no deleted objects
+            string id = (string)jsd["Id"];
+            bool istask = (bool)jsd["IsTask"];
+            DateTime startactual = (DateTime)jsd["StartActual"];
+            DateTime endactual = (DateTime)jsd["EndActual"];
+            DateTime startintended = (DateTime)jsd["StartIntended"];
+            DateTime endintended = (DateTime)jsd["EndIntended"];
+            string parentid = (string)jsd["ParentId"];
+            string chainid = (string)jsd["ChainId"];
+            uint thisnum = (uint)(int)jsd["Number"];
+            Occurrence loaded = new Occurrence();
+            loaded.m_id = id;
+            loaded.m_isTask = istask;
+            loaded.m_createStart = startintended;
+            loaded.m_createEnd = endintended;
+            loaded.m_actualStart = startactual;
+            loaded.m_actualEnd = endactual;
+            loaded.m_chainId = chainid;
+            loaded.m_parent = parentid;
+            loaded.m_status = status;
+            loaded.m_numId = thisnum;
+            if (thisnum >= num){
+                num = thisnum + 1;
+            }
+            if (istask)
+            {
+                loaded = (TaskOccurrence)loaded;
+                uint times = (uint)(int)jsd["Times"];
+                ((TaskOccurrence) loaded).Times = times;
+            }
+            All.Add(id, loaded);
+            return loaded;
+        }
+
+
+
         /**
          * Determines if this Occurrence overlaps with another.
          * 
@@ -319,10 +363,12 @@ namespace Span
          * manually defined. If the Occurrence has been
          * periodically defined, it can be de-chained to
          * become manually defined.
+         * 
+         * @date March 15, 2016
          */
-        public bool IsChained
+        public bool IsChained()
         {
-            get { return m_chainId != null; }
+           return m_chainId != null; 
         }
 
         /**
@@ -357,14 +403,20 @@ namespace Span
         /**
          * Gets the list of times when the alarms for this
          * Occurrence will go off.
+         * 
+         * @date March 17, 2015
          */
-        public ReadOnlyCollection<DateTime> AlarmTimes
+        public ReadOnlyCollection<DateTime> AlarmTimes()
         {
-            get
-            {
-                AlarmSettings tempSettings = new AlarmSettings(Parent().Alarms, Id);
-                return tempSettings.AlarmTimes;
-            }
+            
+            AlarmSettings tempSettings = new AlarmSettings(Parent().Alarms, Id);
+            return tempSettings.AlarmTimes();
+            
+        }
+
+        public uint Number
+        {
+            get { return m_numId; }
         }
 
         private static uint num = 1;

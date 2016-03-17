@@ -178,7 +178,7 @@ namespace Span
             {
                 foreach (Occurrence ocr in per.Occurrences)
                 {
-                    if (!ocr.IsChained)
+                    if (!ocr.IsChained())
                     {
                         if (!m_allOccurrences.Contains(ocr))
                         {
