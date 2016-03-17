@@ -39,6 +39,7 @@ namespace Span
 
             //change this to implement a better hashing function
             m_id = "c" + m_num.ToString("x8");
+            All.Add(m_id, this);
         }
 
         /**
@@ -117,10 +118,16 @@ namespace Span
         }
 
 
+        /**
+         * Gets a Dictionary containing all Categories by Id.
+         */
+        public static Dictionary<string, Category> All { get { return all; } }
+
         private Color m_color;
         private uint m_num;
         private string m_name;
         private string m_id;
         private static uint num = 1;
+        private static Dictionary<string, Category> all = new Dictionary<string, Category>();
     }
 }
