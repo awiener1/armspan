@@ -94,6 +94,24 @@ namespace Span
         }
 
         /**
+         * Creates an AlarmSettings object from an existing 
+         * AlarmSettings object with a new parent.
+         * 
+         * @param a_settings the existing AlarmSettings object
+         * to copy.
+         * 
+         * @param a_newParent the id of the parent Occurrence to which
+         * these alarm settings will now belong.
+         * 
+         * @date March 4, 2016
+         */
+        public AlarmSettings(AlarmSettings a_settings, string a_newParent)
+        {
+            Alarms = a_settings.Alarms;
+            m_parent = a_newParent;
+        }
+
+        /**
          * Creates an AlarmSettings object from a parent Occurrence
          * id with no alarms.
          * 

@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections.ObjectModel;
 
 namespace Span
 {   /**
@@ -363,6 +364,19 @@ namespace Span
             set { m_chainId = value; }
         }
 
+        /**
+         * Gets the list of times when the alarms for this
+         * Occurrence will go off.
+         */
+        public ReadOnlyCollection<DateTime> AlarmTimes
+        {
+            get
+            {
+                AlarmSettings tempSettings = new AlarmSettings(Parent().Alarms, Id);
+                return tempSettings.AlarmTimes;
+            }
+        }
+
         private static uint num = 1;
         private uint m_numId;
         private string m_id;
@@ -372,6 +386,5 @@ namespace Span
         private string m_parent;
         protected string m_chainId = null;
         protected static Dictionary<string, Occurrence> all = new Dictionary<string, Occurrence>();
-        //TODO: add m_alarms [and Alarms] and AlarmTimes
     }
 }
