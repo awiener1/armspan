@@ -90,6 +90,8 @@ namespace Span
          */
         public Period(uint a_frequency, Frequency a_timeUnit, DateTime a_startDate, DateTime a_endDate, DateTime a_startTime, DateTime a_endTime, TimeSpan a_length, string a_parent)
         {
+            m_numId = num++;
+            m_id = "p" + m_numId.ToString("x8");
             PeriodicFrequency = a_frequency;
             TimeUnit = a_timeUnit;
             StartDate = a_startDate;
@@ -137,7 +139,7 @@ namespace Span
                     && eachEndTime.TimeOfDay > StartTime.TimeOfDay)
                 {
                     Occurrence newOcc = new Occurrence(false, eachStartTime, eachStartTime.Add(OccurrenceLength), m_parent);
-                    newOcc.IsChained = true;
+                    newOcc.ChainId = Id;
                     m_occurrences.Add(newOcc);
                 }
                 //increment by time unit (esp. for months and years)
@@ -164,6 +166,63 @@ namespace Span
                 }
             }
             m_needUpdate = false;
+        }
+
+        /**
+         * Removes the specified Occurrence from the Period.
+         * 
+         * @param ocr the Occurrence to remove. It will not be deleted,
+         * but rather moved to the parent Event's list of manual
+         * occurrences.
+         * 
+         * @throws ArgumentException if the Occurrence is not chained,
+         * or if it is chained to a different Period.
+         * 
+         * @throws KeyNotFoundException if the Occurrence is chained
+         * to the Period, but is somehow not found in its list of
+         * Occurrences.
+         */
+        public void DeChain(Occurrence ocr)
+        {
+            if (!(ocr.ChainId != null) || ocr.ChainId != Id) throw new ArgumentException("Occurrence not part of this Period chain");
+            updateOccurrences();
+            m_occurrences.Sort();
+            int ocrPos = m_occurrences.IndexOf(ocr);
+            if (ocrPos == -1) throw new KeyNotFoundException("Occurrence not found");
+            
+            Occurrence nextOcr = m_occurrences[ocrPos + 1];
+
+            //officially dechain the occurrence
+            ocr.ChainId = null;
+            Event.All[ParentId].ManualOccurrences.Add(ocr);
+
+            //adjust Period accordingly
+
+            //TODO: make this work for smaller units of time between occurrences than days.
+            //seriously, it doesn't retain some occurrences if they happen multiple times per day,
+            //NOR does it retain the offset of time that continues between night and morning.
+            //so not only do you lose some occurrences, but some also move earlier or later!
+
+            //TODO: make this work for a single occurrence too.
+
+            //first occurrence, just start at the next one
+            if (ocrPos == 0)
+            {
+                StartDate = nextOcr.StartActual.Date;
+            }
+            //occurrences before and after; split this Period into two
+            else if (ocrPos < m_occurrences.Count - 1)
+            {
+                Event.All[ParentId].Rules.Add(new Period
+                    (PeriodicFrequency, TimeUnit, nextOcr.StartActual.Date, 
+                    EndDate, StartTime, EndTime, OccurrenceLength, ParentId));
+            }
+            //not first occurrence, end before this one
+            if (ocrPos > 0)
+            {
+                EndDate = ocr.EndActual.Date.AddDays(-1);
+            }
+            
         }
 
         /**
@@ -291,6 +350,23 @@ namespace Span
          */
         public string ParentId { get { return m_parent; } }
 
+
+        /**
+         * Gets the id of the Period.
+         * 
+         * The id is written in the form of a string starting
+         * with the letter 'p', followed by a 32-bit unsigned
+         * integer in hexadecimal (all lowercase). This allows
+         * the period to be looked up easily.
+         * 
+         * Currently, the integer portion of the id is
+         * simply equal to the period's number.
+         */
+        public string Id { get { return m_id; } }
+
+        protected string m_id;
+        protected static uint num = 1;
+        protected uint m_numId;
         private uint m_frequency;
         private Frequency m_timeUnit;
         private DateTime m_startDate;

@@ -235,7 +235,7 @@ namespace Span
         public static Dictionary<string, Occurrence> All { get { return all; } }
 
         /**
-         * Specifies or sets whether the Occurrence is part of
+         * Specifies whether the Occurrence is part of
          * a periodic set of occurrences (a Period) or is
          * manually defined. If the Occurrence has been
          * periodically defined, it can be de-chained to
@@ -253,8 +253,18 @@ namespace Span
         //and set to null if dechained.
         public bool IsChained
         {
-            get { return m_chained; }
-            set { m_chained = value; }
+            get { return m_chainId != null; }
+        }
+
+        /**
+         * Gets or sets the id of the Period to which
+         * this Occurrence is chained, or null if it
+         * is not chained to anything.
+         */
+        public string ChainId
+        {
+            get { return m_chainId; }
+            set { m_chainId = value; }
         }
 
         private static uint num = 1;
@@ -264,7 +274,7 @@ namespace Span
         protected DateTime m_actualStart, m_actualEnd, m_createStart, m_createEnd;
         protected OccurrenceStatus m_status;
         private string m_parent;
-        protected bool m_chained;
+        protected string m_chainId = null;
         protected static Dictionary<string, Occurrence> all = new Dictionary<string, Occurrence>();
     }
 }
