@@ -181,6 +181,8 @@ namespace Span
          * @throws KeyNotFoundException if the Occurrence is chained
          * to the Period, but is somehow not found in its list of
          * Occurrences.
+         * 
+         * @date March 16, 2016
          */
         public void DeChain(Occurrence ocr)
         {

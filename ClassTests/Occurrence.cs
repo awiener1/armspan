@@ -224,10 +224,88 @@ namespace Span
         }
 
         /**
+         * Deletes the Occurrence from the timeline.
+         * 
+         * @date March 16, 2016
+         */
+        public void Delete() { Status = OccurrenceStatus.Deleted; }
+
+        /**
+         * Sets the Occurrence to be ignored.
+         * 
+         * @date March 16, 2016
+         */
+        public void Ignore() { Status = OccurrenceStatus.Ignored; }
+
+        /**
+         * Cancels the Occurrence.
+         * 
+         * @date March 16, 2016
+         */
+        public void Cancel() { Status = OccurrenceStatus.Canceled; }
+
+        /**
+         * Postpones the Occurrence by the specified number of minutes.
+         * 
+         * @param minutes the number of minutes to postpone the Occurrence;
+         * equal to 5 by default.
+         * 
+         * @date March 16, 2016
+         */
+        public void Postpone(uint minutes = 5) 
+        { 
+            Status = OccurrenceStatus.Postponed;
+            StartActual = StartActual.AddMinutes(minutes);
+            EndActual = EndActual.AddMinutes(minutes);
+        }
+
+        /**
+         * Starts the Occurrence now, and sets the end time so
+         * that the length is unchanged.
+         * 
+         * @date March 16, 2016
+         */
+        public void StartNow() 
+        { 
+            DateTime now = DateTime.Now;
+            now = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0);
+            TimeSpan diff = now.Subtract(StartActual);
+            StartActual = now;
+            EndActual = EndActual.Add(diff);
+        }
+
+        /**
+         * Stops the Occurrence now, if possible.
+         * 
+         * @throws ArgumentOutOfRangeException if the Occurrence
+         * has not started yet.
+         * 
+         * @date March 16, 2016
+         */
+        public void StopNow()
+        {
+            DateTime now = DateTime.Now;
+            now = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0);
+            if (StartActual > now) throw new ArgumentOutOfRangeException("Occurrence hasn't started yet");
+            EndActual = now;
+        }
+
+        /**
          * Gets the id of the parent Event to which
          * the occurrence belongs.
          */
         public string ParentId { get { return m_parent; } }
+
+        /**
+         * Gets the parent Event to which the
+         * occurrence belongs.
+         * 
+         * @return the parent Event to which the
+         * occurrence belongs.
+         * 
+         * @date March 16, 2016
+         */
+        public Event Parent() { return Event.All[ParentId]; }
 
         /**
          * Gets a Dictionary containing all Occurrences by Id.
@@ -257,6 +335,24 @@ namespace Span
         }
 
         /**
+         * Removes this Occurrence from its Period.
+         * 
+         * @throws ArgumentException if this Occurrence is not chained,
+         * or if it is chained to more than one Period at once. (This
+         * should not normally be possible.)
+         * 
+         * @throws KeyNotFoundException if this Occurrence is chained
+         * to the Period, but is somehow not found in its list of
+         * Occurrences.
+         * 
+         * @date March 16, 2016
+         */
+        public void DeChain()
+        {
+            Event.All[ParentId].Rules.Find(x => x.Id == ChainId).DeChain(this);
+        }
+
+        /**
          * Gets or sets the id of the Period to which
          * this Occurrence is chained, or null if it
          * is not chained to anything.
@@ -276,5 +372,6 @@ namespace Span
         private string m_parent;
         protected string m_chainId = null;
         protected static Dictionary<string, Occurrence> all = new Dictionary<string, Occurrence>();
+        //TODO: add m_alarms [and Alarms] and AlarmTimes
     }
 }
