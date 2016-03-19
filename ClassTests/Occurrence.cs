@@ -428,6 +428,8 @@ namespace Span
          */
         //TODO: make this work when the alarm has been dealtWith.
         //that means giving each occurrence a permanent alarm.
+        //maybe also, if there are multiple alarms going off from
+        //this Occurrence, only display the last one.
         public ReadOnlyCollection<DateTime> AlarmTimes()
         {
             

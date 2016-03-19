@@ -71,7 +71,7 @@ namespace Span
         Weeks    
     };
 
-    class AlarmSettings
+    class AlarmSettings : JSONCapable
     {
         
 
@@ -124,6 +124,29 @@ namespace Span
         {
             Alarms = new List<Alarm>();
             m_parent = a_parent;
+        }
+
+        /**
+         * Generates an AlarmSettings object from the
+         * specified JSON-serialized AlarmSettings
+         * string.
+         * 
+         * @param json the serialized string
+         * representing the object.
+         * 
+         * @return the object, properly
+         * deserialized and initialized.
+         * 
+         * @date March 19, 2016
+         */
+        public static AlarmSettings FromJSON(string json)
+        {
+            Dictionary<string, object> jsd = JSONDictionary(AlarmSettings.FromString(json));
+            List<Alarm> alarms = jss.ConvertToType<List<Alarm>>(jsd["Alarms"]);
+            string parentid = (string)jsd["ParentId"];
+            AlarmSettings loaded = new AlarmSettings(parentid, alarms);
+            
+            return loaded;
         }
 
         /**

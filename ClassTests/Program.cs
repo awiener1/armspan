@@ -37,7 +37,7 @@ namespace ClassTests
 
             }
 
-            Occurrence loado = Occurrence.FromJSON(File.ReadAllText("iotest.txt"));
+            AlarmSettings loado = AlarmSettings.FromJSON(File.ReadAllText("iotest.txt"));
             
             
             bool makeEvt = true;
@@ -51,7 +51,7 @@ namespace ClassTests
 
             }
             File.WriteAllText("iotest.txt", 
-                Event.All.Values.ElementAt(0).ManualOccurrences[0].ToString());
+                Event.All.Values.ElementAt(0).Alarms.ToString());
 
         }
  
