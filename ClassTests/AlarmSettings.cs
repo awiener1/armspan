@@ -204,6 +204,8 @@ namespace Span
          * Gets the list of alarm settings to use, in
          * the form of a read-only, sorted list of DateTime
          * structs. 
+         * 
+         * @date March 6, 2016
          */
         public ReadOnlyCollection<DateTime> AlarmTimes()
         {

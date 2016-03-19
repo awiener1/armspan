@@ -105,10 +105,30 @@ namespace Span
             All.Add(m_id, this);
         }
 
+        /**
+         * Creates a new Occurrence object without
+         * any initialized data.
+         * 
+         * Please only use this constructor for
+         * deserialization.
+         * 
+         * @date March 17, 2016
+         */
         protected Occurrence(){}
 
-
-        //TODO: document this and all other serialize code
+        /**
+         * Generates an Occurrence object from the
+         * specified JSON-serialized Occurrence
+         * string.
+         * 
+         * @param json the serialized string
+         * representing the object.
+         * 
+         * @return the object, properly
+         * deserialized and initialized.
+         * 
+         * @date March 17, 2016
+         */
         public static Occurrence FromJSON(string json)
         {
             Dictionary<string, object> jsd = JSONDictionary(Occurrence.FromString(json));
@@ -404,8 +424,10 @@ namespace Span
          * Gets the list of times when the alarms for this
          * Occurrence will go off.
          * 
-         * @date March 17, 2015
+         * @date March 17, 2016
          */
+        //TODO: make this work when the alarm has been dealtWith.
+        //that means giving each occurrence a permanent alarm.
         public ReadOnlyCollection<DateTime> AlarmTimes()
         {
             
@@ -414,6 +436,15 @@ namespace Span
             
         }
 
+        /**
+         * Gets the number of the occurrence.
+         * 
+         * Note: please use this property sparingly,
+         * as the Id property is better-suited to
+         * keeping track of the object. This property
+         * exists in order to allow proper serialization
+         * of the object.
+         */
         public uint Number
         {
             get { return m_numId; }
