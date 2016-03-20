@@ -193,10 +193,10 @@ namespace Span
             {
                 DateTime eachEndTime = eachStartTime.Add(OccurrenceLength);
                 //check for overlap with non-working time
-                if (eachStartTime.TimeOfDay < EndTime.TimeOfDay
-                    && eachStartTime.TimeOfDay >= StartTime.TimeOfDay
-                    && eachEndTime.TimeOfDay <= EndTime.TimeOfDay
-                    && eachEndTime.TimeOfDay > StartTime.TimeOfDay)
+                if (eachStartTime.ToLocalTime().TimeOfDay < EndTime.ToLocalTime().TimeOfDay
+                    && eachStartTime.ToLocalTime().TimeOfDay >= StartTime.ToLocalTime().TimeOfDay
+                    && eachEndTime.ToLocalTime().TimeOfDay <= EndTime.ToLocalTime().TimeOfDay
+                    && eachEndTime.ToLocalTime().TimeOfDay > StartTime.ToLocalTime().TimeOfDay)
                 {
                     Occurrence newOcc = new Occurrence(false, eachStartTime, eachStartTime.Add(OccurrenceLength), m_parent);
                     newOcc.ChainId = Id;
@@ -244,11 +244,12 @@ namespace Span
          * 
          * @date March 16, 2016
          */
+        //TODO: make nextOcr only defined when there is one, and add prevOcr to handle days better
         public void DeChain(Occurrence ocr)
         {
             if (!(ocr.ChainId != null) || ocr.ChainId != Id) throw new ArgumentException("Occurrence not part of this Period chain");
             updateOccurrences();
-            m_occurrences.Sort();
+            m_occurrences.Sort((x, y) => x.StartActual.CompareTo(y.StartActual));
             int ocrPos = m_occurrences.IndexOf(ocr);
             if (ocrPos == -1) throw new KeyNotFoundException("Occurrence not found");
             
