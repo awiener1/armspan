@@ -37,9 +37,26 @@ namespace ClassTests
 
             }
 
-            AlarmSettings loado = AlarmSettings.FromJSON(File.ReadAllText("iotest.txt"));
-            
-            
+            Event loado = Event.FromJSON(File.ReadAllText("iotest.txt"));
+
+            Occurrence tdc = loado.Rules[0].Occurrences()[3];
+
+            foreach (Occurrence ocr in loado.Rules[0].Occurrences())
+            {
+                Console.WriteLine(ocr.StartActual + " -> " + ocr.EndActual + (ocr.Equals(tdc) ? "*" : ""));
+            }
+
+            loado.Rules[0].DeChain(tdc);
+
+            for (int i = 0; i < loado.Rules.Count(); i++)
+            {
+                Console.WriteLine(i);
+                foreach (Occurrence ocr in loado.Rules[i].Occurrences())
+                {
+                    Console.WriteLine(ocr.StartActual + " -> " + ocr.EndActual + (ocr.Equals(tdc) ? "*" : ""));
+                }
+            }
+
             bool makeEvt = true;
             while (makeEvt)
             {
@@ -51,7 +68,7 @@ namespace ClassTests
 
             }
             File.WriteAllText("iotest.txt", 
-                Event.All.Values.ElementAt(0).Alarms.ToString());
+                Event.All.Values.ElementAt(0).ToString());
 
         }
  

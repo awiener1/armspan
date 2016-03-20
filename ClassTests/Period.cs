@@ -56,7 +56,7 @@ namespace Span
     }
 
    
-    class Period
+    class Period : JSONCapable
     {
 
         /**
@@ -102,6 +102,66 @@ namespace Span
             m_parent = a_parent;
             m_needUpdate = true;
             m_occurrences = null;
+        }
+
+        /**
+         * Creates a new Period object without
+         * any initialized data.
+         * 
+         * Please only use this constructor for
+         * deserialization.
+         * 
+         * @date March 19, 2016
+         */
+        protected Period(){}
+
+        /**
+         * Generates a Period object from the
+         * specified JSON-serialized Period
+         * string.
+         * 
+         * @param json the serialized string
+         * representing the object.
+         * 
+         * @return the object, properly
+         * deserialized and initialized.
+         * 
+         * @date March 19, 2016
+         */
+        public static Period FromJSON(string json)
+        {
+            Dictionary<string, object> jsd = JSONDictionary(Period.FromString(json));
+            uint freq = (uint)(int)jsd["PeriodicFrequency"];
+            uint thisnum = (uint)(int)jsd["Number"];
+            string id = (string)jsd["Id"];
+            Frequency timeunit = (Frequency)jsd["TimeUnit"];
+            DateTime startdate = (DateTime)jsd["StartDate"];
+            DateTime enddate = (DateTime)jsd["EndDate"];
+            DateTime starttime = (DateTime)jsd["StartTime"];
+            DateTime endtime = (DateTime)jsd["EndTime"];
+            string parentid = (string)jsd["ParentId"];
+            TimeSpan length = new TimeSpan((long)JSONDictionary(jsd["OccurrenceLength"])["Ticks"]);
+           
+            Period loaded = new Period();
+            loaded.m_id = id;
+            loaded.m_frequency = freq;
+            loaded.m_timeUnit = timeunit;
+            loaded.m_startDate = startdate;
+            loaded.m_startTime = starttime;
+            loaded.m_endDate = enddate;
+            loaded.m_endTime = endtime;
+            loaded.m_length = length;
+            loaded.m_parent = parentid;
+           
+            loaded.m_numId = thisnum;
+            if (thisnum >= num)
+            {
+                num = thisnum + 1;
+            }
+            loaded.m_needUpdate = true;
+            loaded.m_occurrences = null;
+            
+            return loaded;
         }
 
         /**
@@ -230,13 +290,12 @@ namespace Span
         /**
          * Gets the list of Occurrences specified by this Period.
          */
-        public ReadOnlyCollection<Occurrence> Occurrences
+        public ReadOnlyCollection<Occurrence> Occurrences()
         {
-            get
-            {
-                updateOccurrences();
-                return new ReadOnlyCollection<Occurrence>(m_occurrences);
-            }
+            
+            updateOccurrences();
+            return new ReadOnlyCollection<Occurrence>(m_occurrences);
+            
         }
 
         /**
@@ -365,6 +424,20 @@ namespace Span
          * simply equal to the period's number.
          */
         public string Id { get { return m_id; } }
+
+        /**
+         * Gets the number of the occurrence.
+         * 
+         * Note: please use this property sparingly,
+         * as the Id property is better-suited to
+         * keeping track of the object. This property
+         * exists in order to allow proper serialization
+         * of the object.
+         */
+        public uint Number
+        {
+            get { return m_numId; }
+        }
 
         protected string m_id;
         protected static uint num = 1;

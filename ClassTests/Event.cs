@@ -12,10 +12,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web.Script.Serialization;
 
 namespace Span
 {
-    class Event
+    class Event : JSONCapable
     {
         /**
          * Creates a new Event from the specified information.
@@ -71,6 +72,88 @@ namespace Span
         }
 
         /**
+         * Creates a new Event object without
+         * any initialized data.
+         * 
+         * Please only use this constructor for
+         * deserialization.
+         * 
+         * @date March 19, 2016
+         */
+        protected Event(){}
+
+        /**
+         * Generates an Event object from the
+         * specified JSON-serialized Period
+         * string.
+         * 
+         * @param json the serialized string
+         * representing the object.
+         * 
+         * @return the object, properly
+         * deserialized and initialized.
+         * 
+         * @date March 19, 2016
+         */
+        public static Event FromJSON(string json)
+        {
+            Dictionary<string, object> jsd = JSONDictionary(Event.FromString(json));
+            bool exists = (bool)jsd["Exists"];
+            if (!exists) return null;
+            string name = (string)jsd["Name"];
+            
+            List<Occurrence> manualoccurrences = new List<Occurrence>();
+            
+            List<Dictionary<string, object>> moraw = jss.ConvertToType<List<Dictionary<string, object>>>(jsd["ManualOccurrences"]);
+            foreach (Dictionary<string, object> ocrraw in moraw)
+            {
+                Occurrence ocr = Occurrence.FromJSON(jss.Serialize(ocrraw));
+                manualoccurrences.Add(ocr);
+            }
+            List<Period> rules = new List<Period>();
+            List<Dictionary<string, object>> ruraw = jss.ConvertToType<List<Dictionary<string, object>>>(jsd["Rules"]);
+            foreach (Dictionary<string, object> perraw in ruraw)
+            {
+                Period per = Period.FromJSON(jss.Serialize(perraw));
+                rules.Add(per);
+            }
+            string loc = (string)jsd["Location"];
+            List<string> cats = jss.ConvertToType<List<string>>(jsd["Categories"]);
+            AlarmSettings als = AlarmSettings.FromJSON(jss.Serialize(jsd["Alarms"]));
+            string desc = (string)jsd["Description"];
+            bool istask = (bool)jsd["IsTask"];
+           
+            uint thisnum = (uint)(int)jsd["Number"];
+            string id = (string)jsd["Id"];
+           
+            Event loaded = new Event();
+
+            loaded.m_id = id;
+            loaded.m_exists = true;
+            loaded.m_alarms = als;
+            loaded.m_manualOccurrences = manualoccurrences;
+            loaded.m_allRules = rules;
+            loaded.m_categories = cats;
+            loaded.m_name = name;
+            loaded.m_loc = loc;
+            loaded.m_desc = desc;
+            loaded.m_numId = thisnum;
+            if (thisnum >= num)
+            {
+                num = thisnum + 1;
+            }
+            loaded.m_isTask = istask;
+            if (istask)
+            {
+                loaded = (TaskEvent)loaded;
+                uint times = (uint)(int)jsd["Times"];
+                ((TaskEvent)loaded).Times = times;
+            }
+            All.Add(id, loaded);
+            return loaded;
+        }
+
+        /**
          * Returns a list of the Ids of all Events overlapping this one
          * on the timeline.
          * 
@@ -96,10 +179,10 @@ namespace Span
                 //must have overlapping categories
                 if (new List<string>(other.Categories.Intersect(Categories)).Count == 0) continue;
                 bool noOver = true;
-                foreach (Occurrence ocr in Occurrences)
+                foreach (Occurrence ocr in Occurrences())
                 {
                     if (ocr.Status == (OccurrenceStatus.Canceled | OccurrenceStatus.Deleted | OccurrenceStatus.Ignored)) continue;
-                    foreach (Occurrence otherOcr in other.Occurrences)
+                    foreach (Occurrence otherOcr in other.Occurrences())
                     {
                         if (otherOcr.Status == (OccurrenceStatus.Canceled | OccurrenceStatus.Deleted | OccurrenceStatus.Ignored)) continue;
                         if (ocr.Overlaps(otherOcr))
@@ -176,7 +259,7 @@ namespace Span
             m_allOccurrences = new List<Occurrence>(m_manualOccurrences);
             foreach (Period per in m_allRules)
             {
-                foreach (Occurrence ocr in per.Occurrences)
+                foreach (Occurrence ocr in per.Occurrences())
                 {
                     if (!ocr.IsChained())
                     {
@@ -207,14 +290,15 @@ namespace Span
 
         /**
          * Gets the list of all Occurrences of this Event.
+         * 
+         * @date March 14, 2016
          */
-        public List<Occurrence> Occurrences
+        public List<Occurrence> Occurrences()
         {
-            get 
-            {
-                updateOccurrences();
-                return m_allOccurrences; 
-            }
+            
+            updateOccurrences();
+            return m_allOccurrences; 
+            
         }
 
         /**
@@ -256,6 +340,7 @@ namespace Span
          * is already a secondary category, the existing primary
          * category and the desired one will switch.
          */
+        [ScriptIgnore]
         public string PrimaryCategory
         {
             get { return Categories[0]; }
@@ -286,6 +371,7 @@ namespace Span
          * is included in the list of secondary categories
          * to be set.
          */
+        [ScriptIgnore]
         public List<string> SecondaryCategories
         {
             get 
@@ -346,6 +432,28 @@ namespace Span
          */
         public static Dictionary<string, Event> All { get { return all; } }
 
+        /**
+         * Gets the number of the occurrence.
+         * 
+         * Note: please use this property sparingly,
+         * as the Id property is better-suited to
+         * keeping track of the object. This property
+         * exists in order to allow proper serialization
+         * of the object.
+         */
+        public uint Number
+        {
+            get { return m_numId; }
+        }
+
+        /**
+         * Specifies if the Event is a task.
+         * 
+         * If false, the Event is an appointment.
+         * This should only be true if the Event is
+         * also a TaskEvent object.
+         */
+        public bool IsTask { get { return m_isTask; } }
 
         protected List<Occurrence> m_allOccurrences;
         protected List<Occurrence> m_manualOccurrences;
