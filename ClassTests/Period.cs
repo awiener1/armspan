@@ -265,8 +265,11 @@ namespace Span
             m_occurrences.Sort((x, y) => x.StartActual.CompareTo(y.StartActual));
             int ocrPos = m_occurrences.IndexOf(ocr);
             if (ocrPos == -1) throw new KeyNotFoundException("Occurrence not found");
-            
-            Occurrence nextOcr = m_occurrences[ocrPos + 1];
+            Occurrence nextOcr = null;
+            if (ocrPos < m_occurrences.Count - 1)
+            {
+                nextOcr = m_occurrences[ocrPos + 1];
+            }
 
             //officially dechain the occurrence
             ocr.ChainId = null;

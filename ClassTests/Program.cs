@@ -39,7 +39,7 @@ namespace ClassTests
 
             Event loado = Event.FromJSON(File.ReadAllText("iotest.txt"));
 
-            Occurrence tdc = loado.Rules[0].Occurrences()[3];
+            Occurrence tdc = loado.Rules[0].Occurrences()[6];
 
             foreach (Occurrence ocr in loado.Rules[0].Occurrences())
             {
