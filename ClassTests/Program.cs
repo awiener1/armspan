@@ -56,6 +56,11 @@ namespace ClassTests
                     Console.WriteLine(ocr.StartActual + " -> " + ocr.EndActual + (ocr.Equals(tdc) ? "*" : ""));
                 }
             }
+            Console.WriteLine("manual:");
+            foreach (Occurrence ocr in loado.ManualOccurrences)
+            {
+                Console.WriteLine(ocr.StartActual + " -> " + ocr.EndActual + (ocr.Equals(tdc) ? "*" : ""));
+            }
 
             bool makeEvt = true;
             while (makeEvt)

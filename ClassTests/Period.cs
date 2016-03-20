@@ -189,14 +189,21 @@ namespace Span
             //set up start/end dates
             DateTime eachStartTime = StartDate.Date.Add(StartTime.TimeOfDay);
             DateTime finalEndTime = EndDate.Date.Add(EndTime.TimeOfDay);
+            //accounts for times past 12:00AM UTC
+            DateTime dayStartTime = eachStartTime;
+            DateTime dayEndTime = StartDate.Date.Add(EndTime.TimeOfDay);
+            if (dayEndTime <= dayStartTime)
+            {
+                dayEndTime = dayEndTime.AddDays(1);
+            }
             while (eachStartTime < finalEndTime)
             {
                 DateTime eachEndTime = eachStartTime.Add(OccurrenceLength);
                 //check for overlap with non-working time
-                if (eachStartTime.ToLocalTime().TimeOfDay < EndTime.ToLocalTime().TimeOfDay
-                    && eachStartTime.ToLocalTime().TimeOfDay >= StartTime.ToLocalTime().TimeOfDay
-                    && eachEndTime.ToLocalTime().TimeOfDay <= EndTime.ToLocalTime().TimeOfDay
-                    && eachEndTime.ToLocalTime().TimeOfDay > StartTime.ToLocalTime().TimeOfDay)
+                if (eachStartTime < dayEndTime
+                    && eachStartTime >= dayStartTime
+                    && eachEndTime <= dayEndTime
+                    && eachEndTime > dayStartTime)
                 {
                     Occurrence newOcc = new Occurrence(false, eachStartTime, eachStartTime.Add(OccurrenceLength), m_parent);
                     newOcc.ChainId = Id;
@@ -223,6 +230,12 @@ namespace Span
                     case Frequency.Years:
                         eachStartTime = eachStartTime.AddYears((int)PeriodicFrequency);
                         break;
+                }
+                dayStartTime = eachStartTime.Date.Add(StartTime.TimeOfDay);
+                dayEndTime = eachStartTime.Date.Add(EndTime.TimeOfDay);
+                if (dayEndTime <= dayStartTime)
+                {
+                    dayEndTime = dayEndTime.AddDays(1);
                 }
             }
             m_needUpdate = false;
@@ -284,6 +297,10 @@ namespace Span
             if (ocrPos > 0)
             {
                 EndDate = ocr.EndActual.Date.AddDays(-1);
+                if (EndTime.TimeOfDay <= StartTime.TimeOfDay)
+                {
+                    EndDate = EndDate.AddDays(1);
+                }
             }
             
         }
