@@ -23,7 +23,7 @@ namespace ClassTests
 
         static void Main(string[] args)
         {
-            Category loadoct = Category.FromJSON(File.ReadAllText("iotestcat.txt"));
+            JSONCapable.LoadState(File.ReadAllText("iotest.txt"));
 
             bool makeCat = true;
             while (makeCat)
@@ -40,33 +40,33 @@ namespace ClassTests
 
             }
 
-            File.WriteAllText("iotestcat.txt",
-                Category.All.Values.ElementAt(0).ToString());
+            //File.WriteAllText("iotestcat.txt",
+            //    Category.All.Values.ElementAt(0).ToString());
 
-            Event loado = Event.FromJSON(File.ReadAllText("iotest.txt"));
+            //Event loado = Event.FromJSON(File.ReadAllText("iotest.txt"));
 
-            Occurrence tdc = loado.Rules[0].Occurrences()[6];
+            //Occurrence tdc = loado.Rules[0].Occurrences()[6];
 
-            foreach (Occurrence ocr in loado.Rules[0].Occurrences())
-            {
-                Console.WriteLine(ocr.StartActual + " -> " + ocr.EndActual + (ocr.Equals(tdc) ? "*" : ""));
-            }
+            //foreach (Occurrence ocr in loado.Rules[0].Occurrences())
+            //{
+            //    Console.WriteLine(ocr.StartActual + " -> " + ocr.EndActual + (ocr.Equals(tdc) ? "*" : ""));
+            //}
 
-            loado.Rules[0].DeChain(tdc);
+            //loado.Rules[0].DeChain(tdc);
 
-            for (int i = 0; i < loado.Rules.Count(); i++)
-            {
-                Console.WriteLine(i);
-                foreach (Occurrence ocr in loado.Rules[i].Occurrences())
-                {
-                    Console.WriteLine(ocr.StartActual + " -> " + ocr.EndActual + (ocr.Equals(tdc) ? "*" : ""));
-                }
-            }
-            Console.WriteLine("manual:");
-            foreach (Occurrence ocr in loado.ManualOccurrences)
-            {
-                Console.WriteLine(ocr.StartActual + " -> " + ocr.EndActual + (ocr.Equals(tdc) ? "*" : ""));
-            }
+            //for (int i = 0; i < loado.Rules.Count(); i++)
+            //{
+            //    Console.WriteLine(i);
+            //    foreach (Occurrence ocr in loado.Rules[i].Occurrences())
+            //    {
+            //        Console.WriteLine(ocr.StartActual + " -> " + ocr.EndActual + (ocr.Equals(tdc) ? "*" : ""));
+            //    }
+            //}
+            //Console.WriteLine("manual:");
+            //foreach (Occurrence ocr in loado.ManualOccurrences)
+            //{
+            //    Console.WriteLine(ocr.StartActual + " -> " + ocr.EndActual + (ocr.Equals(tdc) ? "*" : ""));
+            //}
 
             bool makeEvt = true;
             while (makeEvt)
@@ -79,7 +79,7 @@ namespace ClassTests
 
             }
             File.WriteAllText("iotest.txt", 
-                Event.All.Values.ElementAt(0).ToString());
+                JSONCapable.SaveState());
 
         }
  

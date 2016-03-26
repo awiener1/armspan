@@ -5,7 +5,8 @@
  * @section DESCRIPTION
  * 
  * The JSONCapable class allows any of its subclasses
- * to be serialized to and deserialized from a JSON string.
+ * to be serialized to and deserialized from a JSON string. It also
+ * provides serialization capability for the entire program state.
  * 
  */
 using System;
@@ -69,6 +70,47 @@ namespace Span
         public override string ToString()
         {
             return jss.Serialize(this);
+        }
+
+        public static string SaveState(){
+            Dictionary<string, object> state = new Dictionary<string, object>();
+            state.Add("Categories", Category.All);
+            state.Add("Events", Event.All);
+            string header = DateTime.Now.ToString() + "\n";
+            return header + jss.Serialize(state);
+        }
+
+        /**
+         * Loads the saved state from the
+         * specified JSON-serialized
+         * string.
+         * 
+         * @param json the serialized string
+         * representing the object (the first line
+         * must be a date and time stamp.)
+         * 
+         * @date March 26, 2016
+         */
+        public static void LoadState(string json)
+        {
+            Dictionary<string, object> jsd = JSONDictionary(Event.FromString(json.Substring(json.IndexOf("\n") + 1)));
+            object jsdcat = jsd["Categories"];
+          
+            Dictionary<string, object> catsraw = jss.ConvertToType<Dictionary<string, object>>(jsd["Categories"]);
+            foreach (Dictionary<string, object> catraw in catsraw.Values)
+            {
+                Category cat = Category.FromJSON(jss.Serialize(catraw));
+                
+            }
+
+            Dictionary<string, object> evtsraw = jss.ConvertToType<Dictionary<string, object>>(jsd["Events"]);
+            foreach (Dictionary<string, object> evtraw in evtsraw.Values)
+            {
+                Event evt = Event.FromJSON(jss.Serialize(evtraw));
+
+            }
+
+            
         }
     }
 }

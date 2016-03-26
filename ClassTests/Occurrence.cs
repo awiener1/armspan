@@ -428,6 +428,10 @@ namespace Span
          */
         //TODO: make this work when the alarm has been dealtWith.
         //that means giving each occurrence a permanent alarm.
+        ////SIDE NOTE: No, it doesn't.
+        ////once an alarm has gone off, it is dealt with. But once 
+        ////all alarms have been dealt with, set them all to false 
+        ////again and deal with the next set.
         //maybe also, if there are multiple alarms going off from
         //this Occurrence, only display the last one.
         public ReadOnlyCollection<DateTime> AlarmTimes()
