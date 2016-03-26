@@ -23,7 +23,8 @@ namespace ClassTests
 
         static void Main(string[] args)
         {
-            
+            Category loadoct = Category.FromJSON(File.ReadAllText("iotestcat.txt"));
+
             bool makeCat = true;
             while (makeCat)
             {
@@ -33,9 +34,14 @@ namespace ClassTests
                 if (!makeCat) break;
                 Console.Write("Name: ");
                 string name = Console.ReadLine();
-                Category c001 = new Category(name, Color.Black);
+                Console.Write("Color: ");
+                string col = Console.ReadLine();
+                Category c001 = new Category(name, Color.FromName(col));
 
             }
+
+            File.WriteAllText("iotestcat.txt",
+                Category.All.Values.ElementAt(0).ToString());
 
             Event loado = Event.FromJSON(File.ReadAllText("iotest.txt"));
 

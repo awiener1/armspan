@@ -43,6 +43,17 @@ namespace Span
         }
 
         /**
+         * Creates a new Category object without
+         * any initialized data.
+         * 
+         * Please only use this constructor for
+         * deserialization.
+         * 
+         * @date March 26, 2016
+         */
+        protected Category(){}
+
+        /**
          * Gets or sets the name of the Category.
          * 
          * This can be changed at any time.
@@ -119,9 +130,58 @@ namespace Span
 
 
         /**
+         * Generates a Category object from the
+         * specified JSON-serialized Category
+         * string.
+         * 
+         * @param json the serialized string
+         * representing the object.
+         * 
+         * @return the object, properly
+         * deserialized and initialized.
+         * 
+         * @date March 26, 2016
+         */
+        public static Category FromJSON(string json)
+        {
+            Dictionary<string, object> jsd = JSONDictionary(Category.FromString(json));
+            Dictionary<string, object> rawcolor = jss.ConvertToType<Dictionary<string, object>>(jsd["Color"]);
+            Color c = Color.FromArgb((int)rawcolor["R"], (int)rawcolor["G"], (int)rawcolor["B"]);
+            
+            string name = (string)jsd["Name"];
+            string id = (string)jsd["Id"];
+            uint numId = (uint)(int)jsd["Number"];
+            Category loaded = new Category();
+            loaded.Color = c;
+            loaded.Name = name;
+            loaded.m_id = id;
+            loaded.m_num = numId;
+            if (numId >= num)
+            {
+                num = numId + 1;
+            }
+            All.Add(id, loaded);
+            return loaded;
+        }
+
+        /**
          * Gets a Dictionary containing all Categories by Id.
          */
         public static Dictionary<string, Category> All { get { return all; } }
+
+        /**
+         * Gets a list of all Events that are marked under this Category.
+         * 
+         * @param cat the id of the requested category.
+         * @return a list of string ids of the events marked
+         * under this category.
+         * 
+         * @date March 25, 2016
+         */
+        public static List<string> getEvents(string cat){
+            IEnumerable<KeyValuePair<string, Event>> partial = Event.All.Where(x => x.Value.Categories.Contains(cat));
+            return partial.ToDictionary(x => x.Key, x => x.Value).Keys.ToList();
+        }
 
         private Color m_color;
         private uint m_num;

@@ -1,0 +1,1 @@
+{"Name":"Business","Color":{"R":0,"G":0,"B":255,"A":255,"IsKnownColor":false,"IsEmpty":false,"IsNamedColor":false,"IsSystemColor":false,"Name":"ff0000ff"},"Number":1,"Id":"c00000001"}
