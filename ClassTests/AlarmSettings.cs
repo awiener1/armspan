@@ -239,10 +239,13 @@ namespace Span
         }
 
         /**
-         * Gets the id of the parent Occurrence to which
-         * the alarm settings belong.
+         * Gets or sets the id of the parent Occurrence to which
+         * the alarm settings currently apply.
          */
-        public string ParentId { get { return m_parent; } }
+        public string ParentId { 
+            get { return m_parent; }
+            set { m_parent = value; }
+        }
 
 
         private List<Alarm> m_alarms;
