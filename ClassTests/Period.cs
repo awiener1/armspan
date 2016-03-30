@@ -160,7 +160,6 @@ namespace Span
             }
             loaded.m_needUpdate = true;
             loaded.m_occurrences = null;
-            
             return loaded;
         }
 

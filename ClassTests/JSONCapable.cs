@@ -109,7 +109,14 @@ namespace Span
                 Event evt = Event.FromJSON(jss.Serialize(evtraw));
 
             }
-
+            //redefine all non-manual occurrences
+            foreach (Event evt in Event.All.Values)
+            {
+                foreach (Period pd in evt.Rules)
+                {
+                    pd.Occurrences();
+                }
+            }
             
         }
     }

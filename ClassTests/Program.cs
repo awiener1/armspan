@@ -78,6 +78,7 @@ namespace ClassTests
                 MakeEvent();
 
             }
+            TimeKeeper.Update();
             File.WriteAllText("iotest.txt", 
                 JSONCapable.SaveState());
 
@@ -109,7 +110,8 @@ namespace ClassTests
                 makeOcc = Console.ReadLine().ToUpper().StartsWith("Y");
                 if (!makeOcc) break;
                 Period p001 = MakePeriod(e001);
-
+                //don't forget this, or the periodic occurrences won't be added
+                e001.Occurrences();
             }
 
             Console.Write("Location: ");
