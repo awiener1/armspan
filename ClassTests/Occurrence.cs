@@ -355,6 +355,53 @@ namespace Span
             EndActual = now;
         }
 
+        public void Confirm()
+        {
+            if (Parent().Alarms.ParentId == Id)
+            {
+                if (Status == OccurrenceStatus.Future)
+                {
+                    Status = OccurrenceStatus.On_Time;
+                }
+                List<Alarm> alarmtemp = Parent().Alarms.Alarms;
+                for (int i = 0; i < alarmtemp.Count(); i++)
+                {
+                    if (i == 0 && !(alarmtemp[i].m_dealtWith))
+                    {
+                        alarmtemp[i] = new Alarm(alarmtemp[i].m_relativePlace, alarmtemp[i].m_timeLength, alarmtemp[i].m_timeUnit, true);
+                    }
+                    else if (i > 0 && alarmtemp[i - 1].m_dealtWith)
+                    {
+                        alarmtemp[i] = new Alarm(alarmtemp[i].m_relativePlace, alarmtemp[i].m_timeLength, alarmtemp[i].m_timeUnit, true);
+                    }
+                    
+                }
+                bool isFalse = false;
+                for (int i = 0; i < alarmtemp.Count(); i++)
+                {
+                    if (!(alarmtemp[i].m_dealtWith))
+                    {
+                        isFalse = true;
+                        break;
+                    }
+
+                }
+                if (!isFalse)
+                {
+                    //move to next occurrence
+                    Parent().Occurrences().Sort((x, y) => x.StartActual.CompareTo(y.StartActual));
+                    Parent().Alarms.ParentId = Parent().Occurrences()[Parent().Occurrences().IndexOf(this) + 1].Id;
+                    Parent().Occurrences().Sort((x, y) => x.Number.CompareTo(y.Number));
+                    //set all alarms to false
+                    for (int i = 0; i < alarmtemp.Count(); i++)
+                    {
+                        alarmtemp[i] = new Alarm(alarmtemp[i].m_relativePlace, alarmtemp[i].m_timeLength, alarmtemp[i].m_timeUnit, false);
+
+                    }
+                }
+            }
+        }
+
         /**
          * Gets the id of the parent Event to which
          * the occurrence belongs.
