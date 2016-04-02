@@ -391,6 +391,12 @@ namespace Span
                 {
                     //move to next occurrence
                     Parent().Occurrences().Sort((x, y) => x.StartActual.CompareTo(y.StartActual));
+                    //(unless there is no next occurrence)
+                    if (Parent().Occurrences().IndexOf(this) == Parent().Occurrences().Count - 1)
+                    {
+                        Parent().Occurrences().Sort((x, y) => x.Number.CompareTo(y.Number));
+                        return;
+                    }
                     Parent().Alarms.ParentId = Parent().Occurrences()[Parent().Occurrences().IndexOf(this) + 1].Id;
                     Parent().Occurrences().Sort((x, y) => x.Number.CompareTo(y.Number));
                     //set all alarms to false

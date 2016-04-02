@@ -79,7 +79,11 @@ namespace ClassTests
 
             }
             TimeKeeper.Update();
-            TimeKeeper.Alarms.ElementAt(0).Value.Confirm();
+            for (int i = 0; i < 7; i++)
+            {
+                TimeKeeper.Alarms.ElementAt(0).Value.Confirm();
+                TimeKeeper.Update();
+            }
             File.WriteAllText("iotest.txt", 
                 JSONCapable.SaveState());
 

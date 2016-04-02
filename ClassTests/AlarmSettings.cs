@@ -161,6 +161,16 @@ namespace Span
             Occurrence parent = Occurrence.All[ParentId];
             m_alarmTimes = new List<DateTime>();
             foreach (Alarm alarm in Alarms){
+                //if it's already gone off, it shouldn't again.
+                if (alarm.m_dealtWith)
+                {
+                    continue;
+                }
+                //if the occurrence has ended, only after-alarms should go off.
+                if (alarm.m_relativePlace != When.After && parent.EndActual < TimeKeeper.Now)
+                {
+                    continue;
+                }
                 DateTime target = new DateTime();
                 TimeSpan offset = new TimeSpan();
                 //convert Length units into TimeSpan units
