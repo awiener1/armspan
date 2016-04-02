@@ -153,6 +153,14 @@ namespace Span
             return loaded;
         }
 
+        public Occurrence FirstOccurrence()
+        {
+            Occurrences().Sort((x, y) => x.StartActual.CompareTo(y.StartActual));
+            Occurrence first = Occurrences()[0];
+            Occurrences().Sort((x, y) => x.Number.CompareTo(y.Number));
+            return first;
+        }
+
         /**
          * Returns a list of the Ids of all Events overlapping this one
          * on the timeline.

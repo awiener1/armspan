@@ -79,6 +79,7 @@ namespace ClassTests
 
             }
             TimeKeeper.Update();
+            TimeKeeper.Alarms.ElementAt(0).Value.Confirm();
             File.WriteAllText("iotest.txt", 
                 JSONCapable.SaveState());
 
@@ -137,6 +138,7 @@ namespace ClassTests
             als.Alarms.Add(new Alarm(When.During, 0, Length.Minutes));
             als.Alarms.Add(new Alarm(When.During, 20, Length.Minutes));
             als.Alarms.Add(new Alarm(When.After, 0, Length.Minutes));
+            als.ParentId = e001.FirstOccurrence().Id;
             e001.Alarms = als;
 
             Console.Write("Description: ");

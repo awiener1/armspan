@@ -369,6 +369,7 @@ namespace Span
                     if (i == 0 && !(alarmtemp[i].m_dealtWith))
                     {
                         alarmtemp[i] = new Alarm(alarmtemp[i].m_relativePlace, alarmtemp[i].m_timeLength, alarmtemp[i].m_timeUnit, true);
+                        break;
                     }
                     else if (i > 0 && alarmtemp[i - 1].m_dealtWith)
                     {

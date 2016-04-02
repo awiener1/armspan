@@ -50,6 +50,14 @@ namespace Span
             }
         }
 
+        public static Dictionary<DateTime, Occurrence> Alarms 
+        {
+            get
+            {
+                return m_alarms;
+            }
+        }
+
         private static DateTime m_begin;
         private static DateTime m_end;
         private static DateTime m_now;
