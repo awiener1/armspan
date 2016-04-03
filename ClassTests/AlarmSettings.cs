@@ -166,11 +166,14 @@ namespace Span
                 {
                     continue;
                 }
+                /*COMMENT OUT THE IF STATEMENT BELOW TO CHECK IF ALARMS ARE BEING DEALT WITH PROPERLY.*/
                 //if the occurrence has ended, only after-alarms should go off.
                 if (alarm.m_relativePlace != When.After && parent.EndActual < TimeKeeper.Now)
                 {
                     continue;
                 }
+
+
                 DateTime target = new DateTime();
                 TimeSpan offset = new TimeSpan();
                 //convert Length units into TimeSpan units
@@ -231,6 +234,50 @@ namespace Span
                 m_alarms = value;
             }
 
+        }
+
+        //TODO: change updateAlarms() to use this function instead
+        public DateTime SingleAlarmTime(Alarm single){
+            Occurrence parent = Occurrence.All[ParentId];
+            DateTime target = new DateTime();
+            TimeSpan offset = new TimeSpan();
+            //convert Length units into TimeSpan units
+
+            //TODO: change this TimeSpan code to work with DST
+            //(the TimeSpan class doesn't pay attention to
+            //DST, only the DateTime class does. Likely removing
+            //the offset object altogether will help.
+            switch (single.m_timeUnit)
+            {
+                case Length.Minutes:
+                    offset = new TimeSpan(0, (int)single.m_timeLength, 0);
+                    break;
+                case Length.Hours:
+                    offset = new TimeSpan((int)single.m_timeLength, 0, 0);
+                    break;
+                case Length.Days:
+                    offset = new TimeSpan((int)single.m_timeLength, 0, 0, 0);
+                    break;
+                case Length.Weeks:
+                    offset = new TimeSpan((int)single.m_timeLength * 7, 0, 0, 0);
+                    break;
+            }
+            //convert When into start or end time
+            switch (single.m_relativePlace)
+            {
+                case When.Before:
+                    //should happen **before** start time
+                    offset = offset.Negate();
+                    goto case When.During;
+                case When.During:
+                    target = parent.StartActual;
+                    break;
+                case When.After:
+                    target = parent.EndActual;
+                    break;
+            }
+            target = target.Add(offset);
+            return target;
         }
 
         /**

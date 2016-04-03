@@ -364,30 +364,18 @@ namespace Span
                     Status = OccurrenceStatus.On_Time;
                 }
                 List<Alarm> alarmtemp = Parent().Alarms.Alarms;
-                for (int i = 0; i < alarmtemp.Count(); i++)
-                {
-                    if (i == 0 && !(alarmtemp[i].m_dealtWith))
-                    {
-                        alarmtemp[i] = new Alarm(alarmtemp[i].m_relativePlace, alarmtemp[i].m_timeLength, alarmtemp[i].m_timeUnit, true);
-                        break;
-                    }
-                    else if (i > 0 && alarmtemp[i - 1].m_dealtWith)
-                    {
-                        alarmtemp[i] = new Alarm(alarmtemp[i].m_relativePlace, alarmtemp[i].m_timeLength, alarmtemp[i].m_timeUnit, true);
-                    }
-                    
-                }
-                bool isFalse = false;
-                for (int i = 0; i < alarmtemp.Count(); i++)
-                {
-                    if (!(alarmtemp[i].m_dealtWith))
-                    {
-                        isFalse = true;
-                        break;
-                    }
-
-                }
-                if (!isFalse)
+                //TODO: break out if there are no active alarms
+                DateTime firstTime = Parent().Alarms.AlarmTimes()[0];
+                int alarmIndex = alarmtemp.FindIndex(x => Parent().Alarms.SingleAlarmTime(x) == firstTime);
+                alarmtemp[alarmIndex] = new Alarm(alarmtemp[alarmIndex].m_relativePlace, alarmtemp[alarmIndex].m_timeLength, alarmtemp[alarmIndex].m_timeUnit, true);
+                //GET THE LIST OF ALARM TIMES. TAKE THE FIRST ENTRY.
+                //LOOP THROUGH ALL OF alarmtemp AND FIND THE ALARM STRUCT
+                //WITH THE SAME DATETIME AS THAT FIRST ENTRY.
+                //IF THE LIST OF ALARM TIMES IS EMPTY, THEN YOU MOVE ON.
+                //preceding message has already been coded
+                
+                
+                if (Parent().Alarms.AlarmTimes().Count == 0)
                 {
                     //move to next occurrence
                     Parent().Occurrences().Sort((x, y) => x.StartActual.CompareTo(y.StartActual));
