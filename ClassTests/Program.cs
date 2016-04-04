@@ -78,10 +78,14 @@ namespace ClassTests
                 MakeEvent();
 
             }
+            
             TimeKeeper.Update();
             for (int i = 0; i < 7; i++)
             {
-                TimeKeeper.Alarms.ElementAt(0).Value.Confirm();
+                if (TimeKeeper.Alarms.Count > 0)
+                {
+                    TimeKeeper.Alarms.ElementAt(0).Value.Confirm();
+                }
                 TimeKeeper.Update();
             }
             File.WriteAllText("iotest.txt", 

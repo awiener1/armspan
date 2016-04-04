@@ -18,7 +18,8 @@ namespace Span
             IEnumerable<KeyValuePair<string, Occurrence>> partial = Occurrence.All.Where
                 (x => x.Value.StartActual >= m_begin && x.Value.StartActual <= m_end ||
                 x.Value.EndActual >= m_begin && x.Value.EndActual <= m_end);
-            m_occurrences = partial.ToDictionary(x => x.Key, x => x.Value).Keys.ToList();
+            //m_occurrences = partial.ToDictionary(x => x.Key, x => x.Value).Keys.ToList();
+            m_occurrences = Occurrence.All.Keys.ToList();
             //get all alarms for the occurrences
             m_alarms = new Dictionary<DateTime, Occurrence>();
             foreach (string occurrence in m_occurrences)

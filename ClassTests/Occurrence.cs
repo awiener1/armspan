@@ -364,7 +364,14 @@ namespace Span
                     Status = OccurrenceStatus.On_Time;
                 }
                 List<Alarm> alarmtemp = Parent().Alarms.Alarms;
-                //TODO: break out if there are no active alarms
+                if (Parent().Alarms.AlarmTimes().Count == 0)
+                {
+                    return;
+                }
+                if (IsChained())
+                {
+                    DeChain();
+                }
                 DateTime firstTime = Parent().Alarms.AlarmTimes()[0];
                 int alarmIndex = alarmtemp.FindIndex(x => Parent().Alarms.SingleAlarmTime(x) == firstTime);
                 alarmtemp[alarmIndex] = new Alarm(alarmtemp[alarmIndex].m_relativePlace, alarmtemp[alarmIndex].m_timeLength, alarmtemp[alarmIndex].m_timeUnit, true);
