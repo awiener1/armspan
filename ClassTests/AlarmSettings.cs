@@ -236,6 +236,15 @@ namespace Span
 
         }
 
+        /**
+         * Gets the absolute time that the specified Alarm will occur.
+         * 
+         * @param single the Alarm struct specified in relative time.
+         * 
+         * @return a DateTime struct specified in absolute time.
+         * 
+         * @date April 2, 2016
+         */
         //TODO: change updateAlarms() to use this function instead
         public DateTime SingleAlarmTime(Alarm single){
             Occurrence parent = Occurrence.All[ParentId];

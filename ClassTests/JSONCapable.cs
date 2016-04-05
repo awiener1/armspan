@@ -72,6 +72,17 @@ namespace Span
             return jss.Serialize(this);
         }
 
+        /**
+         * Saves the program state to a
+         * JSON-serialized string.
+         * 
+         * @return a serialized string
+         * representing the program's
+         * current state (the first line
+         * is a date and time stamp.)
+         * 
+         * @date March 26, 2016
+         */
         public static string SaveState(){
             Dictionary<string, object> state = new Dictionary<string, object>();
             state.Add("Categories", Category.All);

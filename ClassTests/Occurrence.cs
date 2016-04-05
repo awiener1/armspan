@@ -355,6 +355,13 @@ namespace Span
             EndActual = now;
         }
 
+        /**
+         * Marks the first possible alarm for
+         * this Occurrence as having been dealt
+         * with.
+         * 
+         * @date March 30, 2016
+         */
         public void Confirm()
         {
             if (Parent().Alarms.ParentId == Id)

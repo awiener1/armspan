@@ -153,6 +153,13 @@ namespace Span
             return loaded;
         }
 
+        /**
+         * Gets the earliest Occurrence of this Event.
+         * 
+         * @return the earliest Occurrence of this Event.
+         * 
+         * @date April 1, 2016
+         */
         public Occurrence FirstOccurrence()
         {
             Occurrences().Sort((x, y) => x.StartActual.CompareTo(y.StartActual));
