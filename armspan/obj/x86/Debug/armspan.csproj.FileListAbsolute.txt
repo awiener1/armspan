@@ -1,0 +1,8 @@
+G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\bin\Debug\armspan.exe
+G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\bin\Debug\armspan.pdb
+G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\obj\x86\Debug\armspan.Properties.Resources.resources
+G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\obj\x86\Debug\armspan.csproj.GenerateResource.Cache
+G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\obj\x86\Debug\armspan.exe
+G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\obj\x86\Debug\armspan.pdb
+G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\obj\x86\Debug\Span.GUI.FormMain.resources
+G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\obj\x86\Debug\Span.GUI.ThinDialog.resources
