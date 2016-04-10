@@ -22,12 +22,14 @@ namespace Span.GUI
             rtbOccurrence.Rtf = @"{\rtf0\ansi But this is \b different \b0 text, somehow.}";
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnStartOcc_Click(object sender, EventArgs e)
         {
-            ThinDialog popup = new ThinDialog();
+            FormAlarmWindow popup = new FormAlarmWindow();
             popup.Show();
             //popup.Activate();
         }
+
+        
 
        
     }

@@ -73,6 +73,16 @@ namespace armspan.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap alarm2_svg {
+            get {
+                object obj = ResourceManager.GetObject("alarm2.svg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap apptnow_svg {
             get {
                 object obj = ResourceManager.GetObject("apptnow.svg", resourceCulture);
@@ -143,6 +153,16 @@ namespace armspan.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap dropdown {
+            get {
+                object obj = ResourceManager.GetObject("dropdown", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap edit_svg {
             get {
                 object obj = ResourceManager.GetObject("edit.svg", resourceCulture);
@@ -173,6 +193,16 @@ namespace armspan.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ok_svg {
+            get {
+                object obj = ResourceManager.GetObject("ok.svg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap postpone_svg {
             get {
                 object obj = ResourceManager.GetObject("postpone.svg", resourceCulture);
@@ -186,6 +216,16 @@ namespace armspan.Properties {
         internal static System.Drawing.Bitmap postponesmall_svg {
             get {
                 object obj = ResourceManager.GetObject("postponesmall.svg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap postponesmallfive_svg {
+            get {
+                object obj = ResourceManager.GetObject("postponesmallfive.svg", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

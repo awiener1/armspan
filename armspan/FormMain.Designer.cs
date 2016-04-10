@@ -30,20 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.btnNewAppt = new System.Windows.Forms.ToolStripButton();
-            this.btnNewTask = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnStartAppt = new System.Windows.Forms.ToolStripButton();
-            this.btnStartTask = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnStopAppts = new System.Windows.Forms.ToolStripButton();
-            this.btnStopTasks = new System.Windows.Forms.ToolStripButton();
-            this.btnCancelAppts = new System.Windows.Forms.ToolStripButton();
-            this.btnCancelTasks = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnCategories = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnSummary = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.pnlNow = new System.Windows.Forms.Panel();
             this.gbNow = new System.Windows.Forms.GroupBox();
@@ -54,15 +44,18 @@
             this.btnNow = new System.Windows.Forms.Button();
             this.gbEvent = new System.Windows.Forms.GroupBox();
             this.rtbTask = new System.Windows.Forms.RichTextBox();
-            this.btnDeleteEvent = new System.Windows.Forms.Button();
-            this.btnEditEvent = new System.Windows.Forms.Button();
-            this.btnAddOcc = new System.Windows.Forms.Button();
-            this.pbEventColor = new System.Windows.Forms.PictureBox();
             this.mCalendar = new System.Windows.Forms.MonthCalendar();
             this.panel3 = new System.Windows.Forms.Panel();
             this.gbOccurrence = new System.Windows.Forms.GroupBox();
             this.nudPostponeOcc = new System.Windows.Forms.NumericUpDown();
             this.rtbOccurrence = new System.Windows.Forms.RichTextBox();
+            this.ttNonMenu = new System.Windows.Forms.ToolTip(this.components);
+            this.msTop = new System.Windows.Forms.MenuStrip();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.manualToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnRescheduleOcc = new System.Windows.Forms.Button();
             this.btnRepeatTask = new System.Windows.Forms.Button();
             this.btnDeleteOcc = new System.Windows.Forms.Button();
@@ -71,24 +64,31 @@
             this.btnPostponeOcc = new System.Windows.Forms.Button();
             this.btnStopOcc = new System.Windows.Forms.Button();
             this.btnStartOcc = new System.Windows.Forms.Button();
-            this.ttNonMenu = new System.Windows.Forms.ToolTip(this.components);
-            this.msTop = new System.Windows.Forms.MenuStrip();
-            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.manualToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnDeleteEvent = new System.Windows.Forms.Button();
+            this.btnEditEvent = new System.Windows.Forms.Button();
+            this.btnAddOcc = new System.Windows.Forms.Button();
+            this.pbEventColor = new System.Windows.Forms.PictureBox();
             this.pbTimeline = new System.Windows.Forms.PictureBox();
+            this.btnNewAppt = new System.Windows.Forms.ToolStripButton();
+            this.btnNewTask = new System.Windows.Forms.ToolStripButton();
+            this.btnStartAppt = new System.Windows.Forms.ToolStripButton();
+            this.btnStartTask = new System.Windows.Forms.ToolStripButton();
+            this.btnStopAppts = new System.Windows.Forms.ToolStripButton();
+            this.btnStopTasks = new System.Windows.Forms.ToolStripButton();
+            this.btnCancelAppts = new System.Windows.Forms.ToolStripButton();
+            this.btnCancelTasks = new System.Windows.Forms.ToolStripButton();
+            this.btnCategories = new System.Windows.Forms.ToolStripButton();
+            this.btnSummary = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.pnlNow.SuspendLayout();
             this.pnlTimeline.SuspendLayout();
             this.panel2.SuspendLayout();
             this.gbEvent.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbEventColor)).BeginInit();
             this.panel3.SuspendLayout();
             this.gbOccurrence.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudPostponeOcc)).BeginInit();
             this.msTop.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbEventColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbTimeline)).BeginInit();
             this.SuspendLayout();
             // 
@@ -114,37 +114,11 @@
             this.toolStripSeparator5});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.toolStrip1.Size = new System.Drawing.Size(1024, 52);
             this.toolStrip1.Stretch = true;
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // btnNewAppt
-            // 
-            this.btnNewAppt.AutoSize = false;
-            this.btnNewAppt.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnNewAppt.Image = global::armspan.Properties.Resources.apptshine_svg;
-            this.btnNewAppt.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnNewAppt.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnNewAppt.Name = "btnNewAppt";
-            this.btnNewAppt.Size = new System.Drawing.Size(48, 48);
-            this.btnNewAppt.Text = "New Appointment";
-            this.btnNewAppt.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnNewAppt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
-            // btnNewTask
-            // 
-            this.btnNewTask.AutoSize = false;
-            this.btnNewTask.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnNewTask.Image = global::armspan.Properties.Resources.taskshine_svg;
-            this.btnNewTask.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnNewTask.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnNewTask.Name = "btnNewTask";
-            this.btnNewTask.Size = new System.Drawing.Size(48, 48);
-            this.btnNewTask.Text = "New Task";
-            this.btnNewTask.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnNewTask.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // toolStripSeparator1
             // 
@@ -152,89 +126,11 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 52);
             // 
-            // btnStartAppt
-            // 
-            this.btnStartAppt.AutoSize = false;
-            this.btnStartAppt.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnStartAppt.Image = global::armspan.Properties.Resources.apptnow_svg;
-            this.btnStartAppt.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnStartAppt.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnStartAppt.Name = "btnStartAppt";
-            this.btnStartAppt.Size = new System.Drawing.Size(48, 48);
-            this.btnStartAppt.Text = "Start New Appointment Now";
-            this.btnStartAppt.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnStartAppt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
-            // btnStartTask
-            // 
-            this.btnStartTask.AutoSize = false;
-            this.btnStartTask.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnStartTask.Image = global::armspan.Properties.Resources.tasknow_svg;
-            this.btnStartTask.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnStartTask.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnStartTask.Name = "btnStartTask";
-            this.btnStartTask.Size = new System.Drawing.Size(48, 48);
-            this.btnStartTask.Text = "Start New Task Now";
-            this.btnStartTask.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnStartTask.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 52);
-            // 
-            // btnStopAppts
-            // 
-            this.btnStopAppts.AutoSize = false;
-            this.btnStopAppts.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnStopAppts.Image = global::armspan.Properties.Resources.stopappts_svg;
-            this.btnStopAppts.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnStopAppts.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnStopAppts.Name = "btnStopAppts";
-            this.btnStopAppts.Size = new System.Drawing.Size(48, 48);
-            this.btnStopAppts.Text = "Stop All Appointments";
-            this.btnStopAppts.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnStopAppts.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
-            // btnStopTasks
-            // 
-            this.btnStopTasks.AutoSize = false;
-            this.btnStopTasks.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnStopTasks.Image = global::armspan.Properties.Resources.stoptasks_svg;
-            this.btnStopTasks.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnStopTasks.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnStopTasks.Name = "btnStopTasks";
-            this.btnStopTasks.Size = new System.Drawing.Size(48, 48);
-            this.btnStopTasks.Text = "Stop All Tasks";
-            this.btnStopTasks.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnStopTasks.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
-            // btnCancelAppts
-            // 
-            this.btnCancelAppts.AutoSize = false;
-            this.btnCancelAppts.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnCancelAppts.Image = global::armspan.Properties.Resources.cancelappts_svg;
-            this.btnCancelAppts.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnCancelAppts.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnCancelAppts.Name = "btnCancelAppts";
-            this.btnCancelAppts.Size = new System.Drawing.Size(48, 48);
-            this.btnCancelAppts.Text = "Cancel All Appointments";
-            this.btnCancelAppts.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnCancelAppts.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
-            // btnCancelTasks
-            // 
-            this.btnCancelTasks.AutoSize = false;
-            this.btnCancelTasks.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnCancelTasks.Image = global::armspan.Properties.Resources.canceltasks_svg;
-            this.btnCancelTasks.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnCancelTasks.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnCancelTasks.Name = "btnCancelTasks";
-            this.btnCancelTasks.Size = new System.Drawing.Size(48, 48);
-            this.btnCancelTasks.Text = "Cancel All Tasks";
-            this.btnCancelTasks.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnCancelTasks.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // toolStripSeparator3
             // 
@@ -242,39 +138,11 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 52);
             // 
-            // btnCategories
-            // 
-            this.btnCategories.AutoSize = false;
-            this.btnCategories.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnCategories.Image = global::armspan.Properties.Resources.colors_svg;
-            this.btnCategories.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnCategories.ImageTransparentColor = System.Drawing.Color.Maroon;
-            this.btnCategories.Name = "btnCategories";
-            this.btnCategories.Size = new System.Drawing.Size(48, 48);
-            this.btnCategories.Text = "Manage Categories";
-            this.btnCategories.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnCategories.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 52);
-            // 
-            // btnSummary
-            // 
-            this.btnSummary.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnSummary.AutoSize = false;
-            this.btnSummary.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnSummary.Image = global::armspan.Properties.Resources.summary_svg;
-            this.btnSummary.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnSummary.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSummary.Name = "btnSummary";
-            this.btnSummary.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.btnSummary.Size = new System.Drawing.Size(48, 48);
-            this.btnSummary.Text = "View Summary";
-            this.btnSummary.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnSummary.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // toolStripSeparator5
             // 
@@ -394,50 +262,6 @@
             this.rtbTask.TabIndex = 4;
             this.rtbTask.Text = "";
             // 
-            // btnDeleteEvent
-            // 
-            this.btnDeleteEvent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnDeleteEvent.Image = global::armspan.Properties.Resources.trash_svg;
-            this.btnDeleteEvent.Location = new System.Drawing.Point(135, 136);
-            this.btnDeleteEvent.Name = "btnDeleteEvent";
-            this.btnDeleteEvent.Size = new System.Drawing.Size(45, 45);
-            this.btnDeleteEvent.TabIndex = 3;
-            this.ttNonMenu.SetToolTip(this.btnDeleteEvent, "Delete Event");
-            this.btnDeleteEvent.UseVisualStyleBackColor = true;
-            // 
-            // btnEditEvent
-            // 
-            this.btnEditEvent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnEditEvent.Image = global::armspan.Properties.Resources.edit_svg;
-            this.btnEditEvent.Location = new System.Drawing.Point(83, 136);
-            this.btnEditEvent.Name = "btnEditEvent";
-            this.btnEditEvent.Size = new System.Drawing.Size(45, 45);
-            this.btnEditEvent.TabIndex = 2;
-            this.ttNonMenu.SetToolTip(this.btnEditEvent, "Edit Event");
-            this.btnEditEvent.UseVisualStyleBackColor = true;
-            // 
-            // btnAddOcc
-            // 
-            this.btnAddOcc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnAddOcc.Image = global::armspan.Properties.Resources.add_svg;
-            this.btnAddOcc.Location = new System.Drawing.Point(30, 136);
-            this.btnAddOcc.Name = "btnAddOcc";
-            this.btnAddOcc.Size = new System.Drawing.Size(45, 45);
-            this.btnAddOcc.TabIndex = 1;
-            this.ttNonMenu.SetToolTip(this.btnAddOcc, "Add Occurrence");
-            this.btnAddOcc.UseVisualStyleBackColor = true;
-            // 
-            // pbEventColor
-            // 
-            this.pbEventColor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
-            this.pbEventColor.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.pbEventColor.Location = new System.Drawing.Point(10, 17);
-            this.pbEventColor.Name = "pbEventColor";
-            this.pbEventColor.Size = new System.Drawing.Size(10, 165);
-            this.pbEventColor.TabIndex = 0;
-            this.pbEventColor.TabStop = false;
-            // 
             // mCalendar
             // 
             this.mCalendar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -521,6 +345,53 @@
             this.rtbOccurrence.Size = new System.Drawing.Size(189, 58);
             this.rtbOccurrence.TabIndex = 5;
             this.rtbOccurrence.Text = "";
+            // 
+            // msTop
+            // 
+            this.msTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.optionsToolStripMenuItem,
+            this.helpToolStripMenuItem});
+            this.msTop.Location = new System.Drawing.Point(0, 0);
+            this.msTop.Name = "msTop";
+            this.msTop.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.msTop.Size = new System.Drawing.Size(1024, 24);
+            this.msTop.TabIndex = 5;
+            this.msTop.Text = "menuStrip1";
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.preferencesToolStripMenuItem});
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
+            this.optionsToolStripMenuItem.Text = "Options";
+            // 
+            // preferencesToolStripMenuItem
+            // 
+            this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
+            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.preferencesToolStripMenuItem.Text = "Preferences";
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.manualToolStripMenuItem,
+            this.aboutToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // manualToolStripMenuItem
+            // 
+            this.manualToolStripMenuItem.Name = "manualToolStripMenuItem";
+            this.manualToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.manualToolStripMenuItem.Text = "Manual";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.aboutToolStripMenuItem.Text = "About";
             // 
             // btnRescheduleOcc
             // 
@@ -609,52 +480,51 @@
             this.btnStartOcc.TabIndex = 1;
             this.ttNonMenu.SetToolTip(this.btnStartOcc, "Start Occurrence Now");
             this.btnStartOcc.UseVisualStyleBackColor = true;
+            this.btnStartOcc.Click += new System.EventHandler(this.btnStartOcc_Click);
             // 
-            // msTop
+            // btnDeleteEvent
             // 
-            this.msTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.optionsToolStripMenuItem,
-            this.helpToolStripMenuItem});
-            this.msTop.Location = new System.Drawing.Point(0, 0);
-            this.msTop.Name = "msTop";
-            this.msTop.Size = new System.Drawing.Size(1024, 24);
-            this.msTop.TabIndex = 5;
-            this.msTop.Text = "menuStrip1";
+            this.btnDeleteEvent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnDeleteEvent.Image = global::armspan.Properties.Resources.trash_svg;
+            this.btnDeleteEvent.Location = new System.Drawing.Point(135, 136);
+            this.btnDeleteEvent.Name = "btnDeleteEvent";
+            this.btnDeleteEvent.Size = new System.Drawing.Size(45, 45);
+            this.btnDeleteEvent.TabIndex = 3;
+            this.ttNonMenu.SetToolTip(this.btnDeleteEvent, "Delete Event");
+            this.btnDeleteEvent.UseVisualStyleBackColor = true;
             // 
-            // optionsToolStripMenuItem
+            // btnEditEvent
             // 
-            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.preferencesToolStripMenuItem});
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
-            this.optionsToolStripMenuItem.Text = "Options";
+            this.btnEditEvent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnEditEvent.Image = global::armspan.Properties.Resources.edit_svg;
+            this.btnEditEvent.Location = new System.Drawing.Point(83, 136);
+            this.btnEditEvent.Name = "btnEditEvent";
+            this.btnEditEvent.Size = new System.Drawing.Size(45, 45);
+            this.btnEditEvent.TabIndex = 2;
+            this.ttNonMenu.SetToolTip(this.btnEditEvent, "Edit Event");
+            this.btnEditEvent.UseVisualStyleBackColor = true;
             // 
-            // preferencesToolStripMenuItem
+            // btnAddOcc
             // 
-            this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
-            this.preferencesToolStripMenuItem.Text = "Preferences";
+            this.btnAddOcc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnAddOcc.Image = global::armspan.Properties.Resources.add_svg;
+            this.btnAddOcc.Location = new System.Drawing.Point(30, 136);
+            this.btnAddOcc.Name = "btnAddOcc";
+            this.btnAddOcc.Size = new System.Drawing.Size(45, 45);
+            this.btnAddOcc.TabIndex = 1;
+            this.ttNonMenu.SetToolTip(this.btnAddOcc, "Add Occurrence");
+            this.btnAddOcc.UseVisualStyleBackColor = true;
             // 
-            // helpToolStripMenuItem
+            // pbEventColor
             // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.manualToolStripMenuItem,
-            this.aboutToolStripMenuItem});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
-            this.helpToolStripMenuItem.Text = "Help";
-            // 
-            // manualToolStripMenuItem
-            // 
-            this.manualToolStripMenuItem.Name = "manualToolStripMenuItem";
-            this.manualToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
-            this.manualToolStripMenuItem.Text = "Manual";
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
-            this.aboutToolStripMenuItem.Text = "About";
+            this.pbEventColor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.pbEventColor.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.pbEventColor.Location = new System.Drawing.Point(10, 17);
+            this.pbEventColor.Name = "pbEventColor";
+            this.pbEventColor.Size = new System.Drawing.Size(10, 165);
+            this.pbEventColor.TabIndex = 0;
+            this.pbEventColor.TabStop = false;
             // 
             // pbTimeline
             // 
@@ -667,6 +537,138 @@
             this.pbTimeline.Size = new System.Drawing.Size(583, 371);
             this.pbTimeline.TabIndex = 2;
             this.pbTimeline.TabStop = false;
+            // 
+            // btnNewAppt
+            // 
+            this.btnNewAppt.AutoSize = false;
+            this.btnNewAppt.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnNewAppt.Image = global::armspan.Properties.Resources.apptshine_svg;
+            this.btnNewAppt.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnNewAppt.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnNewAppt.Name = "btnNewAppt";
+            this.btnNewAppt.Size = new System.Drawing.Size(48, 48);
+            this.btnNewAppt.Text = "New Appointment";
+            this.btnNewAppt.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnNewAppt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
+            // btnNewTask
+            // 
+            this.btnNewTask.AutoSize = false;
+            this.btnNewTask.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnNewTask.Image = global::armspan.Properties.Resources.taskshine_svg;
+            this.btnNewTask.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnNewTask.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnNewTask.Name = "btnNewTask";
+            this.btnNewTask.Size = new System.Drawing.Size(48, 48);
+            this.btnNewTask.Text = "New Task";
+            this.btnNewTask.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnNewTask.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
+            // btnStartAppt
+            // 
+            this.btnStartAppt.AutoSize = false;
+            this.btnStartAppt.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnStartAppt.Image = global::armspan.Properties.Resources.apptnow_svg;
+            this.btnStartAppt.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnStartAppt.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnStartAppt.Name = "btnStartAppt";
+            this.btnStartAppt.Size = new System.Drawing.Size(48, 48);
+            this.btnStartAppt.Text = "Start New Appointment Now";
+            this.btnStartAppt.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnStartAppt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
+            // btnStartTask
+            // 
+            this.btnStartTask.AutoSize = false;
+            this.btnStartTask.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnStartTask.Image = global::armspan.Properties.Resources.tasknow_svg;
+            this.btnStartTask.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnStartTask.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnStartTask.Name = "btnStartTask";
+            this.btnStartTask.Size = new System.Drawing.Size(48, 48);
+            this.btnStartTask.Text = "Start New Task Now";
+            this.btnStartTask.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnStartTask.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
+            // btnStopAppts
+            // 
+            this.btnStopAppts.AutoSize = false;
+            this.btnStopAppts.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnStopAppts.Image = global::armspan.Properties.Resources.stopappts_svg;
+            this.btnStopAppts.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnStopAppts.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnStopAppts.Name = "btnStopAppts";
+            this.btnStopAppts.Size = new System.Drawing.Size(48, 48);
+            this.btnStopAppts.Text = "Stop All Appointments";
+            this.btnStopAppts.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnStopAppts.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
+            // btnStopTasks
+            // 
+            this.btnStopTasks.AutoSize = false;
+            this.btnStopTasks.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnStopTasks.Image = global::armspan.Properties.Resources.stoptasks_svg;
+            this.btnStopTasks.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnStopTasks.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnStopTasks.Name = "btnStopTasks";
+            this.btnStopTasks.Size = new System.Drawing.Size(48, 48);
+            this.btnStopTasks.Text = "Stop All Tasks";
+            this.btnStopTasks.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnStopTasks.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
+            // btnCancelAppts
+            // 
+            this.btnCancelAppts.AutoSize = false;
+            this.btnCancelAppts.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnCancelAppts.Image = global::armspan.Properties.Resources.cancelappts_svg;
+            this.btnCancelAppts.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnCancelAppts.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCancelAppts.Name = "btnCancelAppts";
+            this.btnCancelAppts.Size = new System.Drawing.Size(48, 48);
+            this.btnCancelAppts.Text = "Cancel All Appointments";
+            this.btnCancelAppts.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnCancelAppts.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
+            // btnCancelTasks
+            // 
+            this.btnCancelTasks.AutoSize = false;
+            this.btnCancelTasks.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnCancelTasks.Image = global::armspan.Properties.Resources.canceltasks_svg;
+            this.btnCancelTasks.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnCancelTasks.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCancelTasks.Name = "btnCancelTasks";
+            this.btnCancelTasks.Size = new System.Drawing.Size(48, 48);
+            this.btnCancelTasks.Text = "Cancel All Tasks";
+            this.btnCancelTasks.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnCancelTasks.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
+            // btnCategories
+            // 
+            this.btnCategories.AutoSize = false;
+            this.btnCategories.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnCategories.Image = global::armspan.Properties.Resources.colors_svg;
+            this.btnCategories.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnCategories.ImageTransparentColor = System.Drawing.Color.Maroon;
+            this.btnCategories.Name = "btnCategories";
+            this.btnCategories.Size = new System.Drawing.Size(48, 48);
+            this.btnCategories.Text = "Manage Categories";
+            this.btnCategories.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnCategories.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
+            // btnSummary
+            // 
+            this.btnSummary.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnSummary.AutoSize = false;
+            this.btnSummary.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnSummary.Image = global::armspan.Properties.Resources.summary_svg;
+            this.btnSummary.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnSummary.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSummary.Name = "btnSummary";
+            this.btnSummary.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.btnSummary.Size = new System.Drawing.Size(48, 48);
+            this.btnSummary.Text = "View Summary";
+            this.btnSummary.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnSummary.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // FormMain
             // 
@@ -691,12 +693,12 @@
             this.pnlTimeline.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.gbEvent.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pbEventColor)).EndInit();
             this.panel3.ResumeLayout(false);
             this.gbOccurrence.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nudPostponeOcc)).EndInit();
             this.msTop.ResumeLayout(false);
             this.msTop.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbEventColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbTimeline)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

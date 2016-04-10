@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormAlarmWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAlarmWindow.Designer.cs">
+      <DependentUpon>FormAlarmWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,6 +66,9 @@
     <Compile Include="ThinDialog.Designer.cs">
       <DependentUpon>ThinDialog.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="FormAlarmWindow.resx">
+      <DependentUpon>FormAlarmWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -151,6 +160,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\schedule.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\postponesmallfive.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dropdown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\alarm2.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ok.svg.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

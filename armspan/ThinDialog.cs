@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace Span.GUI
 {
@@ -67,7 +68,7 @@ namespace Span.GUI
 
         private void ThinDialog_Load(object sender, EventArgs e)
         {
-
+            this.dragBox.Width = this.ClientSize.Width - 24;
         }
 
     }

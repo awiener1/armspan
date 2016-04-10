@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            this.ttThin = new System.Windows.Forms.ToolTip(this.components);
             this.dragBox = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dragBox)).BeginInit();
             this.SuspendLayout();
@@ -52,7 +54,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(292, 273);
             this.Controls.Add(this.dragBox);
+            this.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.Name = "ThinDialog";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ThinDialog";
             this.Load += new System.EventHandler(this.ThinDialog_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dragBox)).EndInit();
@@ -63,5 +67,6 @@
         #endregion
 
         private System.Windows.Forms.PictureBox dragBox;
+        protected internal System.Windows.Forms.ToolTip ttThin;
     }
 }
