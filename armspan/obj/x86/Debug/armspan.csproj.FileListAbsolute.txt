@@ -6,3 +6,4 @@ G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\obj\x86\Debug
 G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\obj\x86\Debug\armspan.pdb
 G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\obj\x86\Debug\Span.GUI.FormMain.resources
 G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\obj\x86\Debug\Span.GUI.ThinDialog.resources
+G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\obj\x86\Debug\armspan.csprojResolveAssemblyReference.cache

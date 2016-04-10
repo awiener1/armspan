@@ -71,6 +71,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="ThinDialog.resx">
       <DependentUpon>ThinDialog.cs</DependentUpon>
@@ -84,6 +85,72 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\apptshine.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\taskshine.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\apptnow.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tasknow.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stopappts.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stoptasks.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cancelappts.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\canceltasks.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\colors.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\summary.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\edit.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\trash.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\now.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stop.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\postpone.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\postponesmall.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\repeat.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ignore.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\calendar.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cancel.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\schedule.svg.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

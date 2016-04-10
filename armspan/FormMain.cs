@@ -18,7 +18,8 @@ namespace Span.GUI
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-           
+            rtbTask.Rtf = @"{\rtf0\ansi Some \b text \b0 is now bold.}";
+            rtbOccurrence.Rtf = @"{\rtf0\ansi But this is \b different \b0 text, somehow.}";
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -27,5 +28,7 @@ namespace Span.GUI
             popup.Show();
             //popup.Activate();
         }
+
+       
     }
 }
