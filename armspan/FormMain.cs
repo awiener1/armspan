@@ -29,6 +29,12 @@ namespace Span.GUI
             //popup.Activate();
         }
 
+        private void btnRescheduleOcc_Click(object sender, EventArgs e)
+        {
+            FormEventScheduler popup = new FormEventScheduler();
+            popup.Show();
+        }
+
         
 
        

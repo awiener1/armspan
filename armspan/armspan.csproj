@@ -52,6 +52,12 @@
     <Compile Include="FormAlarmWindow.Designer.cs">
       <DependentUpon>FormAlarmWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormEventScheduler.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormEventScheduler.Designer.cs">
+      <DependentUpon>FormEventScheduler.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,6 +74,9 @@
     </Compile>
     <EmbeddedResource Include="FormAlarmWindow.resx">
       <DependentUpon>FormAlarmWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormEventScheduler.resx">
+      <DependentUpon>FormEventScheduler.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
@@ -172,6 +181,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ok.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sub.svg.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

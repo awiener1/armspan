@@ -127,17 +127,17 @@
   <data name="calendar.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\calendar.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="edit.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\edit.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="trash.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\trash.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="summary.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\summary.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="apptshine.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\apptshine.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="stoptasks.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\stoptasks.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ok.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ok.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="edit.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\edit.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="cancelappts.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\cancelappts.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -148,14 +148,17 @@
   <data name="tasknow.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tasknow.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="stop.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\stop.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="taskshine.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\taskshine.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="canceltasks.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\canceltasks.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="apptnow.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\apptnow.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="stoptasks.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\stoptasks.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ignore.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ignore.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -175,14 +178,14 @@
   <data name="cancel.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\cancel.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="summary.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\summary.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="stop.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\stop.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="postponesmall.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\postponesmall.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="apptnow.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\apptnow.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="trash.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\trash.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="postponesmallfive.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\postponesmallfive.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -193,7 +196,7 @@
   <data name="add.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\add.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ok.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ok.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="sub.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\sub.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

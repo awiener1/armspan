@@ -403,6 +403,7 @@
             this.btnRescheduleOcc.TabIndex = 9;
             this.ttNonMenu.SetToolTip(this.btnRescheduleOcc, "Reschedule Occurrence");
             this.btnRescheduleOcc.UseVisualStyleBackColor = true;
+            this.btnRescheduleOcc.Click += new System.EventHandler(this.btnRescheduleOcc_Click);
             // 
             // btnRepeatTask
             // 
