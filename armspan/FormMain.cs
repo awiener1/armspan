@@ -35,6 +35,12 @@ namespace Span.GUI
             popup.Show();
         }
 
+        private void btnNewAppt_Click(object sender, EventArgs e)
+        {
+            FormAddEvent popup = new FormAddEvent();
+            popup.Show();
+        }
+
         
 
        

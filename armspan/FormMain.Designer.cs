@@ -551,6 +551,7 @@
             this.btnNewAppt.Text = "New Appointment";
             this.btnNewAppt.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnNewAppt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnNewAppt.Click += new System.EventHandler(this.btnNewAppt_Click);
             // 
             // btnNewTask
             // 

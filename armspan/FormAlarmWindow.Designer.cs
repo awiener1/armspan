@@ -37,7 +37,7 @@
             this.btnAlarmSet = new System.Windows.Forms.Button();
             this.nudPostponeOcc = new System.Windows.Forms.NumericUpDown();
             this.btnPostpone = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.pnlCurrent = new System.Windows.Forms.Panel();
             this.cbMore = new System.Windows.Forms.CheckBox();
             this.rtbAlarm = new System.Windows.Forms.RichTextBox();
             this.btnPostponeFive = new System.Windows.Forms.Button();
@@ -45,7 +45,7 @@
             this.lbNext = new System.Windows.Forms.ListBox();
             this.gbCurrent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudPostponeOcc)).BeginInit();
-            this.panel1.SuspendLayout();
+            this.pnlCurrent.SuspendLayout();
             this.gbNext.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,7 +61,7 @@
             this.gbCurrent.Controls.Add(this.btnAlarmSet);
             this.gbCurrent.Controls.Add(this.nudPostponeOcc);
             this.gbCurrent.Controls.Add(this.btnPostpone);
-            this.gbCurrent.Controls.Add(this.panel1);
+            this.gbCurrent.Controls.Add(this.pnlCurrent);
             this.gbCurrent.Location = new System.Drawing.Point(12, 80);
             this.gbCurrent.Name = "gbCurrent";
             this.gbCurrent.Size = new System.Drawing.Size(532, 204);
@@ -195,18 +195,18 @@
             this.ttThin.SetToolTip(this.btnPostpone, "Postpone");
             this.btnPostpone.UseVisualStyleBackColor = true;
             // 
-            // panel1
+            // pnlCurrent
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.pnlCurrent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel1.Controls.Add(this.cbMore);
-            this.panel1.Controls.Add(this.rtbAlarm);
-            this.panel1.Location = new System.Drawing.Point(12, 22);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(503, 86);
-            this.panel1.TabIndex = 0;
+            this.pnlCurrent.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.pnlCurrent.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlCurrent.Controls.Add(this.cbMore);
+            this.pnlCurrent.Controls.Add(this.rtbAlarm);
+            this.pnlCurrent.Location = new System.Drawing.Point(12, 22);
+            this.pnlCurrent.Name = "pnlCurrent";
+            this.pnlCurrent.Size = new System.Drawing.Size(503, 86);
+            this.pnlCurrent.TabIndex = 0;
             // 
             // cbMore
             // 
@@ -291,7 +291,7 @@
             this.Controls.SetChildIndex(this.gbNext, 0);
             this.gbCurrent.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nudPostponeOcc)).EndInit();
-            this.panel1.ResumeLayout(false);
+            this.pnlCurrent.ResumeLayout(false);
             this.gbNext.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -301,7 +301,7 @@
 
         private System.Windows.Forms.GroupBox gbCurrent;
         private System.Windows.Forms.Button btnPostponeFive;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pnlCurrent;
         private System.Windows.Forms.RichTextBox rtbAlarm;
         private System.Windows.Forms.CheckBox cbMore;
         private System.Windows.Forms.Button btnAlarmSet;

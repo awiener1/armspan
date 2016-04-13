@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormAddEvent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAddEvent.Designer.cs">
+      <DependentUpon>FormAddEvent.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormAlarmWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,6 +78,9 @@
     <Compile Include="ThinDialog.Designer.cs">
       <DependentUpon>ThinDialog.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="FormAddEvent.resx">
+      <DependentUpon>FormAddEvent.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormAlarmWindow.resx">
       <DependentUpon>FormAlarmWindow.cs</DependentUpon>
     </EmbeddedResource>

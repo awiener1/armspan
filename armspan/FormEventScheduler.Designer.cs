@@ -39,7 +39,7 @@
             this.btnAddOcc = new System.Windows.Forms.Button();
             this.gbPeriodic = new System.Windows.Forms.GroupBox();
             this.lblDuration = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dtpOccEnd = new System.Windows.Forms.DateTimePicker();
             this.lblEndAt = new System.Windows.Forms.Label();
             this.cbFrequency = new System.Windows.Forms.ComboBox();
             this.nudFrequency = new System.Windows.Forms.NumericUpDown();
@@ -50,6 +50,7 @@
             this.lblFrom = new System.Windows.Forms.Label();
             this.dtpFrom = new System.Windows.Forms.DateTimePicker();
             this.btnOK = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.gbSchedule.SuspendLayout();
             this.gbNewTime.SuspendLayout();
             this.gbPeriodic.SuspendLayout();
@@ -179,7 +180,7 @@
             // 
             this.gbPeriodic.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.gbPeriodic.Controls.Add(this.lblDuration);
-            this.gbPeriodic.Controls.Add(this.dateTimePicker1);
+            this.gbPeriodic.Controls.Add(this.dtpOccEnd);
             this.gbPeriodic.Controls.Add(this.lblEndAt);
             this.gbPeriodic.Controls.Add(this.cbFrequency);
             this.gbPeriodic.Controls.Add(this.nudFrequency);
@@ -201,15 +202,15 @@
             this.lblDuration.TabIndex = 6;
             this.lblDuration.Text = "Duration of Each?";
             // 
-            // dateTimePicker1
+            // dtpOccEnd
             // 
-            this.dateTimePicker1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.dateTimePicker1.CustomFormat = "M/d/yy \'at\' h:m tt";
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker1.Location = new System.Drawing.Point(179, 83);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(145, 21);
-            this.dateTimePicker1.TabIndex = 5;
+            this.dtpOccEnd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.dtpOccEnd.CustomFormat = "M/d/yy \'at\' h:m tt";
+            this.dtpOccEnd.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpOccEnd.Location = new System.Drawing.Point(179, 83);
+            this.dtpOccEnd.Name = "dtpOccEnd";
+            this.dtpOccEnd.Size = new System.Drawing.Size(145, 21);
+            this.dtpOccEnd.TabIndex = 5;
             // 
             // lblEndAt
             // 
@@ -335,11 +336,23 @@
             this.ttThin.SetToolTip(this.btnOK, "OK");
             this.btnOK.UseVisualStyleBackColor = true;
             // 
+            // btnCancel
+            // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnCancel.Image = global::armspan.Properties.Resources.cancel_svg;
+            this.btnCancel.Location = new System.Drawing.Point(12, 398);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(45, 45);
+            this.btnCancel.TabIndex = 9;
+            this.ttThin.SetToolTip(this.btnCancel, "Add Occurrence");
+            this.btnCancel.UseVisualStyleBackColor = true;
+            // 
             // FormEventScheduler
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(612, 450);
+            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.gbNewTime);
             this.Controls.Add(this.gbSchedule);
@@ -349,6 +362,7 @@
             this.Controls.SetChildIndex(this.gbSchedule, 0);
             this.Controls.SetChildIndex(this.gbNewTime, 0);
             this.Controls.SetChildIndex(this.btnOK, 0);
+            this.Controls.SetChildIndex(this.btnCancel, 0);
             this.gbSchedule.ResumeLayout(false);
             this.gbNewTime.ResumeLayout(false);
             this.gbNewTime.PerformLayout();
@@ -368,7 +382,7 @@
         private System.Windows.Forms.Button btnAddOcc;
         private System.Windows.Forms.GroupBox gbPeriodic;
         private System.Windows.Forms.Label lblDuration;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dtpOccEnd;
         private System.Windows.Forms.Label lblEndAt;
         private System.Windows.Forms.ComboBox cbFrequency;
         private System.Windows.Forms.NumericUpDown nudFrequency;
@@ -383,5 +397,6 @@
         private System.Windows.Forms.RadioButton rbPeriodic;
         private System.Windows.Forms.RadioButton rbManual;
         private System.Windows.Forms.Label lblWritten;
+        private System.Windows.Forms.Button btnCancel;
     }
 }

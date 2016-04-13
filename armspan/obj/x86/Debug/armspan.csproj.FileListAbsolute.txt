@@ -9,3 +9,4 @@ G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\obj\x86\Debug
 G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\obj\x86\Debug\armspan.csprojResolveAssemblyReference.cache
 G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\obj\x86\Debug\Span.GUI.FormAlarmWindow.resources
 G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\obj\x86\Debug\Span.GUI.FormEventScheduler.resources
+G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\obj\x86\Debug\Span.GUI.FormAddEvent.resources
