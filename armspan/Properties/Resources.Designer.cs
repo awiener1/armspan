@@ -143,6 +143,26 @@ namespace armspan.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap checkall_svg {
+            get {
+                object obj = ResourceManager.GetObject("checkall.svg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap checknone_svg {
+            get {
+                object obj = ResourceManager.GetObject("checknone.svg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap colors_svg {
             get {
                 object obj = ResourceManager.GetObject("colors.svg", resourceCulture);

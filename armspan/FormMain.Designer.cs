@@ -658,6 +658,7 @@
             this.btnCategories.Text = "Manage Categories";
             this.btnCategories.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnCategories.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnCategories.Click += new System.EventHandler(this.btnCategories_Click);
             // 
             // btnSummary
             // 

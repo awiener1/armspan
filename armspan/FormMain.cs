@@ -54,6 +54,12 @@ namespace Span.GUI
 
         }
 
+        private void btnCategories_Click(object sender, EventArgs e)
+        {
+            FormAddCategories popup = new FormAddCategories();
+            popup.Show();
+        }
+
         
 
        
