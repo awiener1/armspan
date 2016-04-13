@@ -47,6 +47,13 @@ namespace Span.GUI
             popup.Show();
         }
 
+        private void btnCancelTasks_Click(object sender, EventArgs e)
+        {
+            FormConflictMultiple popup = new FormConflictMultiple();
+            popup.Show();
+
+        }
+
         
 
        

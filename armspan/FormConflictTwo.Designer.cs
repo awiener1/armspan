@@ -44,8 +44,8 @@
             this.pnlNew = new System.Windows.Forms.Panel();
             this.rtbNew = new System.Windows.Forms.RichTextBox();
             this.btnOK = new System.Windows.Forms.Button();
-            this.tlpOK = new System.Windows.Forms.TableLayoutPanel();
             this.rtbConflict = new System.Windows.Forms.RichTextBox();
+            this.tlpOK = new System.Windows.Forms.TableLayoutPanel();
             this.tlpConflicts.SuspendLayout();
             this.gbOld.SuspendLayout();
             this.pnlOld.SuspendLayout();
@@ -258,30 +258,14 @@
             // 
             // btnOK
             // 
-            this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOK.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnOK.Image = global::armspan.Properties.Resources.ok_svg;
-            this.btnOK.Location = new System.Drawing.Point(338, 8);
+            this.btnOK.Location = new System.Drawing.Point(339, 7);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(45, 45);
             this.btnOK.TabIndex = 6;
-            this.ttThin.SetToolTip(this.btnOK, "OK");
+            this.ttThin.SetToolTip(this.btnOK, "Accept Conflict");
             this.btnOK.UseVisualStyleBackColor = true;
-            // 
-            // tlpOK
-            // 
-            this.tlpOK.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.tlpOK.ColumnCount = 3;
-            this.tlpOK.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpOK.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 52F));
-            this.tlpOK.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpOK.Controls.Add(this.btnOK, 1, 0);
-            this.tlpOK.Location = new System.Drawing.Point(16, 251);
-            this.tlpOK.Name = "tlpOK";
-            this.tlpOK.RowCount = 1;
-            this.tlpOK.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpOK.Size = new System.Drawing.Size(721, 56);
-            this.tlpOK.TabIndex = 7;
             // 
             // rtbConflict
             // 
@@ -299,21 +283,35 @@
             this.rtbConflict.TabIndex = 8;
             this.rtbConflict.Text = "";
             // 
+            // tlpOK
+            // 
+            this.tlpOK.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tlpOK.ColumnCount = 1;
+            this.tlpOK.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpOK.Controls.Add(this.btnOK, 0, 0);
+            this.tlpOK.Location = new System.Drawing.Point(14, 248);
+            this.tlpOK.Name = "tlpOK";
+            this.tlpOK.RowCount = 1;
+            this.tlpOK.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpOK.Size = new System.Drawing.Size(723, 60);
+            this.tlpOK.TabIndex = 9;
+            // 
             // FormConflictTwo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(751, 319);
-            this.Controls.Add(this.rtbConflict);
             this.Controls.Add(this.tlpOK);
+            this.Controls.Add(this.rtbConflict);
             this.Controls.Add(this.tlpConflicts);
             this.MinimumSize = new System.Drawing.Size(460, 314);
             this.Name = "FormConflictTwo";
             this.Text = "FormConflictTwo";
             this.Load += new System.EventHandler(this.FormConflictTwo_Load);
             this.Controls.SetChildIndex(this.tlpConflicts, 0);
-            this.Controls.SetChildIndex(this.tlpOK, 0);
             this.Controls.SetChildIndex(this.rtbConflict, 0);
+            this.Controls.SetChildIndex(this.tlpOK, 0);
             this.tlpConflicts.ResumeLayout(false);
             this.gbOld.ResumeLayout(false);
             this.pnlOld.ResumeLayout(false);
@@ -342,7 +340,7 @@
         private System.Windows.Forms.Panel pnlOld;
         private System.Windows.Forms.RichTextBox rtbOld;
         private System.Windows.Forms.Button btnOK;
-        private System.Windows.Forms.TableLayoutPanel tlpOK;
         private System.Windows.Forms.RichTextBox rtbConflict;
+        private System.Windows.Forms.TableLayoutPanel tlpOK;
     }
 }

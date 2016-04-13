@@ -644,6 +644,7 @@
             this.btnCancelTasks.Text = "Cancel All Tasks";
             this.btnCancelTasks.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnCancelTasks.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnCancelTasks.Click += new System.EventHandler(this.btnCancelTasks_Click);
             // 
             // btnCategories
             // 
