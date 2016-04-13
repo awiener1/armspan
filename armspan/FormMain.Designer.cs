@@ -630,6 +630,7 @@
             this.btnCancelAppts.Text = "Cancel All Appointments";
             this.btnCancelAppts.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnCancelAppts.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnCancelAppts.Click += new System.EventHandler(this.btnCancelAppts_Click);
             // 
             // btnCancelTasks
             // 

@@ -41,6 +41,12 @@ namespace Span.GUI
             popup.Show();
         }
 
+        private void btnCancelAppts_Click(object sender, EventArgs e)
+        {
+            FormConflictTwo popup = new FormConflictTwo();
+            popup.Show();
+        }
+
         
 
        
