@@ -76,6 +76,12 @@
     <Compile Include="FormConflictTwo.Designer.cs">
       <DependentUpon>FormConflictTwo.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormEditCategory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormEditCategory.Designer.cs">
+      <DependentUpon>FormEditCategory.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormEventScheduler.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,6 +116,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormConflictTwo.resx">
       <DependentUpon>FormConflictTwo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormEditCategory.resx">
+      <DependentUpon>FormEditCategory.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormEventScheduler.resx">
       <DependentUpon>FormEventScheduler.cs</DependentUpon>

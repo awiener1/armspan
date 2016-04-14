@@ -134,6 +134,7 @@
             this.btnAddCat.TabIndex = 2;
             this.ttThin.SetToolTip(this.btnAddCat, "Add Category");
             this.btnAddCat.UseVisualStyleBackColor = true;
+            this.btnAddCat.Click += new System.EventHandler(this.btnAddCat_Click);
             // 
             // btnSelectAll
             // 

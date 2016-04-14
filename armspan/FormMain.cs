@@ -60,6 +60,10 @@ namespace Span.GUI
             popup.Show();
         }
 
+        private void btnNow_Click(object sender, EventArgs e)
+        {
+        }
+
         
 
        

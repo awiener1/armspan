@@ -228,6 +228,7 @@
             this.btnNow.Text = "Go to Now";
             this.ttNonMenu.SetToolTip(this.btnNow, "Go to Now");
             this.btnNow.UseVisualStyleBackColor = true;
+            this.btnNow.Click += new System.EventHandler(this.btnNow_Click);
             // 
             // gbEvent
             // 
