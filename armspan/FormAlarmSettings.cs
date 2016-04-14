@@ -9,17 +9,16 @@ using System.Windows.Forms;
 
 namespace Span.GUI
 {
-    public partial class FormAddEvent : ThinDialog
+    public partial class FormAlarmSettings : ThinDialog
     {
-        public FormAddEvent()
+        public FormAlarmSettings()
         {
             InitializeComponent();
         }
 
-        private void btnAlarm_Click(object sender, EventArgs e)
+        private void FormAlarmSettings_Load(object sender, EventArgs e)
         {
-            FormAlarmSettings popup = new FormAlarmSettings();
-            popup.Show();
+
         }
     }
 }

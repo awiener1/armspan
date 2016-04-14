@@ -243,6 +243,7 @@
             this.btnAlarm.TabIndex = 14;
             this.ttThin.SetToolTip(this.btnAlarm, "Add Occurrence");
             this.btnAlarm.UseVisualStyleBackColor = true;
+            this.btnAlarm.Click += new System.EventHandler(this.btnAlarm_Click);
             // 
             // lblDesc
             // 

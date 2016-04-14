@@ -58,6 +58,12 @@
     <Compile Include="FormAddEvent.Designer.cs">
       <DependentUpon>FormAddEvent.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormAlarmSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAlarmSettings.Designer.cs">
+      <DependentUpon>FormAlarmSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormAlarmWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,6 +119,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormAddEvent.resx">
       <DependentUpon>FormAddEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAlarmSettings.resx">
+      <DependentUpon>FormAlarmSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormAlarmWindow.resx">
       <DependentUpon>FormAlarmWindow.cs</DependentUpon>
