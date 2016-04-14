@@ -19,7 +19,17 @@ namespace Span.GUI
         private void btnAlarm_Click(object sender, EventArgs e)
         {
             FormAlarmSettings popup = new FormAlarmSettings();
-            popup.Show();
+            popup.ShowDialog();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnAddOcc_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

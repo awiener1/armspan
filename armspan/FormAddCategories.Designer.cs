@@ -170,6 +170,7 @@
             this.btnOK.TabIndex = 6;
             this.ttThin.SetToolTip(this.btnOK, "OK");
             this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // FormAddCategories
             // 

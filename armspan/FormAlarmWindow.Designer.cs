@@ -97,6 +97,7 @@
             this.btnNow.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.ttThin.SetToolTip(this.btnNow, "Start / Stop Now");
             this.btnNow.UseVisualStyleBackColor = true;
+            this.btnNow.Click += new System.EventHandler(this.btnNow_Click);
             // 
             // btnIgnore
             // 
@@ -111,6 +112,7 @@
             this.btnIgnore.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.ttThin.SetToolTip(this.btnIgnore, "Ignore");
             this.btnIgnore.UseVisualStyleBackColor = true;
+            this.btnIgnore.Click += new System.EventHandler(this.btnIgnore_Click);
             // 
             // btnCancel
             // 
@@ -125,6 +127,7 @@
             this.btnCancel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.ttThin.SetToolTip(this.btnCancel, "Cancel");
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnAffirm
             // 

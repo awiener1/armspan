@@ -117,6 +117,7 @@
             this.btnOK.TabIndex = 24;
             this.ttThin.SetToolTip(this.btnOK, "Confirm Category");
             this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // FormEditCategory
             // 

@@ -1069,6 +1069,7 @@
             this.btnOK.TabIndex = 27;
             this.ttThin.SetToolTip(this.btnOK, "Confirm Alarm Settings");
             this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // FormAlarmSettings
             // 

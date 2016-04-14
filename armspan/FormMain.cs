@@ -25,39 +25,39 @@ namespace Span.GUI
         private void btnStartOcc_Click(object sender, EventArgs e)
         {
             FormAlarmWindow popup = new FormAlarmWindow();
-            popup.Show();
+            popup.ShowDialog();
             //popup.Activate();
         }
 
         private void btnRescheduleOcc_Click(object sender, EventArgs e)
         {
             FormEventScheduler popup = new FormEventScheduler();
-            popup.Show();
+            popup.ShowDialog();
         }
 
         private void btnNewAppt_Click(object sender, EventArgs e)
         {
             FormAddEvent popup = new FormAddEvent();
-            popup.Show();
+            popup.ShowDialog();
         }
 
         private void btnCancelAppts_Click(object sender, EventArgs e)
         {
             FormConflictTwo popup = new FormConflictTwo();
-            popup.Show();
+            popup.ShowDialog();
         }
 
         private void btnCancelTasks_Click(object sender, EventArgs e)
         {
             FormConflictMultiple popup = new FormConflictMultiple();
-            popup.Show();
+            popup.ShowDialog();
 
         }
 
         private void btnCategories_Click(object sender, EventArgs e)
         {
             FormAddCategories popup = new FormAddCategories();
-            popup.Show();
+            popup.ShowDialog();
         }
 
         private void btnNow_Click(object sender, EventArgs e)
@@ -67,7 +67,12 @@ namespace Span.GUI
         private void btnSummary_Click(object sender, EventArgs e)
         {
             FormSummaryWindow popup = new FormSummaryWindow();
-            popup.Show();
+            popup.ShowDialog();
+        }
+
+        private void FormMain_Activated(object sender, EventArgs e)
+        {
+          
         }
 
         

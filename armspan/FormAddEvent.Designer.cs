@@ -233,6 +233,7 @@
             this.btnAddOcc.TabIndex = 13;
             this.ttThin.SetToolTip(this.btnAddOcc, "Add Occurrence");
             this.btnAddOcc.UseVisualStyleBackColor = true;
+            this.btnAddOcc.Click += new System.EventHandler(this.btnAddOcc_Click);
             // 
             // btnAlarm
             // 
@@ -276,6 +277,7 @@
             this.btnCancel.TabIndex = 17;
             this.ttThin.SetToolTip(this.btnCancel, "Add Occurrence");
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // FormAddEvent
             // 

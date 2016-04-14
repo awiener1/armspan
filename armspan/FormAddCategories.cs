@@ -24,7 +24,12 @@ namespace Span.GUI
         private void btnAddCat_Click(object sender, EventArgs e)
         {
             FormEditCategory popup = new FormEditCategory();
-            popup.Show();
+            popup.ShowDialog();
+        }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

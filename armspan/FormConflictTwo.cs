@@ -24,6 +24,55 @@ namespace Span.GUI
             rtbOld.Rtf = @"{\rtf0\ansi\b Something called y \b0 is the old event.}";
         }
 
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnCancelNew_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnIgnoreNew_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnDeleteNew_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnCancelOld_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnIgnoreOld_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnDeleteOld_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnReschedNew_Click(object sender, EventArgs e)
+        {
+            FormEventScheduler popup = new FormEventScheduler();
+            popup.ShowDialog();
+            this.Close();
+        }
+
+        private void btnReschedOld_Click(object sender, EventArgs e)
+        {
+            FormEventScheduler popup = new FormEventScheduler();
+            popup.ShowDialog();
+            this.Close();
+        }
+
     
 
     

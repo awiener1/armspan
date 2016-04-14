@@ -28,5 +28,20 @@ namespace Span.GUI
         {
             rtbAlarm.Rtf = @"{\rtf0\ansi Are you getting ready for \b An Event\b0 ?}";
         }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void btnIgnore_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void btnNow_Click(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

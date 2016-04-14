@@ -99,6 +99,7 @@
             this.btnReschedOld.TabIndex = 21;
             this.ttThin.SetToolTip(this.btnReschedOld, "Reschedule Old Event");
             this.btnReschedOld.UseVisualStyleBackColor = true;
+            this.btnReschedOld.Click += new System.EventHandler(this.btnReschedOld_Click);
             // 
             // btnDeleteOld
             // 
@@ -110,6 +111,7 @@
             this.btnDeleteOld.TabIndex = 20;
             this.ttThin.SetToolTip(this.btnDeleteOld, "Delete Old Event");
             this.btnDeleteOld.UseVisualStyleBackColor = true;
+            this.btnDeleteOld.Click += new System.EventHandler(this.btnDeleteOld_Click);
             // 
             // btnIgnoreOld
             // 
@@ -121,6 +123,7 @@
             this.btnIgnoreOld.TabIndex = 19;
             this.ttThin.SetToolTip(this.btnIgnoreOld, "Ignore Old Event");
             this.btnIgnoreOld.UseVisualStyleBackColor = true;
+            this.btnIgnoreOld.Click += new System.EventHandler(this.btnIgnoreOld_Click);
             // 
             // btnCancelOld
             // 
@@ -132,6 +135,7 @@
             this.btnCancelOld.TabIndex = 18;
             this.ttThin.SetToolTip(this.btnCancelOld, "Cancel Old Event");
             this.btnCancelOld.UseVisualStyleBackColor = true;
+            this.btnCancelOld.Click += new System.EventHandler(this.btnCancelOld_Click);
             // 
             // pnlOld
             // 
@@ -191,6 +195,7 @@
             this.btnReschedNew.TabIndex = 21;
             this.ttThin.SetToolTip(this.btnReschedNew, "Reschedule New Event");
             this.btnReschedNew.UseVisualStyleBackColor = true;
+            this.btnReschedNew.Click += new System.EventHandler(this.btnReschedNew_Click);
             // 
             // btnDeleteNew
             // 
@@ -202,6 +207,7 @@
             this.btnDeleteNew.TabIndex = 20;
             this.ttThin.SetToolTip(this.btnDeleteNew, "Delete New Event");
             this.btnDeleteNew.UseVisualStyleBackColor = true;
+            this.btnDeleteNew.Click += new System.EventHandler(this.btnDeleteNew_Click);
             // 
             // btnIgnoreNew
             // 
@@ -213,6 +219,7 @@
             this.btnIgnoreNew.TabIndex = 19;
             this.ttThin.SetToolTip(this.btnIgnoreNew, "Ignore New Event");
             this.btnIgnoreNew.UseVisualStyleBackColor = true;
+            this.btnIgnoreNew.Click += new System.EventHandler(this.btnIgnoreNew_Click);
             // 
             // btnCancelNew
             // 
@@ -224,6 +231,7 @@
             this.btnCancelNew.TabIndex = 18;
             this.ttThin.SetToolTip(this.btnCancelNew, "Cancel New Event");
             this.btnCancelNew.UseVisualStyleBackColor = true;
+            this.btnCancelNew.Click += new System.EventHandler(this.btnCancelNew_Click);
             // 
             // pnlNew
             // 
@@ -266,6 +274,7 @@
             this.btnOK.TabIndex = 6;
             this.ttThin.SetToolTip(this.btnOK, "Accept Conflict");
             this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // rtbConflict
             // 

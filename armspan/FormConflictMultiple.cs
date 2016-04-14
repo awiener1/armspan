@@ -20,5 +20,33 @@ namespace Span.GUI
         {
             rtbConflict.Rtf = @"{\rtf0\ansi\pard\qc \b Something called x \b0 conflicts with the following events: \par}";
         }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnCancelNew_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnIgnoreNew_Click(object sender, EventArgs e)
+        {
+            this.Close();
+
+        }
+
+        private void btnDeleteNew_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnReschedNew_Click(object sender, EventArgs e)
+        {
+            FormEventScheduler popup = new FormEventScheduler();
+            popup.ShowDialog();
+            this.Close();
+        }
     }
 }

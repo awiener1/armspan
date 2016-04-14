@@ -56,8 +56,10 @@
             this.Controls.Add(this.dragBox);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.Name = "ThinDialog";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ThinDialog";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.ThinDialog_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dragBox)).EndInit();
             this.ResumeLayout(false);

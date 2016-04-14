@@ -18,7 +18,12 @@ namespace Span.GUI
 
         private void FormEditCategory_Load(object sender, EventArgs e)
         {
-            MessageBox.Show(this.Size.ToString());
+           
+        }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

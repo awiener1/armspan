@@ -20,5 +20,10 @@ namespace Span.GUI
         {
 
         }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
