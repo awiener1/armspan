@@ -64,6 +64,12 @@ namespace Span.GUI
         {
         }
 
+        private void btnSummary_Click(object sender, EventArgs e)
+        {
+            FormSummaryWindow popup = new FormSummaryWindow();
+            popup.Show();
+        }
+
         
 
        

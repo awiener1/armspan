@@ -675,6 +675,7 @@
             this.btnSummary.Text = "View Summary";
             this.btnSummary.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnSummary.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnSummary.Click += new System.EventHandler(this.btnSummary_Click);
             // 
             // FormMain
             // 

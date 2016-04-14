@@ -14,3 +14,4 @@ G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\obj\x86\Debug
 G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\obj\x86\Debug\Span.GUI.FormConflictMultiple.resources
 G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\obj\x86\Debug\Span.GUI.FormAddCategories.resources
 G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\obj\x86\Debug\Span.GUI.FormEditCategory.resources
+G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\obj\x86\Debug\Span.GUI.FormSummaryWindow.resources
