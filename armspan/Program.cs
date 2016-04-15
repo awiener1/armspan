@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Span.GUI
 {
@@ -15,6 +16,7 @@ namespace Span.GUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            JSONCapable.LoadState(File.ReadAllText("iotest.txt"));
             Application.Run(new FormMain());
         }
     }

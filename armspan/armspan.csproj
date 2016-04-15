@@ -11,7 +11,8 @@
     <RootNamespace>armspan</RootNamespace>
     <AssemblyName>armspan</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -36,6 +37,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Web.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,6 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlarmSettings.cs" />
+    <Compile Include="Category.cs" />
+    <Compile Include="Event.cs" />
     <Compile Include="FormAddCategories.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,14 +113,20 @@
     <Compile Include="FormSummaryWindow.Designer.cs">
       <DependentUpon>FormSummaryWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="JSONCapable.cs" />
+    <Compile Include="Occurrence.cs" />
+    <Compile Include="Period.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TaskEvent.cs" />
+    <Compile Include="TaskOccurrence.cs" />
     <Compile Include="ThinDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ThinDialog.Designer.cs">
       <DependentUpon>ThinDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="TimeKeeper.cs" />
     <EmbeddedResource Include="FormAddCategories.resx">
       <DependentUpon>FormAddCategories.cs</DependentUpon>
     </EmbeddedResource>
@@ -157,6 +170,7 @@
     <EmbeddedResource Include="ThinDialog.resx">
       <DependentUpon>ThinDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
