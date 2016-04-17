@@ -49,8 +49,6 @@
             this.gbNow = new System.Windows.Forms.GroupBox();
             this.pnlTimeline = new System.Windows.Forms.Panel();
             this.pbTimeline = new System.Windows.Forms.PictureBox();
-            this.hsbTimelineSize = new System.Windows.Forms.HScrollBar();
-            this.hsbTimelinePos = new System.Windows.Forms.HScrollBar();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnNow = new System.Windows.Forms.Button();
             this.gbEvent = new System.Windows.Forms.GroupBox();
@@ -79,6 +77,9 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manualToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tlpZoom = new System.Windows.Forms.TableLayoutPanel();
+            this.btnZoomOut = new System.Windows.Forms.Button();
+            this.btnZoomIn = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.pnlNow.SuspendLayout();
             this.pnlTimeline.SuspendLayout();
@@ -90,6 +91,7 @@
             this.gbOccurrence.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudPostponeOcc)).BeginInit();
             this.msTop.SuspendLayout();
+            this.tlpZoom.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -315,46 +317,25 @@
             this.pnlTimeline.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlTimeline.AutoScroll = true;
             this.pnlTimeline.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pnlTimeline.Controls.Add(this.pbTimeline);
-            this.pnlTimeline.Controls.Add(this.hsbTimelineSize);
-            this.pnlTimeline.Controls.Add(this.hsbTimelinePos);
-            this.pnlTimeline.Location = new System.Drawing.Point(218, 76);
+            this.pnlTimeline.Location = new System.Drawing.Point(218, 101);
             this.pnlTimeline.Name = "pnlTimeline";
-            this.pnlTimeline.Size = new System.Drawing.Size(584, 427);
+            this.pnlTimeline.Size = new System.Drawing.Size(584, 396);
             this.pnlTimeline.TabIndex = 2;
             // 
             // pbTimeline
             // 
-            this.pbTimeline.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbTimeline.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
             this.pbTimeline.BackColor = System.Drawing.SystemColors.Window;
-            this.pbTimeline.Location = new System.Drawing.Point(-2, 25);
+            this.pbTimeline.Location = new System.Drawing.Point(0, 0);
+            this.pbTimeline.Margin = new System.Windows.Forms.Padding(0);
             this.pbTimeline.Name = "pbTimeline";
-            this.pbTimeline.Size = new System.Drawing.Size(583, 371);
+            this.pbTimeline.Size = new System.Drawing.Size(581, 375);
             this.pbTimeline.TabIndex = 2;
             this.pbTimeline.TabStop = false;
-            // 
-            // hsbTimelineSize
-            // 
-            this.hsbTimelineSize.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.hsbTimelineSize.Location = new System.Drawing.Point(0, -2);
-            this.hsbTimelineSize.Name = "hsbTimelineSize";
-            this.hsbTimelineSize.Size = new System.Drawing.Size(580, 26);
-            this.hsbTimelineSize.TabIndex = 1;
-            // 
-            // hsbTimelinePos
-            // 
-            this.hsbTimelinePos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.hsbTimelinePos.LargeChange = 60;
-            this.hsbTimelinePos.Location = new System.Drawing.Point(0, 399);
-            this.hsbTimelinePos.Maximum = 2880;
-            this.hsbTimelinePos.Name = "hsbTimelinePos";
-            this.hsbTimelinePos.Size = new System.Drawing.Size(580, 24);
-            this.hsbTimelinePos.TabIndex = 0;
             // 
             // panel2
             // 
@@ -677,11 +658,56 @@
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.aboutToolStripMenuItem.Text = "About";
             // 
+            // tlpZoom
+            // 
+            this.tlpZoom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tlpZoom.ColumnCount = 2;
+            this.tlpZoom.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpZoom.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpZoom.Controls.Add(this.btnZoomOut, 0, 0);
+            this.tlpZoom.Controls.Add(this.btnZoomIn, 1, 0);
+            this.tlpZoom.Location = new System.Drawing.Point(218, 76);
+            this.tlpZoom.Name = "tlpZoom";
+            this.tlpZoom.RowCount = 1;
+            this.tlpZoom.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpZoom.Size = new System.Drawing.Size(583, 24);
+            this.tlpZoom.TabIndex = 3;
+            // 
+            // btnZoomOut
+            // 
+            this.btnZoomOut.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnZoomOut.Location = new System.Drawing.Point(0, 0);
+            this.btnZoomOut.Margin = new System.Windows.Forms.Padding(0);
+            this.btnZoomOut.Name = "btnZoomOut";
+            this.btnZoomOut.Size = new System.Drawing.Size(291, 24);
+            this.btnZoomOut.TabIndex = 0;
+            this.btnZoomOut.Text = "-";
+            this.btnZoomOut.UseVisualStyleBackColor = true;
+            this.btnZoomOut.Click += new System.EventHandler(this.btnZoomOut_Click);
+            // 
+            // btnZoomIn
+            // 
+            this.btnZoomIn.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnZoomIn.Location = new System.Drawing.Point(291, 0);
+            this.btnZoomIn.Margin = new System.Windows.Forms.Padding(0);
+            this.btnZoomIn.Name = "btnZoomIn";
+            this.btnZoomIn.Size = new System.Drawing.Size(292, 24);
+            this.btnZoomIn.TabIndex = 1;
+            this.btnZoomIn.Text = "+";
+            this.btnZoomIn.UseVisualStyleBackColor = true;
+            this.btnZoomIn.Click += new System.EventHandler(this.btnZoomIn_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1024, 649);
+            this.Controls.Add(this.tlpZoom);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.pnlTimeline);
@@ -695,6 +721,7 @@
             this.Text = "armspan (A Calendar Program)";
             this.Activated += new System.EventHandler(this.FormMain_Activated);
             this.Load += new System.EventHandler(this.FormMain_Load);
+            this.Resize += new System.EventHandler(this.FormMain_Resize);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.pnlNow.ResumeLayout(false);
@@ -708,6 +735,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudPostponeOcc)).EndInit();
             this.msTop.ResumeLayout(false);
             this.msTop.PerformLayout();
+            this.tlpZoom.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -762,9 +790,10 @@
         private System.Windows.Forms.ToolStripMenuItem manualToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.GroupBox gbNow;
-        private System.Windows.Forms.HScrollBar hsbTimelinePos;
-        private System.Windows.Forms.HScrollBar hsbTimelineSize;
         private System.Windows.Forms.PictureBox pbTimeline;
+        private System.Windows.Forms.TableLayoutPanel tlpZoom;
+        private System.Windows.Forms.Button btnZoomOut;
+        private System.Windows.Forms.Button btnZoomIn;
 
 
     }
