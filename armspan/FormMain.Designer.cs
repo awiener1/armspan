@@ -148,6 +148,7 @@
             this.btnNewTask.Text = "New Task";
             this.btnNewTask.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnNewTask.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnNewTask.Click += new System.EventHandler(this.btnNewTask_Click);
             // 
             // toolStripSeparator1
             // 
@@ -336,6 +337,7 @@
             this.pbTimeline.Size = new System.Drawing.Size(581, 375);
             this.pbTimeline.TabIndex = 2;
             this.pbTimeline.TabStop = false;
+            this.pbTimeline.Click += new System.EventHandler(this.pbTimeline_Click);
             // 
             // panel2
             // 

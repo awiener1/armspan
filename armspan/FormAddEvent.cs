@@ -14,6 +14,35 @@ namespace Span.GUI
         public FormAddEvent()
         {
             InitializeComponent();
+            ExtraInit(false);
+        }
+
+        public FormAddEvent(bool a_isTask)
+        {
+            InitializeComponent();
+            ExtraInit(a_isTask);
+        }
+
+        private void ExtraInit(bool a_isTask)
+        {
+            cbType.SelectedIndex = cbType.FindStringExact(a_isTask ? "Task" : "Appointment");
+            cbCatPrim.DataSource = Category.All.Values.ToList();
+            cbCatPrim.DisplayMember = "Name";
+            cbCatPrim.ValueMember = "Id";
+        }
+
+        public bool IsTask
+        {
+            get
+            {
+                return m_isTask;
+            }
+            set
+            {
+                m_isTask = value;
+                lblTaskNum.Enabled = m_isTask;
+                nudTaskNum.Enabled = m_isTask;
+            }
         }
 
         private void btnAlarm_Click(object sender, EventArgs e)
@@ -29,7 +58,32 @@ namespace Span.GUI
 
         private void btnAddOcc_Click(object sender, EventArgs e)
         {
-            this.Close();
+            bool canClose = true;
+            if (tbName.Text.Trim().Equals(""))
+            {
+                canClose = false;
+            }
+            if (canClose)
+            {
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("One or more fields are missing");
+            }
+        }
+
+        private void FormAddEvent_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private bool m_isTask;
+
+        private void cbType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+            IsTask = (cbType.SelectedItem.ToString().Equals("Task"));
         }
     }
 }

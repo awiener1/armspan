@@ -119,7 +119,7 @@ namespace Span.GUI
 
         private void btnNewAppt_Click(object sender, EventArgs e)
         {
-            FormAddEvent popup = new FormAddEvent();
+            FormAddEvent popup = new FormAddEvent(false);
             popup.ShowDialog();
         }
 
@@ -174,6 +174,17 @@ namespace Span.GUI
         private void FormMain_Resize(object sender, EventArgs e)
         {
             DrawTimeline();
+        }
+
+        private void pbTimeline_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnNewTask_Click(object sender, EventArgs e)
+        {
+            FormAddEvent popup = new FormAddEvent(true);
+            popup.ShowDialog();
         }
 
        
