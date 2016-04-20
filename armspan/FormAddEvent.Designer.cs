@@ -186,15 +186,19 @@
             this.btnCatSec.TabIndex = 13;
             this.btnCatSec.Text = "...";
             this.btnCatSec.UseVisualStyleBackColor = true;
+            this.btnCatSec.Click += new System.EventHandler(this.btnCatSec_Click);
             // 
             // cbCatPrim
             // 
+            this.cbCatPrim.DisplayMember = "Name";
             this.cbCatPrim.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCatPrim.FormattingEnabled = true;
             this.cbCatPrim.Location = new System.Drawing.Point(65, 23);
             this.cbCatPrim.Name = "cbCatPrim";
             this.cbCatPrim.Size = new System.Drawing.Size(139, 21);
             this.cbCatPrim.TabIndex = 13;
+            this.cbCatPrim.ValueMember = "Id";
+            this.cbCatPrim.SelectedIndexChanged += new System.EventHandler(this.cbCatPrim_SelectedIndexChanged);
             // 
             // lblCatSec
             // 

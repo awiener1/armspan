@@ -29,16 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
-            "",
-            "name1"}, 0, System.Drawing.Color.Black, System.Drawing.Color.Transparent, null);
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
-            "",
-            "name2"}, 2);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAddCategories));
             this.lvCategories = new System.Windows.Forms.ListView();
-            this.chInclude = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.chName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chNameCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chNum = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tlpControls = new System.Windows.Forms.TableLayoutPanel();
             this.btnEditCat = new System.Windows.Forms.Button();
@@ -56,15 +50,10 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.lvCategories.CheckBoxes = true;
             this.lvCategories.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.chInclude,
-            this.chName});
+            this.chNameCol,
+            this.chNum});
             this.lvCategories.GridLines = true;
             this.lvCategories.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            listViewItem1.StateImageIndex = 0;
-            listViewItem2.StateImageIndex = 0;
-            this.lvCategories.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2});
             this.lvCategories.Location = new System.Drawing.Point(17, 73);
             this.lvCategories.Name = "lvCategories";
             this.lvCategories.Size = new System.Drawing.Size(501, 124);
@@ -72,16 +61,18 @@
             this.lvCategories.TabIndex = 1;
             this.lvCategories.UseCompatibleStateImageBehavior = false;
             this.lvCategories.View = System.Windows.Forms.View.Details;
+            this.lvCategories.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.lvCategories_ItemCheck);
+            this.lvCategories.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lvCategories_ItemSelectionChanged);
             // 
-            // chInclude
+            // chNameCol
             // 
-            this.chInclude.Text = "      Color";
-            this.chInclude.Width = 80;
+            this.chNameCol.Text = "      Color / Category Name";
+            this.chNameCol.Width = 340;
             // 
-            // chName
+            // chNum
             // 
-            this.chName.Text = "Category Name";
-            this.chName.Width = 300;
+            this.chNum.Text = "Number";
+            this.chNum.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // imageList1
             // 
@@ -194,8 +185,8 @@
 
         private System.Windows.Forms.ListView lvCategories;
         private System.Windows.Forms.ImageList imageList1;
-        private System.Windows.Forms.ColumnHeader chInclude;
-        private System.Windows.Forms.ColumnHeader chName;
+        private System.Windows.Forms.ColumnHeader chNameCol;
+        private System.Windows.Forms.ColumnHeader chNum;
         private System.Windows.Forms.TableLayoutPanel tlpControls;
         private System.Windows.Forms.Button btnAddCat;
         private System.Windows.Forms.Button btnSelectNone;

@@ -29,6 +29,7 @@ namespace Span.GUI
             cbCatPrim.DataSource = Category.All.Values.ToList();
             cbCatPrim.DisplayMember = "Name";
             cbCatPrim.ValueMember = "Id";
+            m_secondcats = new List<string>();
         }
 
         public bool IsTask
@@ -84,6 +85,36 @@ namespace Span.GUI
         {
             
             IsTask = (cbType.SelectedItem.ToString().Equals("Task"));
+        }
+
+        private void btnCatSec_Click(object sender, EventArgs e)
+        {
+            FormAddCategories popup = new FormAddCategories(false);
+            List<int> incats = new List<int>();
+            foreach (string id in m_secondcats){
+                int index = (int)Category.All[id].Number - 1;
+                incats.Add(index);
+               
+            }
+            popup.Checked = incats;
+            popup.Disabled = (int)Category.All[m_primarycat].Number - 1;
+            popup.ShowDialog();
+            MessageBox.Show("end");
+            
+            m_secondcats.Clear();
+            foreach (int index in popup.Checked)
+            {
+                m_secondcats.Add(Category.All.First(x => x.Value.Number == index + 1).Key);
+            }
+        }
+
+        private List<string> m_secondcats;
+        private string m_primarycat;
+        
+
+        private void cbCatPrim_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            m_primarycat = (string)cbCatPrim.SelectedValue;
         }
     }
 }

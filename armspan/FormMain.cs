@@ -138,7 +138,7 @@ namespace Span.GUI
 
         private void btnCategories_Click(object sender, EventArgs e)
         {
-            FormAddCategories popup = new FormAddCategories();
+            FormAddCategories popup = new FormAddCategories(true);
             popup.ShowDialog();
         }
 
