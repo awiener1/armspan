@@ -21,7 +21,7 @@ namespace Span
      * Denotes the unit of time in which to specify the
      * frequency of the Period.
      */
-    enum Frequency
+    public enum Frequency
     {
         /**
          * The Occurrence will reoccur in the specified
@@ -56,7 +56,7 @@ namespace Span
     }
 
    
-    class Period : JSONCapable
+    public class Period : JSONCapable
     {
 
         /**

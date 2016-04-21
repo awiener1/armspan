@@ -71,7 +71,7 @@ namespace Span
         Deleted
     };
 
-    class Occurrence : JSONCapable
+    public class Occurrence : JSONCapable
     {
         /**
          * Creates a new Occurrence from the specified times and parent id.

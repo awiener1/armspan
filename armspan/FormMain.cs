@@ -68,6 +68,10 @@ namespace Span.GUI
             foreach (string s in TimeKeeper.InDate)
             {
                 Occurrence o = Occurrence.All[s];
+                if (o.Status == OccurrenceStatus.Deleted)
+                {
+                    continue;
+                }
                 Event p = o.Parent();
                 Category prim = Category.All[p.PrimaryCategory];
 
@@ -77,8 +81,8 @@ namespace Span.GUI
                 //float endpt = (float)(endtime.TotalMinutes / bte.TotalMinutes);
                 //startpt *= pbTimeline.Width;
                 //endpt *= pbTimeline.Width;
-                float startpt = DateTimeToPixel(o.StartActual);
-                float endpt = DateTimeToPixel(o.EndActual);
+                float startpt = DateTimeToPixel(o.StartActual.ToUniversalTime());
+                float endpt = DateTimeToPixel(o.EndActual.ToUniversalTime());
                 tlg.FillRectangle(new SolidBrush(Color.White), startpt, 20f, endpt - startpt, 40f);
                 tlg.FillRectangle(new SolidBrush(Color.FromArgb(128, prim.Color)), startpt, 20f, endpt - startpt, 40f);
                 tlg.DrawRectangle(new Pen(new SolidBrush(prim.Color)), startpt, 20f, endpt - startpt, 40f);
@@ -154,7 +158,7 @@ namespace Span.GUI
 
         private void FormMain_Activated(object sender, EventArgs e)
         {
-          
+            DrawTimeline();
         }
 
         private void btnZoomOut_Click(object sender, EventArgs e)

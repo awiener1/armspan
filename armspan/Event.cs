@@ -16,7 +16,7 @@ using System.Web.Script.Serialization;
 
 namespace Span
 {
-    class Event : JSONCapable
+    public class Event : JSONCapable
     {
         /**
          * Creates a new Event from the specified information.

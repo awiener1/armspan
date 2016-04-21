@@ -110,6 +110,7 @@
             this.btnTime.TabIndex = 6;
             this.btnTime.Text = "...";
             this.btnTime.UseVisualStyleBackColor = true;
+            this.btnTime.Click += new System.EventHandler(this.btnTime_Click);
             // 
             // lblTaskNum
             // 

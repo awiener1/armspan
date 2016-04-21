@@ -116,5 +116,15 @@ namespace Span.GUI
         {
             m_primarycat = (string)cbCatPrim.SelectedValue;
         }
+
+        private void btnTime_Click(object sender, EventArgs e)
+        {
+            FormEventScheduler popup = new FormEventScheduler();
+            //TODO: change this to not be dependent on the parentid code here.
+            //for example, set up a dummy class that has no id but allows for passing.
+            popup.ParentId = "e" + Event.All.Count.ToString("x8");
+            popup.ShowDialog();
+
+        }
     }
 }

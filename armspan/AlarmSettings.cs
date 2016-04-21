@@ -71,7 +71,7 @@ namespace Span
         Weeks    
     };
 
-    class AlarmSettings : JSONCapable
+    public class AlarmSettings : JSONCapable
     {
         
 
@@ -333,7 +333,7 @@ namespace Span
      * has ended.
      * 
      */
-    struct Alarm
+    public struct Alarm
     {
         /**
          * Specifies if the alarm should go off before, during, or

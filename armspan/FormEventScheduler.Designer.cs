@@ -81,6 +81,7 @@
             this.btnRemoveOcc.TabIndex = 2;
             this.ttThin.SetToolTip(this.btnRemoveOcc, "Remove Occurrence");
             this.btnRemoveOcc.UseVisualStyleBackColor = true;
+            this.btnRemoveOcc.Click += new System.EventHandler(this.btnRemoveOcc_Click);
             // 
             // lbSchedule
             // 
@@ -144,6 +145,7 @@
             // 
             this.rbManual.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.rbManual.AutoSize = true;
+            this.rbManual.Checked = true;
             this.rbManual.Location = new System.Drawing.Point(16, 20);
             this.rbManual.Name = "rbManual";
             this.rbManual.Size = new System.Drawing.Size(59, 17);
@@ -152,6 +154,7 @@
             this.rbManual.Text = "Manual";
             this.ttThin.SetToolTip(this.rbManual, "One Manually Defined Occurrence");
             this.rbManual.UseVisualStyleBackColor = true;
+            this.rbManual.CheckedChanged += new System.EventHandler(this.rbManual_CheckedChanged);
             // 
             // lblWritten
             // 
@@ -175,6 +178,7 @@
             this.btnAddOcc.TabIndex = 3;
             this.ttThin.SetToolTip(this.btnAddOcc, "Add Occurrence");
             this.btnAddOcc.UseVisualStyleBackColor = true;
+            this.btnAddOcc.Click += new System.EventHandler(this.btnAddOcc_Click);
             // 
             // gbPeriodic
             // 

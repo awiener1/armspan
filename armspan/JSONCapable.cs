@@ -17,7 +17,7 @@ using System.Web.Script.Serialization;
 
 namespace Span
 {
-    class JSONCapable
+    public class JSONCapable
     {
         /**
          * Provides serialization functionality.
