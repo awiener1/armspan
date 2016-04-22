@@ -209,7 +209,7 @@
             // dtpOccEnd
             // 
             this.dtpOccEnd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.dtpOccEnd.CustomFormat = "M/d/yy \'at\' h:m tt";
+            this.dtpOccEnd.CustomFormat = "M/d/yy \'at\' h:mm tt";
             this.dtpOccEnd.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpOccEnd.Location = new System.Drawing.Point(179, 83);
             this.dtpOccEnd.Name = "dtpOccEnd";
@@ -301,7 +301,7 @@
             // 
             this.dtpTo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.dtpTo.CustomFormat = "M/d/yy \'at\' h:m tt";
+            this.dtpTo.CustomFormat = "M/d/yy \'at\' h:mm tt";
             this.dtpTo.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpTo.Location = new System.Drawing.Point(53, 85);
             this.dtpTo.Name = "dtpTo";
@@ -322,7 +322,7 @@
             // 
             this.dtpFrom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.dtpFrom.CustomFormat = "M/d/yy \'at\' h:m tt";
+            this.dtpFrom.CustomFormat = "M/d/yy \'at\' h:mm tt";
             this.dtpFrom.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpFrom.Location = new System.Drawing.Point(53, 58);
             this.dtpFrom.Name = "dtpFrom";
@@ -365,6 +365,7 @@
             this.MinimumSize = new System.Drawing.Size(614, 438);
             this.Name = "FormEventScheduler";
             this.Text = "FormEventScheduler";
+            this.Load += new System.EventHandler(this.FormEventScheduler_Load);
             this.Controls.SetChildIndex(this.gbSchedule, 0);
             this.Controls.SetChildIndex(this.gbNewTime, 0);
             this.Controls.SetChildIndex(this.btnOK, 0);

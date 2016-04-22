@@ -22,12 +22,11 @@ namespace Span.GUI
         {
             UpdateOptions();
             cbFrequency.SelectedIndex = cbFrequency.FindStringExact("Minutes");
-            m_manual = new List<Occurrence>();
-            m_rules = new List<Period>();
+            ////don't use, as they will be initialized by parent form
+            //m_manual = new List<Occurrence>();
+            //m_rules = new List<Period>();
 
-            //assume pre-existing schedule
-            lbSchedule.Items.AddRange(m_manual.ToArray());
-            lbSchedule.Items.AddRange(m_rules.ToArray());
+            
         
         }
 
@@ -137,6 +136,13 @@ namespace Span.GUI
                 lbSchedule.Items.Remove(thisitem);
                 m_rules.Remove(thisitem);
             }
+        }
+
+        private void FormEventScheduler_Load(object sender, EventArgs e)
+        {
+            //assume pre-existing schedule
+            lbSchedule.Items.AddRange(m_manual.ToArray());
+            lbSchedule.Items.AddRange(m_rules.ToArray());
         }
     }
 }
