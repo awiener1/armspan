@@ -156,6 +156,7 @@
             this.cbBeforeGroup.TabIndex = 3;
             this.cbBeforeGroup.Text = "Alarm Before";
             this.cbBeforeGroup.UseVisualStyleBackColor = true;
+            this.cbBeforeGroup.CheckedChanged += new System.EventHandler(this.cbBeforeGroup_CheckedChanged);
             // 
             // cbDuringGroup
             // 
@@ -167,6 +168,7 @@
             this.cbDuringGroup.TabIndex = 4;
             this.cbDuringGroup.Text = "Alarm During";
             this.cbDuringGroup.UseVisualStyleBackColor = true;
+            this.cbDuringGroup.CheckedChanged += new System.EventHandler(this.cbDuringGroup_CheckedChanged);
             // 
             // gbBefore
             // 
@@ -471,6 +473,7 @@
             this.cbAfterGroup.TabIndex = 5;
             this.cbAfterGroup.Text = "Alarm After";
             this.cbAfterGroup.UseVisualStyleBackColor = true;
+            this.cbAfterGroup.CheckedChanged += new System.EventHandler(this.cbAfterGroup_CheckedChanged);
             // 
             // gbAfter
             // 

@@ -49,6 +49,31 @@ namespace Span.GUI
                 ddl.SelectedIndex = ddl.FindStringExact("Minutes");
             }
 
+            List<Alarm> oldbefore = m_settings.Alarms.Where(x => x.m_relativePlace == When.Before).ToList();
+            List<Alarm> oldduring = m_settings.Alarms.Where(x => x.m_relativePlace == When.During).ToList();
+            List<Alarm> oldafter = m_settings.Alarms.Where(x => x.m_relativePlace == When.After).ToList();
+
+            for (int i = 0; i < oldbefore.Count; i++)
+            {
+                cbBeforeList[i].Checked = true;
+                nudBeforeList[i].Value = oldbefore[i].m_timeLength;
+                ddlBeforeList[i].SelectedIndex = ddlBeforeList[i].FindStringExact(oldbefore[i].m_timeUnit.ToString());
+            }
+
+            for (int i = 0; i < oldduring.Count; i++)
+            {
+                cbDuringList[i].Checked = true;
+                nudDuringList[i].Value = oldduring[i].m_timeLength;
+                ddlDuringList[i].SelectedIndex = ddlDuringList[i].FindStringExact(oldduring[i].m_timeUnit.ToString());
+            }
+
+            for (int i = 0; i < oldafter.Count; i++)
+            {
+                cbAfterList[i].Checked = true;
+                nudAfterList[i].Value = oldafter[i].m_timeLength;
+                ddlAfterList[i].SelectedIndex = ddlAfterList[i].FindStringExact(oldafter[i].m_timeUnit.ToString());
+            }
+
             //MessageBox.Show(string.Join(", ", cbBeforeList.Select(o => o.Name).ToArray()));
             //MessageBox.Show(string.Join(", ", nudBeforeList.Select(o => o.Name).ToArray()));
             //MessageBox.Show(string.Join(", ", ddlBeforeList.Select(o => o.Name).ToArray()));
@@ -62,10 +87,48 @@ namespace Span.GUI
         private void FormAlarmSettings_Load(object sender, EventArgs e)
         {
             InitializeControlLists();
+            cbBeforeGroup.Checked = true;
+            cbDuringGroup.Checked = true;
+            cbAfterGroup.Checked = true;
+
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
+            m_settings.Alarms.Clear();
+            for (int i = 0; i < cbBeforeList.Count; i++)
+            {
+                if (!cbBeforeList[i].Checked)
+                {
+                    continue;
+                }
+                Alarm thisAlarm = new Alarm(When.Before, (uint)nudBeforeList[i].Value, (Length)Enum.Parse(typeof(Length), (string)ddlBeforeList[i].SelectedItem));
+                m_settings.Alarms.Add(thisAlarm);
+            }
+
+            for (int i = 0; i < cbDuringList.Count; i++)
+            {
+                if (!cbDuringList[i].Checked)
+                {
+                    continue;
+                }
+                Alarm thisAlarm = new Alarm(When.During, (uint)nudDuringList[i].Value, (Length)Enum.Parse(typeof(Length), (string)ddlDuringList[i].SelectedItem));
+                m_settings.Alarms.Add(thisAlarm);
+            }
+
+            for (int i = 0; i < cbAfterList.Count; i++)
+            {
+                if (!cbAfterList[i].Checked)
+                {
+                    continue;
+                }
+                Alarm thisAlarm = new Alarm(When.After, (uint)nudAfterList[i].Value, (Length)Enum.Parse(typeof(Length), (string)ddlAfterList[i].SelectedItem));
+                m_settings.Alarms.Add(thisAlarm);
+            }
+
+            //REPEAT FOR DURING AND AFTER!!!!!
+
+
             this.Close();
         }
 
@@ -79,5 +142,34 @@ namespace Span.GUI
         private List<NumericUpDown> nudAfterList;
         private List<ComboBox> ddlAfterList;
         private List<ComboBox> ddlAllList;
+
+        private AlarmSettings m_settings;
+
+        public AlarmSettings Settings
+        {
+            get
+            {
+                return m_settings;
+            }
+            set
+            {
+                m_settings = value;
+            }
+        }
+
+        private void cbBeforeGroup_CheckedChanged(object sender, EventArgs e)
+        {
+            gbBefore.Enabled = cbBeforeGroup.Checked;
+        }
+
+        private void cbDuringGroup_CheckedChanged(object sender, EventArgs e)
+        {
+            gbDuring.Enabled = cbDuringGroup.Checked;
+        }
+
+        private void cbAfterGroup_CheckedChanged(object sender, EventArgs e)
+        {
+            gbAfter.Enabled = cbAfterGroup.Checked;
+        }
     }
 }

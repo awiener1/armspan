@@ -34,6 +34,7 @@ namespace Span.GUI
             m_secondcats = new List<string>();
             m_manualocc = new List<Occurrence>();
             m_rules = new List<Period>();
+            m_settings = new AlarmSettings("");
         }
 
         public bool IsTask
@@ -53,7 +54,9 @@ namespace Span.GUI
         private void btnAlarm_Click(object sender, EventArgs e)
         {
             FormAlarmSettings popup = new FormAlarmSettings();
+            popup.Settings = m_settings;
             popup.ShowDialog();
+            m_settings = popup.Settings;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -70,9 +73,26 @@ namespace Span.GUI
             {
                 canClose = false;
             }
+            if (m_manualocc.Count == 0 && m_rules.Count == 0)
+            {
+                canClose = false;
+            }
+            if (m_settings == null)
+            {
+                canClose = false;
+            }
             if (canClose)
             {
+                m_newevent.Name = tbName.Text.Trim();
+                m_newevent.PrimaryCategory = m_primarycat;
+                m_newevent.SecondaryCategories = m_secondcats;
+                m_newevent.ManualOccurrences = m_manualocc;
+                m_newevent.Rules = m_rules;
+                m_newevent.Alarms = new AlarmSettings(m_settings, m_newevent.FirstOccurrence().Id);
+                m_newevent.Location = tbLocation.Text.Trim();
+                m_newevent.Description = tbDesc.Text.Trim();
                 this.Close();
+                //check overlapping here
             }
             else
             {
@@ -119,6 +139,7 @@ namespace Span.GUI
         private Event m_newevent;
         private List<Occurrence> m_manualocc;
         private List<Period> m_rules;
+        private AlarmSettings m_settings;
         
 
         private void cbCatPrim_SelectedIndexChanged(object sender, EventArgs e)
