@@ -63,8 +63,32 @@ namespace Span.GUI
             //float nowpt = (float)(nowst.TotalMinutes / bte.TotalMinutes);
             //nowpt *= pbTimeline.Width;
             float nowpt = DateTimeToPixel(TimeKeeper.Now);
-            tlg.DrawLine(nowDasher, nowpt, 0, nowpt, pbTimeline.Height);
+            //offset by 2 so it is easier to see next to hours
+            tlg.DrawLine(nowDasher, nowpt, 2, nowpt, pbTimeline.Height);
             tlg.FillPolygon(new SolidBrush(Color.Black), new PointF[] { new PointF(nowpt - 10.5f, -0.5f), new PointF(nowpt + 10.5f, -0.5f), new PointF(nowpt, 10.5f) });
+            Dictionary<string, int> primCatHeight = new Dictionary<string, int>();
+            int offset = 0;
+            foreach (string s in TimeKeeper.InDate)
+            {
+                Occurrence o = Occurrence.All[s];
+                if (o.Status == OccurrenceStatus.Deleted || o.Status == OccurrenceStatus.Canceled)
+                {
+                    continue;
+                }
+                if (!o.Parent().Exists)
+                {
+                    continue;
+                }
+                string newprim = Occurrence.All[s].Parent().PrimaryCategory;
+                if (!primCatHeight.ContainsKey(newprim))
+                {
+                    primCatHeight.Add(newprim, offset);
+                    offset++;
+                }
+            }
+            
+            float occSpacing = (float)(pbTimeline.Height - 20) / (float)offset;
+            float occHeight = occSpacing * 0.75f;
             foreach (string s in TimeKeeper.InDate)
             {
                 Occurrence o = Occurrence.All[s];
@@ -77,8 +101,9 @@ namespace Span.GUI
                 {
                     continue;
                 }
+                tlg.ResetClip();
                 Category prim = Category.All[p.PrimaryCategory];
-
+                float ycoord = primCatHeight[p.PrimaryCategory] * occSpacing + 20f;
                 //TimeSpan starttime = o.StartActual - TimeKeeper.Begin;
                 //TimeSpan endtime = o.EndActual - TimeKeeper.Begin;
                 //float startpt = (float)(starttime.TotalMinutes / bte.TotalMinutes);
@@ -87,9 +112,24 @@ namespace Span.GUI
                 //endpt *= pbTimeline.Width;
                 float startpt = DateTimeToPixel(o.StartActual.ToUniversalTime());
                 float endpt = DateTimeToPixel(o.EndActual.ToUniversalTime());
-                tlg.FillRectangle(new SolidBrush(Color.White), startpt, 20f, endpt - startpt, 40f);
-                tlg.FillRectangle(new SolidBrush(Color.FromArgb(128, prim.Color)), startpt, 20f, endpt - startpt, 40f);
-                tlg.DrawRectangle(new Pen(new SolidBrush(prim.Color)), startpt, 20f, endpt - startpt, 40f);
+                RectangleF occRect = new RectangleF(startpt, ycoord, endpt - startpt, occHeight);
+                tlg.FillRectangle(new SolidBrush(Color.White), occRect);
+                tlg.FillRectangle(new SolidBrush(Color.FromArgb(128, prim.Color)), occRect);
+                tlg.DrawRectangle(new Pen(new SolidBrush(prim.Color)), occRect.Left, occRect.Top, occRect.Width, occRect.Height);
+                tlg.Clip = new Region(occRect);
+                PointF occPt = new PointF(occRect.Left + 3, occRect.Top + 3);
+                string occCats = String.Join(", ", p.Categories.Select(x => Category.All[x].Name));
+                SizeF firstLine = tlg.MeasureString(occCats, this.Font);
+                tlg.DrawString(occCats, this.Font, new SolidBrush(Color.Black), occPt);
+                string occTimePlace = o.StartActual.ToShortTimeString() + " - " + o.EndActual.ToShortTimeString();
+                if (p.Location != "")
+                {
+                    occTimePlace += " at " + p.Location;
+                }
+                tlg.DrawString(occTimePlace, this.Font, new SolidBrush(Color.Black), occPt.X, occPt.Y + firstLine.Height);
+                tlg.DrawString(p.Name, new Font(this.Font, FontStyle.Bold), new SolidBrush(Color.Black), occPt.X, occPt.Y + firstLine.Height * 2);
+                RectangleF occDescRect = new RectangleF(occPt.X, occPt.Y + firstLine.Height * 3, occRect.Width - 3, occRect.Height - (3 + firstLine.Height * 3));
+                tlg.DrawString(p.Description, this.Font, new SolidBrush(Color.Black), occDescRect);
             }
 
             pbTimeline.Image = tl;
