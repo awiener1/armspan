@@ -19,6 +19,10 @@ namespace Span.GUI
 
         private void btnPostponeFive_Click(object sender, EventArgs e)
         {
+            var distinctOccurrences = Alarms.Select(x => x.Value).Distinct();
+            foreach (Occurrence occ in distinctOccurrences){
+                occ.Postpone(5);
+            }
             this.Close();
         }
 
@@ -31,13 +35,15 @@ namespace Span.GUI
             DisplayAlarm(0);
         }
 
-        private void UpdateList()
+        public void UpdateList()
         {
+            object olditem = lbNext.SelectedItem;
             lbNext.Items.Clear();
-            foreach (Occurrence occ in Alarms.Values)
+            foreach (var occ in Alarms)
             {
-                lbNext.Items.Add(occ.Parent().Name);
+                lbNext.Items.Add(occ.Value.Parent().Name + " " + occ.Key.ToShortTimeString());
             }
+            lbNext.SelectedItem = olditem;
         }
 
         private void DisplayAlarm(uint index)
@@ -64,6 +70,7 @@ namespace Span.GUI
             //how to convert text to rich text automatically
             RichTextBox temp = new RichTextBox();
             temp.Text = thisOcc.Parent().Name;
+            temp.Text += " " + thisOcc.Parent().Alarms.SingleAlarmTime(thisAlarm).ToShortTimeString();
             string richname = temp.Rtf;
             int start = richname.IndexOf(@"\fs17") + 6;
             int length = richname.LastIndexOf(@"\par") - start;
@@ -76,6 +83,7 @@ namespace Span.GUI
 
             //MessageBox.Show(richtext);
             rtbAlarm.Rtf = richtext;
+            m_settings = thisOcc.Parent().Alarms;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -103,7 +111,7 @@ namespace Span.GUI
         }
 
         private Dictionary<DateTime, Occurrence> m_alarms;
-
+        private AlarmSettings m_settings;
 
         public Dictionary<DateTime, Occurrence> Alarms
         {
@@ -138,6 +146,7 @@ namespace Span.GUI
             if (Alarms.Count > 0)
             {
                 UpdateList();
+                lbNext.SelectedIndex = 0;
                 DisplayAlarm(0);
             }
             else
@@ -152,6 +161,18 @@ namespace Span.GUI
             var toConfirm = Alarms.ElementAt(lbNext.SelectedIndex);
             toConfirm.Value.Postpone((uint)nudPostponeOcc.Value);
             RemoveAlarm(toConfirm);
+            //due to alarm changes, close.
+            this.Close();
+        }
+
+        private void btnAlarmSet_Click(object sender, EventArgs e)
+        {
+            FormAlarmSettings popup = new FormAlarmSettings();
+            popup.Settings = new AlarmSettings(m_settings.ParentId, m_settings.Alarms);
+            popup.ShowDialog();
+            Alarms.ElementAt(lbNext.SelectedIndex).Value.Parent().Alarms.Alarms = popup.Settings.Alarms;
+            //due to alarm changes, close and possibly reopen in ten seconds
+            this.Close();
         }
 
         

@@ -158,6 +158,7 @@
             this.btnAlarmSet.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.ttThin.SetToolTip(this.btnAlarmSet, "Change Alarm Settings");
             this.btnAlarmSet.UseVisualStyleBackColor = true;
+            this.btnAlarmSet.Click += new System.EventHandler(this.btnAlarmSet_Click);
             // 
             // nudPostponeOcc
             // 
@@ -291,7 +292,6 @@
             this.MinimumSize = new System.Drawing.Size(564, 8);
             this.Name = "FormAlarmWindow";
             this.Text = "FormAlarmWindow";
-           
             this.Load += new System.EventHandler(this.FormAlarmWindow_Load);
             this.Controls.SetChildIndex(this.gbCurrent, 0);
             this.Controls.SetChildIndex(this.btnPostponeFive, 0);

@@ -68,7 +68,7 @@ namespace Span.GUI
             foreach (string s in TimeKeeper.InDate)
             {
                 Occurrence o = Occurrence.All[s];
-                if (o.Status == OccurrenceStatus.Deleted)
+                if (o.Status == OccurrenceStatus.Deleted || o.Status == OccurrenceStatus.Canceled)
                 {
                     continue;
                 }
@@ -215,6 +215,7 @@ namespace Span.GUI
                 }
 
                 popup.Alarms = alarmOccs;
+                popup.UpdateList();
                 if (isNewForm)
                 {
                     popup.ShowDialog();
