@@ -27,6 +27,7 @@ namespace Span.GUI
         private void FormAlarmWindow_Load(object sender, EventArgs e)
         {
             UpdateList();
+            lbNext.SelectedIndex = 0;
             DisplayAlarm(0);
         }
 
@@ -79,20 +80,30 @@ namespace Span.GUI
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            
+            var toConfirm = Alarms.ElementAt(lbNext.SelectedIndex);
+            toConfirm.Value.Cancel();
+            toConfirm.Value.Confirm();
+            RemoveAlarm(toConfirm);
         }
 
         private void btnIgnore_Click(object sender, EventArgs e)
         {
-           
+            var toConfirm = Alarms.ElementAt(lbNext.SelectedIndex);
+            toConfirm.Value.Ignore();
+            toConfirm.Value.Confirm();
+            RemoveAlarm(toConfirm);
         }
 
         private void btnNow_Click(object sender, EventArgs e)
         {
-            
+            var toConfirm = Alarms.ElementAt(lbNext.SelectedIndex);
+            toConfirm.Value.StartNow();
+            toConfirm.Value.Confirm();
+            RemoveAlarm(toConfirm);
         }
 
         private Dictionary<DateTime, Occurrence> m_alarms;
+
 
         public Dictionary<DateTime, Occurrence> Alarms
         {
@@ -111,5 +122,38 @@ namespace Span.GUI
         {
             DisplayAlarm((uint)lbNext.SelectedIndex);
         }
+
+        private void btnAffirm_Click(object sender, EventArgs e)
+        {
+            var toConfirm = Alarms.ElementAt(lbNext.SelectedIndex);
+            toConfirm.Value.Confirm();
+            RemoveAlarm(toConfirm);
+        }
+
+        private void RemoveAlarm(KeyValuePair<DateTime, Occurrence> toConfirm)
+        {
+            
+            
+            Alarms.Remove(toConfirm.Key);
+            if (Alarms.Count > 0)
+            {
+                UpdateList();
+                DisplayAlarm(0);
+            }
+            else
+            {
+                this.Close();
+
+            }
+        }
+
+        private void btnPostpone_Click(object sender, EventArgs e)
+        {
+            var toConfirm = Alarms.ElementAt(lbNext.SelectedIndex);
+            toConfirm.Value.Postpone((uint)nudPostponeOcc.Value);
+            RemoveAlarm(toConfirm);
+        }
+
+        
     }
 }

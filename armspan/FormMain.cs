@@ -211,6 +211,7 @@ namespace Span.GUI
                 {
                     isNewForm = true;
                     popup = new FormAlarmWindow();
+                    
                 }
 
                 popup.Alarms = alarmOccs;

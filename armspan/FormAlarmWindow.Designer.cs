@@ -142,6 +142,7 @@
             this.btnAffirm.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.ttThin.SetToolTip(this.btnAffirm, "Affirm");
             this.btnAffirm.UseVisualStyleBackColor = true;
+            this.btnAffirm.Click += new System.EventHandler(this.btnAffirm_Click);
             // 
             // btnAlarmSet
             // 
@@ -197,6 +198,7 @@
             this.btnPostpone.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.ttThin.SetToolTip(this.btnPostpone, "Postpone");
             this.btnPostpone.UseVisualStyleBackColor = true;
+            this.btnPostpone.Click += new System.EventHandler(this.btnPostpone_Click);
             // 
             // pnlCurrent
             // 
@@ -289,6 +291,7 @@
             this.MinimumSize = new System.Drawing.Size(564, 8);
             this.Name = "FormAlarmWindow";
             this.Text = "FormAlarmWindow";
+           
             this.Load += new System.EventHandler(this.FormAlarmWindow_Load);
             this.Controls.SetChildIndex(this.gbCurrent, 0);
             this.Controls.SetChildIndex(this.btnPostponeFive, 0);
