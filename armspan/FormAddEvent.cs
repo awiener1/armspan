@@ -25,7 +25,8 @@ namespace Span.GUI
 
         private void ExtraInit(bool a_isTask)
         {
-            m_newevent = new Event(false, "", new List<Occurrence>(), new List<Period>(), "", new List<string>(), null, "");
+            m_newevent = new Event(false, "", new List<Occurrence>(), new List<Period>(), "", new List<string>(), new AlarmSettings(""), "");
+            m_newevent.Exists = false;
             //make sure alarms are filled
             cbType.SelectedIndex = cbType.FindStringExact(a_isTask ? "Task" : "Appointment");
             cbCatPrim.DataSource = Category.All.Values.ToList();
@@ -91,6 +92,10 @@ namespace Span.GUI
                 m_newevent.Alarms = new AlarmSettings(m_settings, m_newevent.FirstOccurrence().Id);
                 m_newevent.Location = tbLocation.Text.Trim();
                 m_newevent.Description = tbDesc.Text.Trim();
+                m_newevent.Exists = true;
+                TimeKeeper.Update();
+                MessageBox.Show(m_newevent.FirstOccurrence().AlarmTimes().Count().ToString());
+                
                 this.Close();
                 //check overlapping here
             }

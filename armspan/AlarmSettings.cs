@@ -168,7 +168,7 @@ namespace Span
                 }
                 /*COMMENT OUT THE IF STATEMENT BELOW TO CHECK IF ALARMS ARE BEING DEALT WITH PROPERLY.*/
                 //if the occurrence has ended, only after-alarms should go off.
-                if (alarm.m_relativePlace != When.After && parent.EndActual < TimeKeeper.Now)
+                if (alarm.m_relativePlace != When.After && parent.EndActual < TimeKeeper.Now.ToLocalTime())
                 {
                     continue;
                 }

@@ -26,7 +26,55 @@ namespace Span.GUI
 
         private void FormAlarmWindow_Load(object sender, EventArgs e)
         {
-            rtbAlarm.Rtf = @"{\rtf0\ansi Are you getting ready for \b An Event\b0 ?}";
+            UpdateList();
+            DisplayAlarm(0);
+        }
+
+        private void UpdateList()
+        {
+            lbNext.Items.Clear();
+            foreach (Occurrence occ in Alarms.Values)
+            {
+                lbNext.Items.Add(occ.Parent().Name);
+            }
+        }
+
+        private void DisplayAlarm(uint index)
+        {
+            Occurrence thisOcc = Alarms.ElementAt((int)index).Value;
+            DateTime thisTime = Alarms.ElementAt((int)index).Key;
+            string richtext = @"{\rtf0\ansi ";
+            Alarm thisAlarm = thisOcc.Parent().Alarms.Alarms.Where(x => thisOcc.Parent().Alarms.SingleAlarmTime(x).Equals(thisTime)).ElementAt(0);
+            switch (thisAlarm.m_relativePlace)
+            {
+                case When.Before:
+                    richtext += @"Are you getting ready for \b <EVNM>\b0 ?";
+                    break;
+                case When.During:
+                    richtext += @"Is \b <EVNM>\b0  occurring?";
+                    break;
+                case When.After:
+                    richtext += @"Did \b <EVNM>\b0  occur on time?";
+                    break;
+            }
+            richtext += "}";
+
+            //CITE: http://stackoverflow.com/a/4795785
+            //how to convert text to rich text automatically
+            RichTextBox temp = new RichTextBox();
+            temp.Text = thisOcc.Parent().Name;
+            string richname = temp.Rtf;
+            int start = richname.IndexOf(@"\fs17") + 6;
+            int length = richname.LastIndexOf(@"\par") - start;
+            richname = richname.Substring(start, length);
+            Color thisColor = Category.All[thisOcc.Parent().PrimaryCategory].Color;
+            pnlCurrent.BackColor = thisColor;
+            rtbAlarm.BackColor = ControlPaint.LightLight(thisColor);
+
+            richtext = richtext.Replace("<EVNM>", richname);
+
+            //MessageBox.Show(richtext);
+            rtbAlarm.Rtf = richtext;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -42,6 +90,26 @@ namespace Span.GUI
         private void btnNow_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private Dictionary<DateTime, Occurrence> m_alarms;
+
+        public Dictionary<DateTime, Occurrence> Alarms
+        {
+            get
+            {
+                return m_alarms;
+            }
+
+            set
+            {
+                m_alarms = value;
+            }
+        }
+
+        private void lbNext_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DisplayAlarm((uint)lbNext.SelectedIndex);
         }
     }
 }

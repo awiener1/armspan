@@ -73,6 +73,10 @@ namespace Span.GUI
                     continue;
                 }
                 Event p = o.Parent();
+                if (!p.Exists)
+                {
+                    continue;
+                }
                 Category prim = Category.All[p.PrimaryCategory];
 
                 //TimeSpan starttime = o.StartActual - TimeKeeper.Begin;
@@ -189,6 +193,38 @@ namespace Span.GUI
         {
             FormAddEvent popup = new FormAddEvent(true);
             popup.ShowDialog();
+        }
+
+        private void tmWhole_Tick(object sender, EventArgs e)
+        {
+            DrawTimeline();
+            Dictionary<DateTime, Occurrence> alarmOccs = TimeKeeper.Alarms.Where(x => (x.Key <= TimeKeeper.Now.ToLocalTime())).ToDictionary(x => x.Key, x => x.Value);
+            if (alarmOccs.Count() > 0)
+            {
+                FormAlarmWindow popup;
+                bool isNewForm = false;
+
+                //CITE: http://stackoverflow.com/q/3861602
+                //to only open a form if it isn't already open
+                popup = (FormAlarmWindow)Application.OpenForms["FormAlarmWindow"];
+                if (popup == null)
+                {
+                    isNewForm = true;
+                    popup = new FormAlarmWindow();
+                }
+
+                popup.Alarms = alarmOccs;
+                if (isNewForm)
+                {
+                    popup.ShowDialog();
+                }
+               //MessageBox.Show( alarmOccs.ElementAt(0).ToString());
+            }
+           
+            //if (TimeKeeper.Alarms.Count > 0)
+            //{
+            //    MessageBox.Show(TimeKeeper.Alarms.Count.ToString());
+            //}
         }
 
        

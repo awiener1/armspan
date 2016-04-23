@@ -276,6 +276,7 @@
             this.lbNext.ScrollAlwaysVisible = true;
             this.lbNext.Size = new System.Drawing.Size(450, 82);
             this.lbNext.TabIndex = 0;
+            this.lbNext.SelectedIndexChanged += new System.EventHandler(this.lbNext_SelectedIndexChanged);
             // 
             // FormAlarmWindow
             // 

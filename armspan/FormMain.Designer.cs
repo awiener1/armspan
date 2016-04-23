@@ -80,6 +80,7 @@
             this.tlpZoom = new System.Windows.Forms.TableLayoutPanel();
             this.btnZoomOut = new System.Windows.Forms.Button();
             this.btnZoomIn = new System.Windows.Forms.Button();
+            this.tmWhole = new System.Windows.Forms.Timer(this.components);
             this.toolStrip1.SuspendLayout();
             this.pnlNow.SuspendLayout();
             this.pnlTimeline.SuspendLayout();
@@ -704,6 +705,12 @@
             this.btnZoomIn.UseVisualStyleBackColor = true;
             this.btnZoomIn.Click += new System.EventHandler(this.btnZoomIn_Click);
             // 
+            // tmWhole
+            // 
+            this.tmWhole.Enabled = true;
+            this.tmWhole.Interval = 10000;
+            this.tmWhole.Tick += new System.EventHandler(this.tmWhole_Tick);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -796,6 +803,7 @@
         private System.Windows.Forms.TableLayoutPanel tlpZoom;
         private System.Windows.Forms.Button btnZoomOut;
         private System.Windows.Forms.Button btnZoomIn;
+        private System.Windows.Forms.Timer tmWhole;
 
 
     }
