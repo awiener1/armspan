@@ -60,10 +60,14 @@ namespace Span
                 }
             }
             //get all occurrences happening now
+            
             partial = Occurrence.All.Where
-                (x => x.Value.StartActual <= m_now && x.Value.EndActual > m_now);
+                (x => x.Value.StartActual <= m_now.ToLocalTime() && x.Value.EndActual > m_now.ToLocalTime());
             Dictionary<string, Occurrence> tempp = partial.ToDictionary(x => x.Key, x => x.Value);
-            m_current = partial.ToDictionary(x => x.Key, x => x.Value).Keys.ToList();
+            m_current = partial.Select(x => x.Key).ToList();
+            m_current.RemoveAll(x => Occurrence.All[x].Status == OccurrenceStatus.Canceled 
+                || Occurrence.All[x].Status == OccurrenceStatus.Deleted 
+                || !Occurrence.All[x].Parent().Exists); 
         }
 
         /**
@@ -75,7 +79,7 @@ namespace Span
             get
             {
                 DateTime precise = DateTime.Now.ToUniversalTime();
-                m_now = new DateTime(precise.Year, precise.Month, precise.Day, precise.Hour, precise.Minute, 0);
+                m_now = new DateTime(precise.Year, precise.Month, precise.Day, precise.Hour, precise.Minute, 0, 0);
                 return m_now;
             }
         }
@@ -97,6 +101,15 @@ namespace Span
             get
             {
                 return new ReadOnlyCollection<string>(m_inDate);
+            }
+        }
+
+        //TODO: document
+        public static ReadOnlyCollection<string> Current
+        {
+            get
+            {
+                return new ReadOnlyCollection<string>(m_current);
             }
         }
 

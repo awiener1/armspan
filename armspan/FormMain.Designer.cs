@@ -47,6 +47,7 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.pnlNow = new System.Windows.Forms.Panel();
             this.gbNow = new System.Windows.Forms.GroupBox();
+            this.tlpNow = new System.Windows.Forms.TableLayoutPanel();
             this.pnlTimeline = new System.Windows.Forms.Panel();
             this.pbTimeline = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -83,6 +84,7 @@
             this.tmWhole = new System.Windows.Forms.Timer(this.components);
             this.toolStrip1.SuspendLayout();
             this.pnlNow.SuspendLayout();
+            this.gbNow.SuspendLayout();
             this.pnlTimeline.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbTimeline)).BeginInit();
             this.panel2.SuspendLayout();
@@ -307,12 +309,31 @@
             this.gbNow.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbNow.Controls.Add(this.tlpNow);
             this.gbNow.Location = new System.Drawing.Point(9, 8);
             this.gbNow.Name = "gbNow";
             this.gbNow.Size = new System.Drawing.Size(1003, 122);
             this.gbNow.TabIndex = 0;
             this.gbNow.TabStop = false;
             this.gbNow.Text = "Now";
+            // 
+            // tlpNow
+            // 
+            this.tlpNow.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tlpNow.ColumnCount = 5;
+            this.tlpNow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpNow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpNow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpNow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpNow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpNow.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.AddColumns;
+            this.tlpNow.Location = new System.Drawing.Point(15, 21);
+            this.tlpNow.Name = "tlpNow";
+            this.tlpNow.RowCount = 1;
+            this.tlpNow.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tlpNow.Size = new System.Drawing.Size(973, 88);
+            this.tlpNow.TabIndex = 0;
             // 
             // pnlTimeline
             // 
@@ -734,6 +755,7 @@
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.pnlNow.ResumeLayout(false);
+            this.gbNow.ResumeLayout(false);
             this.pnlTimeline.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbTimeline)).EndInit();
             this.panel2.ResumeLayout(false);
@@ -804,6 +826,7 @@
         private System.Windows.Forms.Button btnZoomOut;
         private System.Windows.Forms.Button btnZoomIn;
         private System.Windows.Forms.Timer tmWhole;
+        private System.Windows.Forms.TableLayoutPanel tlpNow;
 
 
     }

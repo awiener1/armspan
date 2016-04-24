@@ -152,7 +152,84 @@ namespace Span.GUI
             int newMax = pnlTimeline.HorizontalScroll.Maximum;
             float newpos = newScroll / newMax;
             //MessageBox.Show(oldMax + " " + newMax);
+            UpdateNow();
         }
+
+        private void UpdateNow()
+        {
+            
+            
+            var curnew = TimeKeeper.Current.Where(x => !m_current.Contains(x));
+            var curold = m_current.Where(x => !TimeKeeper.Current.Contains(x)).ToList();
+            
+            //rtbOccurrence.Text = "New:" + curnew.Count() + "\n";
+            foreach (string occ in curnew)
+            {
+                m_currentView.Add(occ, new RichTextBox());
+                
+                //rtbOccurrence.Text += Occurrence.All[occ].Parent().Name + "\n";
+                m_currentView[occ].Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
+                m_currentView[occ].ReadOnly = true;
+
+                
+
+                tlpNow.Controls.Add(m_currentView[occ]);
+                m_currentView[occ].Click += new EventHandler(rtbOccurrenceNow_Click);
+                
+               
+                m_current.Add(occ);
+            }
+            //rtbOccurrence.Text += "Old:" + curold.Count() + "\n";
+            foreach (string occ in curold)
+            {
+                tlpNow.Controls.Remove(m_currentView[occ]);
+                m_currentView.Remove(occ);
+                m_current.Remove(occ);
+                //rtbOccurrence.Text += Occurrence.All[occ].Parent().Name + "\n";
+            }
+            //rtbOccurrence.Text += "Current:" + m_current.Count + "\n";
+            foreach (string occ in m_current)
+            {
+                Occurrence thisOcc = Occurrence.All[occ];
+                Color thisColor = Category.All[thisOcc.Parent().PrimaryCategory].Color;
+                m_currentView[occ].BackColor = ControlPaint.LightLight(thisColor);
+                m_currentView[occ].ForeColor = ControlPaint.DarkDark(thisColor);
+                string occCats = String.Join(", ", thisOcc.Parent().Categories.Select(x => Category.All[x].Name));
+                m_currentView[occ].Text = occCats + "\n";
+                m_currentView[occ].AppendText(thisOcc.StartActual.ToShortTimeString() + " - " + thisOcc.EndActual.ToShortTimeString());
+                if (thisOcc.Parent().Location != "")
+                {
+                    m_currentView[occ].AppendText(" at " + thisOcc.Parent().Location);
+                }
+                m_currentView[occ].AppendText("\n");
+                m_currentView[occ].SelectionFont = new Font(m_currentView[occ].Font, FontStyle.Bold);
+                m_currentView[occ].AppendText(thisOcc.Parent().Name);
+                m_currentView[occ].SelectionFont = m_currentView[occ].Font;
+                m_currentView[occ].AppendText("\n" + thisOcc.Parent().Description);
+                //rtbOccurrence.Text += Occurrence.All[occ].Parent().Name + "\n";
+                m_currentView[occ].BorderStyle = occ.Equals(m_selected) ? BorderStyle.Fixed3D : BorderStyle.None;
+                m_currentView[occ].SelectionStart = 0;
+                m_currentView[occ].Enabled = false;
+                m_currentView[occ].Enabled = true;
+                
+                
+            }
+            foreach (ColumnStyle tlpcs in tlpNow.ColumnStyles)
+            {
+                tlpcs.SizeType = SizeType.Percent;
+                tlpcs.Width = 100 / tlpNow.ColumnCount;
+            }
+        }
+
+        private void rtbOccurrenceNow_Click(object sender, System.EventArgs e)
+        {
+            string selOcc = m_currentView.First(x => x.Value.Equals(sender)).Key;
+            m_selected = selOcc;
+            DrawTimeline();
+        }
+
+        private List<string> m_current;
+        private Dictionary<string, RichTextBox> m_currentView;
 
         private void FormMain_Load(object sender, EventArgs e)
         {
@@ -160,6 +237,8 @@ namespace Span.GUI
             rtbOccurrence.Rtf = @"{\rtf0\ansi But this is \b different \b0 text, somehow.}";
             m_selected = "";
             m_occurrenceGraphics = new Dictionary<string, RectangleF>();
+            m_current = new List<string>();
+            m_currentView = new Dictionary<string, RichTextBox>();
             DrawTimeline();
         }
 
