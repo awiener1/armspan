@@ -88,7 +88,7 @@ namespace Span.GUI
             }
             
             float occSpacing = (float)(pbTimeline.Height - 20) / (float)offset;
-            float occHeight = occSpacing * 0.75f;
+            float occHeight = occSpacing * 0.9f;
             foreach (string s in TimeKeeper.InDate)
             {
                 Occurrence o = Occurrence.All[s];
@@ -113,6 +113,8 @@ namespace Span.GUI
                 float startpt = DateTimeToPixel(o.StartActual.ToUniversalTime());
                 float endpt = DateTimeToPixel(o.EndActual.ToUniversalTime());
                 RectangleF occRect = new RectangleF(startpt, ycoord, endpt - startpt, occHeight);
+                m_occurrenceGraphics[o.Id] = occRect;
+                
                 tlg.FillRectangle(new SolidBrush(Color.White), occRect);
                 tlg.FillRectangle(new SolidBrush(Color.FromArgb(128, prim.Color)), occRect);
                 tlg.DrawRectangle(new Pen(new SolidBrush(prim.Color)), occRect.Left, occRect.Top, occRect.Width, occRect.Height);
@@ -131,6 +133,13 @@ namespace Span.GUI
                 RectangleF occDescRect = new RectangleF(occPt.X, occPt.Y + firstLine.Height * 3, occRect.Width - 3, occRect.Height - (3 + firstLine.Height * 3));
                 tlg.DrawString(p.Description, this.Font, new SolidBrush(Color.Black), occDescRect);
             }
+            tlg.ResetClip();
+            if (m_selected != "")
+            {
+                RectangleF selRect = m_occurrenceGraphics[m_selected];
+                tlg.DrawRectangle(new Pen(new SolidBrush(Color.Red), 4.0f), selRect.Left, selRect.Top, selRect.Width, selRect.Height);
+            }
+            
 
             pbTimeline.Image = tl;
 
@@ -149,6 +158,8 @@ namespace Span.GUI
         {
             rtbTask.Rtf = @"{\rtf0\ansi Some \b text \b0 is now bold.}";
             rtbOccurrence.Rtf = @"{\rtf0\ansi But this is \b different \b0 text, somehow.}";
+            m_selected = "";
+            m_occurrenceGraphics = new Dictionary<string, RectangleF>();
             DrawTimeline();
         }
 
@@ -200,6 +211,9 @@ namespace Span.GUI
             popup.ShowDialog();
         }
 
+        private Dictionary<string, RectangleF> m_occurrenceGraphics;
+        private string m_selected;
+
         private void FormMain_Activated(object sender, EventArgs e)
         {
             DrawTimeline();
@@ -226,7 +240,17 @@ namespace Span.GUI
 
         private void pbTimeline_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                string occ = m_occurrenceGraphics.First(x => Rectangle.Round(x.Value).Contains(pbTimeline.PointToClient(MousePosition))).Key;
+                m_selected = occ;
+                //MessageBox.Show(Occurrence.All[occ].Parent().Name);
+            }
+            catch (InvalidOperationException)
+            {
+                m_selected = "";
+            }
+            DrawTimeline();
         }
 
         private void btnNewTask_Click(object sender, EventArgs e)
@@ -272,4 +296,5 @@ namespace Span.GUI
        
        
     }
+
 }
