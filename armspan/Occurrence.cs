@@ -68,7 +68,24 @@ namespace Span
          * deleted events will not be serialized to the
          * save file.
          */
-        Deleted
+        Deleted,
+        /**
+         * This Occurrence specifies when the Event cannot happen.
+         * 
+         * Setting an Occurrence to Excluded means that it will not
+         * be counted as an Occurrence at all; instead, it requires
+         * that no chained Occurrence must exist at that time for this
+         * particular Event. This allows the user to specify
+         * times when the Event should not occur, regardless of
+         * any Period that already exists there. If any other
+         * chained Occurrence is scheduled to take place during this
+         * Occurrence, it will not be created.
+         * 
+         * Occurrences should only be given this status if they
+         * are chained.
+         */
+        Excluded
+      
     };
 
     public class Occurrence : JSONCapable
@@ -379,6 +396,7 @@ namespace Span
                 {
                     DeChain();
                 }
+                OccurrenceStatus[] noInclude = {OccurrenceStatus.Canceled, OccurrenceStatus.Deleted, OccurrenceStatus.Excluded, OccurrenceStatus.Ignored};
                 DateTime firstTime = Parent().Alarms.AlarmTimes()[0];
                 int alarmIndex = alarmtemp.FindIndex(x => Parent().Alarms.SingleAlarmTime(x) == firstTime);
                 alarmtemp[alarmIndex] = new Alarm(alarmtemp[alarmIndex].m_relativePlace, alarmtemp[alarmIndex].m_timeLength, alarmtemp[alarmIndex].m_timeUnit, true);
@@ -399,7 +417,18 @@ namespace Span
                         Parent().Occurrences().Sort((x, y) => x.Number.CompareTo(y.Number));
                         return;
                     }
-                    Parent().Alarms.ParentId = Parent().Occurrences()[Parent().Occurrences().IndexOf(this) + 1].Id;
+                    int nextNum = Parent().Occurrences().IndexOf(this) + 1;
+                    //don't take excluded/deleted/ignored/canceled occurrences
+                    while (noInclude.Contains(Parent().Occurrences()[nextNum].Status))
+                    {
+                        nextNum++;
+                        if (nextNum == Parent().Occurrences().Count)
+                        {
+                            Parent().Occurrences().Sort((x, y) => x.Number.CompareTo(y.Number));
+                            return;
+                        }
+                    }
+                    Parent().Alarms.ParentId = Parent().Occurrences()[nextNum].Id;
                     Parent().Occurrences().Sort((x, y) => x.Number.CompareTo(y.Number));
                     //set all alarms to false
                     for (int i = 0; i < alarmtemp.Count(); i++)
@@ -521,5 +550,6 @@ namespace Span
         private string m_parent;
         protected string m_chainId = null;
         protected static Dictionary<string, Occurrence> all = new Dictionary<string, Occurrence>();
+        
     }
 }

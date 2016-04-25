@@ -88,15 +88,15 @@ namespace Span
          * 
          * @date March 10, 2016
          */
-        public Period(uint a_frequency, Frequency a_timeUnit, DateTime a_startDate, DateTime a_endDate, DateTime a_startTime, DateTime a_endTime, TimeSpan a_length, string a_parent)
+        public Period(uint a_frequency, Frequency a_timeUnit, DateTime a_startTime, DateTime a_endTime, TimeSpan a_length, string a_parent)
         {
             m_numId = num++;
             m_id = "p" + m_numId.ToString("x8");
             PeriodicFrequency = a_frequency;
             TimeUnit = a_timeUnit;
-            StartDate = a_startDate;
+           
             StartTime = a_startTime;
-            EndDate = a_endDate;
+           
             EndTime = a_endTime;
             OccurrenceLength = a_length;
             m_parent = a_parent;
@@ -135,8 +135,7 @@ namespace Span
             uint thisnum = (uint)(int)jsd["Number"];
             string id = (string)jsd["Id"];
             Frequency timeunit = (Frequency)jsd["TimeUnit"];
-            DateTime startdate = (DateTime)jsd["StartDate"];
-            DateTime enddate = (DateTime)jsd["EndDate"];
+           
             DateTime starttime = (DateTime)jsd["StartTime"];
             DateTime endtime = (DateTime)jsd["EndTime"];
             string parentid = (string)jsd["ParentId"];
@@ -146,9 +145,9 @@ namespace Span
             loaded.m_id = id;
             loaded.m_frequency = freq;
             loaded.m_timeUnit = timeunit;
-            loaded.m_startDate = startdate;
+           
             loaded.m_startTime = starttime;
-            loaded.m_endDate = enddate;
+            
             loaded.m_endTime = endtime;
             loaded.m_length = length;
             loaded.m_parent = parentid;
@@ -186,25 +185,59 @@ namespace Span
             }
             m_occurrences = new List<Occurrence>();
             //set up start/end dates
-            DateTime eachStartTime = StartDate.Date.Add(StartTime.TimeOfDay);
-            DateTime finalEndTime = EndDate.Date.Add(EndTime.TimeOfDay);
-            //accounts for times past 12:00AM UTC
-            DateTime dayStartTime = eachStartTime;
-            DateTime dayEndTime = StartDate.Date.Add(EndTime.TimeOfDay);
-            if (dayEndTime <= dayStartTime)
+            DateTime eachStartTime = StartTime;
+            DateTime finalEndTime = EndTime;
+
+            IEnumerable<Period> excludeRules = new List<Period>();
+            IEnumerable<Occurrence> excludes = new List<Occurrence>();
+
+            if (!Excluded)
             {
-                dayEndTime = dayEndTime.AddDays(1);
+                excludeRules = Event.All[ParentId].Rules.Where(x => x.Excluded);
+                excludes = excludeRules.SelectMany(x => x.Occurrences());
             }
+            
             while (eachStartTime < finalEndTime)
             {
                 DateTime eachEndTime = eachStartTime.Add(OccurrenceLength);
-                //check for overlap with non-working time
-                if (eachStartTime < dayEndTime
-                    && eachStartTime >= dayStartTime
-                    && eachEndTime <= dayEndTime
-                    && eachEndTime > dayStartTime)
+                //check for overlap with excluded Occurrences
+                bool canCreate = true;
+                foreach (Occurrence exOcc in excludes)
+                {
+                    if (eachStartTime == exOcc.StartActual || eachEndTime == exOcc.EndActual)
+                    {
+                        canCreate = false;
+                        break;
+                    }
+                    if (eachStartTime > exOcc.EndActual || eachEndTime < exOcc.StartActual) continue;
+                    if (exOcc.StartActual <= eachStartTime && eachStartTime <= exOcc.EndActual)
+                    {
+                        canCreate = false;
+                        break;
+                    }
+                    if (exOcc.StartActual <= eachEndTime && eachEndTime <= exOcc.EndActual)
+                    {
+                        canCreate = false;
+                        break;
+                    }
+                    if (eachStartTime <= exOcc.StartActual && exOcc.StartActual <= eachEndTime)
+                    {
+                        canCreate = false;
+                        break;
+                    }
+                    if (eachStartTime <= exOcc.EndActual && exOcc.EndActual <= eachEndTime)
+                    {
+                        canCreate = false;
+                        break;
+                    }
+                }
+                if (canCreate)
                 {
                     Occurrence newOcc = new Occurrence(false, eachStartTime, eachStartTime.Add(OccurrenceLength), m_parent);
+                    if (Excluded)
+                    {
+                        newOcc.Status = OccurrenceStatus.Excluded;
+                    }
                     newOcc.ChainId = Id;
                     m_occurrences.Add(newOcc);
                 }
@@ -230,12 +263,7 @@ namespace Span
                         eachStartTime = eachStartTime.AddYears((int)PeriodicFrequency);
                         break;
                 }
-                dayStartTime = eachStartTime.Date.Add(StartTime.TimeOfDay);
-                dayEndTime = eachStartTime.Date.Add(EndTime.TimeOfDay);
-                if (dayEndTime <= dayStartTime)
-                {
-                    dayEndTime = dayEndTime.AddDays(1);
-                }
+               
             }
             m_needUpdate = false;
         }
@@ -276,33 +304,27 @@ namespace Span
 
             //adjust Period accordingly
 
-            //TODO: make this work for smaller units of time between occurrences than days.
-            //seriously, it doesn't retain some occurrences if they happen multiple times per day,
-            //NOR does it retain the offset of time that continues between night and morning.
-            //so not only do you lose some occurrences, but some also move earlier or later!
+           
 
             //TODO: make this work for a single occurrence too.
 
             //first occurrence, just start at the next one
             if (ocrPos == 0)
             {
-                StartDate = nextOcr.StartActual.Date;
+                StartTime = nextOcr.StartActual;
             }
             //occurrences before and after; split this Period into two
             else if (ocrPos < m_occurrences.Count - 1)
             {
                 Event.All[ParentId].Rules.Add(new Period
-                    (PeriodicFrequency, TimeUnit, nextOcr.StartActual.Date, 
-                    EndDate, StartTime, EndTime, OccurrenceLength, ParentId));
+                    (PeriodicFrequency, TimeUnit, nextOcr.StartActual, 
+                    EndTime, OccurrenceLength, ParentId));
             }
             //not first occurrence, end before this one
             if (ocrPos > 0)
             {
-                EndDate = ocr.EndActual.Date.AddDays(-1);
-                if (EndTime.TimeOfDay <= StartTime.TimeOfDay)
-                {
-                    EndDate = EndDate.AddDays(1);
-                }
+                EndTime = ocr.StartActual;
+               
             }
             
         }
@@ -348,20 +370,7 @@ namespace Span
             }
         }
 
-        /**
-         * Gets or sets a DateTime struct specifying the day on
-         * which the Occurrences will start.
-         */
-        public DateTime StartDate 
-        {
-            get { return m_startDate; }
-
-            set 
-            { 
-                m_startDate = value;
-                m_needUpdate = true;
-            } 
-        }
+       
 
         /**
          * Gets or sets a DateTime struct specifying the earliest
@@ -379,21 +388,7 @@ namespace Span
             }
         }
 
-        /**
-         * Gets or sets a DateTime struct specifying the day on
-         * which the Occurrences will end, inclusively (that is, the final day
-         * on which they will occur).
-         */
-        public DateTime EndDate
-        {
-            get { return m_endDate; }
-
-            set 
-            { 
-                m_endDate = value;
-                m_needUpdate = true;
-            }
-        }
+        
 
         /**
          * Gets or sets a DateTime struct specifying the latest
@@ -459,20 +454,27 @@ namespace Span
             get { return m_numId; }
         }
 
+        //TODO: document
+        public bool Excluded
+        {
+            get { return m_exclude; }
+
+            set { m_exclude = value; }
+        }
+
         protected string m_id;
         protected static uint num = 1;
         protected uint m_numId;
         private uint m_frequency;
         private Frequency m_timeUnit;
-        private DateTime m_startDate;
-        private DateTime m_endDate;
+        
         private DateTime m_startTime;
         private DateTime m_endTime;
         private TimeSpan m_length;
         private string m_parent;
         private List<Occurrence> m_occurrences;
         private bool m_needUpdate;
-        //private bool exclude;
+        private bool m_exclude;
 
        
     }

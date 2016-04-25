@@ -186,6 +186,7 @@ namespace Span
             List<string> overlapping = new List<string>();
             Occurrence myOccurrence = null;
             Occurrence otherOccurrence = null;
+            OccurrenceStatus[] noInclude = { OccurrenceStatus.Canceled, OccurrenceStatus.Deleted, OccurrenceStatus.Ignored, OccurrenceStatus.Excluded };
             foreach (Event other in All.Values)
             {
                 //can't be itself
@@ -196,10 +197,10 @@ namespace Span
                 bool noOver = true;
                 foreach (Occurrence ocr in Occurrences())
                 {
-                    if (ocr.Status == (OccurrenceStatus.Canceled | OccurrenceStatus.Deleted | OccurrenceStatus.Ignored)) continue;
+                    if (noInclude.Contains(ocr.Status)) continue;
                     foreach (Occurrence otherOcr in other.Occurrences())
                     {
-                        if (otherOcr.Status == (OccurrenceStatus.Canceled | OccurrenceStatus.Deleted | OccurrenceStatus.Ignored)) continue;
+                        if (noInclude.Contains(otherOcr.Status)) continue;
                         if (ocr.Overlaps(otherOcr))
                         {
                             noOver = false;
@@ -286,11 +287,14 @@ namespace Span
                         continue;
 
                     }
-                    if (ocr.Status == (OccurrenceStatus.Canceled | OccurrenceStatus.Deleted | OccurrenceStatus.Ignored)) continue;
+                    OccurrenceStatus[] noInclude = 
+                    {OccurrenceStatus.Canceled, OccurrenceStatus.Deleted, OccurrenceStatus.Ignored, OccurrenceStatus.Excluded};
+                    if (noInclude.Contains(ocr.Status)) continue;
                     bool unused = true;
                     foreach (Occurrence manualOcr in m_allOccurrences)
                     {
-                        if (manualOcr.Status == (OccurrenceStatus.Canceled | OccurrenceStatus.Deleted | OccurrenceStatus.Ignored)) continue;
+                        
+                        if (noInclude.Contains(manualOcr.Status)) continue;
                         if (ocr.Overlaps(manualOcr))
                         {
                             unused = false;

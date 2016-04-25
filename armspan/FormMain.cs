@@ -66,12 +66,13 @@ namespace Span.GUI
             //offset by 2 so it is easier to see next to hours
             tlg.DrawLine(nowDasher, nowpt, 2, nowpt, pbTimeline.Height);
             tlg.FillPolygon(new SolidBrush(Color.Black), new PointF[] { new PointF(nowpt - 10.5f, -0.5f), new PointF(nowpt + 10.5f, -0.5f), new PointF(nowpt, 10.5f) });
+            OccurrenceStatus[] noInclude = { OccurrenceStatus.Deleted, OccurrenceStatus.Canceled, OccurrenceStatus.Excluded };
             Dictionary<string, int> primCatHeight = new Dictionary<string, int>();
             int offset = 0;
             foreach (string s in TimeKeeper.InDate)
             {
                 Occurrence o = Occurrence.All[s];
-                if (o.Status == OccurrenceStatus.Deleted || o.Status == OccurrenceStatus.Canceled)
+                if (noInclude.Contains(o.Status))
                 {
                     continue;
                 }
@@ -92,7 +93,7 @@ namespace Span.GUI
             foreach (string s in TimeKeeper.InDate)
             {
                 Occurrence o = Occurrence.All[s];
-                if (o.Status == OccurrenceStatus.Deleted || o.Status == OccurrenceStatus.Canceled)
+                if (noInclude.Contains(o.Status))
                 {
                     continue;
                 }
@@ -170,7 +171,7 @@ namespace Span.GUI
                 //rtbOccurrence.Text += Occurrence.All[occ].Parent().Name + "\n";
                 m_currentView[occ].Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right;
                 m_currentView[occ].ReadOnly = true;
-
+                m_currentView[occ].Cursor = this.Cursor;
                 
 
                 tlpNow.Controls.Add(m_currentView[occ]);

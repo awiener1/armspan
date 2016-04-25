@@ -60,14 +60,13 @@ namespace Span
                 }
             }
             //get all occurrences happening now
-            
+            OccurrenceStatus[] noInclude = { OccurrenceStatus.Canceled, OccurrenceStatus.Deleted, OccurrenceStatus.Excluded };
             partial = Occurrence.All.Where
                 (x => x.Value.StartActual <= m_now.ToLocalTime() && x.Value.EndActual > m_now.ToLocalTime());
             Dictionary<string, Occurrence> tempp = partial.ToDictionary(x => x.Key, x => x.Value);
             m_current = partial.Select(x => x.Key).ToList();
-            m_current.RemoveAll(x => Occurrence.All[x].Status == OccurrenceStatus.Canceled 
-                || Occurrence.All[x].Status == OccurrenceStatus.Deleted 
-                || !Occurrence.All[x].Parent().Exists); 
+
+            int removed = m_current.RemoveAll(x => noInclude.Contains(Occurrence.All[x].Status) || !Occurrence.All[x].Parent().Exists);
         }
 
         /**
