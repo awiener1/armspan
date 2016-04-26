@@ -136,6 +136,9 @@
   <data name="edit.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\edit.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="checknone.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\checknone.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="stop.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\stop.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -202,7 +205,7 @@
   <data name="sub.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\sub.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="checknone.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\checknone.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="task.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\task.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -143,6 +143,7 @@
             // 
             this.btnNewTask.AutoSize = false;
             this.btnNewTask.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnNewTask.Enabled = false;
             this.btnNewTask.Image = global::armspan.Properties.Resources.taskshine_svg;
             this.btnNewTask.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnNewTask.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -176,6 +177,7 @@
             // 
             this.btnStartTask.AutoSize = false;
             this.btnStartTask.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnStartTask.Enabled = false;
             this.btnStartTask.Image = global::armspan.Properties.Resources.tasknow_svg;
             this.btnStartTask.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnStartTask.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -208,6 +210,7 @@
             // 
             this.btnStopTasks.AutoSize = false;
             this.btnStopTasks.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnStopTasks.Enabled = false;
             this.btnStopTasks.Image = global::armspan.Properties.Resources.stoptasks_svg;
             this.btnStopTasks.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnStopTasks.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -235,6 +238,7 @@
             // 
             this.btnCancelTasks.AutoSize = false;
             this.btnCancelTasks.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnCancelTasks.Enabled = false;
             this.btnCancelTasks.Image = global::armspan.Properties.Resources.canceltasks_svg;
             this.btnCancelTasks.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.btnCancelTasks.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -560,6 +564,7 @@
             // btnRepeatTask
             // 
             this.btnRepeatTask.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRepeatTask.Enabled = false;
             this.btnRepeatTask.Image = global::armspan.Properties.Resources.repeat_svg;
             this.btnRepeatTask.Location = new System.Drawing.Point(12, 82);
             this.btnRepeatTask.Name = "btnRepeatTask";
