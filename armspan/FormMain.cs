@@ -154,6 +154,45 @@ namespace Span.GUI
             float newpos = newScroll / newMax;
             //MessageBox.Show(oldMax + " " + newMax);
             UpdateNow();
+            UpdateSides();
+        }
+
+        private void UpdateSides()
+        {
+            if (m_selected == "")
+            {
+                gbEvent.Enabled = false;
+                gbOccurrence.Enabled = false;
+                rtbTask.Text = "";
+                rtbOccurrence.Text = "";
+                pbEventColor.BackColor = SystemColors.ControlDark;
+                return;
+            }
+            Occurrence occ =  Occurrence.All[m_selected];
+            Event p = occ.Parent();
+            gbEvent.Enabled = true;
+            gbOccurrence.Enabled = true;
+            rtbTask.Text = "";
+            rtbTask.SelectionFont = new Font(rtbTask.Font, FontStyle.Bold);
+            rtbTask.AppendText(p.Name);
+            rtbTask.SelectionFont = rtbTask.Font;
+            rtbTask.AppendText("\n");
+            if (!p.Location.Equals(""))
+            {
+                rtbTask.AppendText("at " + p.Location + "\n");
+            }
+            rtbTask.AppendText(p.Description);
+            pbEventColor.BackColor = Category.All[p.PrimaryCategory].Color;
+            rtbOccurrence.Text = "";
+            Font boldOcc = new Font(rtbOccurrence.Font, FontStyle.Bold);
+            rtbOccurrence.SelectionFont = boldOcc;
+            rtbOccurrence.AppendText("Starts: ");
+            rtbOccurrence.SelectionFont = rtbOccurrence.Font;
+            rtbOccurrence.AppendText(occ.StartActual.ToShortDateString() + ", " + occ.StartActual.ToShortTimeString() + "\n");
+            rtbOccurrence.SelectionFont = boldOcc;
+            rtbOccurrence.AppendText("Ends: ");
+            rtbOccurrence.SelectionFont = rtbOccurrence.Font;
+            rtbOccurrence.AppendText(occ.EndActual.ToShortDateString() + ", " + occ.EndActual.ToShortTimeString() + "\n");
         }
 
         private void UpdateNow()
