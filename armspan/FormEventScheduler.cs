@@ -77,6 +77,11 @@ namespace Span.GUI
         {
             DateTime start = new DateTime(dtpFrom.Value.Year, dtpFrom.Value.Month, dtpFrom.Value.Day, dtpFrom.Value.Hour, dtpFrom.Value.Minute, 0, 0);
             DateTime end = new DateTime(dtpTo.Value.Year, dtpTo.Value.Month, dtpTo.Value.Day, dtpTo.Value.Hour, dtpTo.Value.Minute, 0, 0);
+            if (end < start.AddMinutes(1))
+            {
+                MessageBox.Show("Start time must be at least one minute before end time");
+                return;
+            }
             if (rbPeriodic.Checked)
             {
                 uint freq = (uint)nudFrequency.Value;

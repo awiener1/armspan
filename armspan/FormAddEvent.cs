@@ -14,28 +14,55 @@ namespace Span.GUI
         public FormAddEvent()
         {
             InitializeComponent();
-            ExtraInit(false);
+            ExtraInitNew(false);
         }
 
         public FormAddEvent(bool a_isTask)
         {
             InitializeComponent();
-            ExtraInit(a_isTask);
+            ExtraInitNew(a_isTask);
         }
 
-        private void ExtraInit(bool a_isTask)
+        public FormAddEvent(Event a_event)
         {
+            InitializeComponent();
+            ExtraInitEdit(a_event);
+        }
+        private void ExtraInitNew(bool a_isTask)
+        {
+            m_isNew = true;
             m_newevent = new Event(false, "", new List<Occurrence>(), new List<Period>(), "", new List<string>(), new AlarmSettings(""), "");
             m_newevent.Exists = false;
-            //make sure alarms are filled
-            cbType.SelectedIndex = cbType.FindStringExact(a_isTask ? "Task" : "Appointment");
-            cbCatPrim.DataSource = Category.All.Values.ToList();
-            cbCatPrim.DisplayMember = "Name";
-            cbCatPrim.ValueMember = "Id";
+
+            ExtraInitAll(a_isTask);
             m_secondcats = new List<string>();
             m_manualocc = new List<Occurrence>();
             m_rules = new List<Period>();
             m_settings = new AlarmSettings("");
+        }
+
+        private void ExtraInitEdit(Event a_event)
+        {
+            m_isNew = false;
+            m_newevent = a_event;
+            ExtraInitAll(m_newevent.IsTask);
+            //don't make any changes unless ok is pressed
+            m_secondcats = new List<string>(m_newevent.SecondaryCategories);
+            m_manualocc = new List<Occurrence>(m_newevent.ManualOccurrences);
+            m_rules = new List<Period>(m_newevent.Rules);
+            m_settings = new AlarmSettings(m_newevent.Alarms.ParentId, m_newevent.Alarms.Alarms);
+
+            tbName.Text = m_newevent.Name;
+            tbLocation.Text = m_newevent.Location;
+            tbDesc.Text = m_newevent.Description;
+        }
+
+        private void ExtraInitAll(bool a_isTask)
+        {
+            cbType.SelectedIndex = cbType.FindStringExact(a_isTask ? "Task" : "Appointment");
+            cbCatPrim.DataSource = Category.All.Values.ToList();
+            cbCatPrim.DisplayMember = "Name";
+            cbCatPrim.ValueMember = "Id";
         }
 
         public bool IsTask
@@ -62,8 +89,11 @@ namespace Span.GUI
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            //if a new event only
-            m_newevent.Exists = false;
+            if (m_isNew)
+            {
+                m_newevent.Exists = false;
+            }
+            
             this.Close();
         }
 
@@ -111,6 +141,7 @@ namespace Span.GUI
         }
 
         private bool m_isTask;
+        private bool m_isNew;
 
         private void cbType_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -155,8 +186,6 @@ namespace Span.GUI
         private void btnTime_Click(object sender, EventArgs e)
         {
             FormEventScheduler popup = new FormEventScheduler();
-            //TODO: change this to not be dependent on the parentid code here.
-            //for example, set up a dummy class that has no id but allows for passing.
             popup.ManualOccurrences = m_manualocc;
             popup.Rules = m_rules;
             popup.ParentId = m_newevent.Id;

@@ -107,6 +107,12 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormOccurrenceScheduler.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormOccurrenceScheduler.Designer.cs">
+      <DependentUpon>FormOccurrenceScheduler.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSummaryWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -153,6 +159,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormOccurrenceScheduler.resx">
+      <DependentUpon>FormOccurrenceScheduler.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSummaryWindow.resx">
       <DependentUpon>FormSummaryWindow.cs</DependentUpon>

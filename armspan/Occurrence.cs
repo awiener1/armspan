@@ -369,6 +369,10 @@ namespace Span
             DateTime now = DateTime.Now;
             now = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0);
             if (StartActual > now) throw new ArgumentOutOfRangeException("Occurrence hasn't started yet");
+            if (StartActual == now)
+            {
+                StartActual = StartActual.AddMinutes(-1);
+            }
             EndActual = now;
         }
 

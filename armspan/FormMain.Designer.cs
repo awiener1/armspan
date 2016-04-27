@@ -69,7 +69,6 @@
             this.btnStartOcc = new System.Windows.Forms.Button();
             this.btnDeleteEvent = new System.Windows.Forms.Button();
             this.btnEditEvent = new System.Windows.Forms.Button();
-            this.btnAddOcc = new System.Windows.Forms.Button();
             this.pbEventColor = new System.Windows.Forms.PictureBox();
             this.pbTimeline = new System.Windows.Forms.PictureBox();
             this.btnNewAppt = new System.Windows.Forms.ToolStripButton();
@@ -240,7 +239,6 @@
             this.gbEvent.Controls.Add(this.rtbTask);
             this.gbEvent.Controls.Add(this.btnDeleteEvent);
             this.gbEvent.Controls.Add(this.btnEditEvent);
-            this.gbEvent.Controls.Add(this.btnAddOcc);
             this.gbEvent.Controls.Add(this.pbEventColor);
             this.gbEvent.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.gbEvent.Location = new System.Drawing.Point(9, 3);
@@ -309,7 +307,7 @@
             this.gbOccurrence.Size = new System.Drawing.Size(210, 421);
             this.gbOccurrence.TabIndex = 5;
             this.gbOccurrence.TabStop = false;
-            this.gbOccurrence.Text = "Event";
+            this.gbOccurrence.Text = "Occurrence";
             // 
             // nudPostponeOcc
             // 
@@ -483,6 +481,7 @@
             this.btnDeleteOcc.TabIndex = 7;
             this.ttNonMenu.SetToolTip(this.btnDeleteOcc, "Delete Occurrence");
             this.btnDeleteOcc.UseVisualStyleBackColor = true;
+            this.btnDeleteOcc.Click += new System.EventHandler(this.btnDeleteOcc_Click);
             // 
             // btnCancelOcc
             // 
@@ -494,6 +493,7 @@
             this.btnCancelOcc.TabIndex = 6;
             this.ttNonMenu.SetToolTip(this.btnCancelOcc, "Cancel Occurrence");
             this.btnCancelOcc.UseVisualStyleBackColor = true;
+            this.btnCancelOcc.Click += new System.EventHandler(this.btnCancelOcc_Click);
             // 
             // btnIgnoreOcc
             // 
@@ -505,6 +505,7 @@
             this.btnIgnoreOcc.TabIndex = 5;
             this.ttNonMenu.SetToolTip(this.btnIgnoreOcc, "Ignore Occurrence");
             this.btnIgnoreOcc.UseVisualStyleBackColor = true;
+            this.btnIgnoreOcc.Click += new System.EventHandler(this.btnIgnoreOcc_Click);
             // 
             // btnPostponeOcc
             // 
@@ -516,6 +517,7 @@
             this.btnPostponeOcc.TabIndex = 3;
             this.ttNonMenu.SetToolTip(this.btnPostponeOcc, "Postpone Occurrence\r\nfor the specified number of minutes.");
             this.btnPostponeOcc.UseVisualStyleBackColor = true;
+            this.btnPostponeOcc.Click += new System.EventHandler(this.btnPostponeOcc_Click);
             // 
             // btnStopOcc
             // 
@@ -527,6 +529,7 @@
             this.btnStopOcc.TabIndex = 2;
             this.ttNonMenu.SetToolTip(this.btnStopOcc, "Stop Occurrence Now");
             this.btnStopOcc.UseVisualStyleBackColor = true;
+            this.btnStopOcc.Click += new System.EventHandler(this.btnStopOcc_Click);
             // 
             // btnStartOcc
             // 
@@ -544,7 +547,7 @@
             // 
             this.btnDeleteEvent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnDeleteEvent.Image = global::armspan.Properties.Resources.trash_svg;
-            this.btnDeleteEvent.Location = new System.Drawing.Point(135, 136);
+            this.btnDeleteEvent.Location = new System.Drawing.Point(82, 136);
             this.btnDeleteEvent.Name = "btnDeleteEvent";
             this.btnDeleteEvent.Size = new System.Drawing.Size(45, 45);
             this.btnDeleteEvent.TabIndex = 3;
@@ -555,23 +558,13 @@
             // 
             this.btnEditEvent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnEditEvent.Image = global::armspan.Properties.Resources.edit_svg;
-            this.btnEditEvent.Location = new System.Drawing.Point(83, 136);
+            this.btnEditEvent.Location = new System.Drawing.Point(29, 136);
             this.btnEditEvent.Name = "btnEditEvent";
             this.btnEditEvent.Size = new System.Drawing.Size(45, 45);
             this.btnEditEvent.TabIndex = 2;
             this.ttNonMenu.SetToolTip(this.btnEditEvent, "Edit Event");
             this.btnEditEvent.UseVisualStyleBackColor = true;
-            // 
-            // btnAddOcc
-            // 
-            this.btnAddOcc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnAddOcc.Image = global::armspan.Properties.Resources.add_svg;
-            this.btnAddOcc.Location = new System.Drawing.Point(30, 136);
-            this.btnAddOcc.Name = "btnAddOcc";
-            this.btnAddOcc.Size = new System.Drawing.Size(45, 45);
-            this.btnAddOcc.TabIndex = 1;
-            this.ttNonMenu.SetToolTip(this.btnAddOcc, "Add Occurrence");
-            this.btnAddOcc.UseVisualStyleBackColor = true;
+            this.btnEditEvent.Click += new System.EventHandler(this.btnEditEvent_Click);
             // 
             // pbEventColor
             // 
@@ -804,7 +797,6 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button btnNow;
         private System.Windows.Forms.GroupBox gbEvent;
-        private System.Windows.Forms.Button btnAddOcc;
         private System.Windows.Forms.PictureBox pbEventColor;
         private System.Windows.Forms.ToolTip ttNonMenu;
         private System.Windows.Forms.Button btnEditEvent;

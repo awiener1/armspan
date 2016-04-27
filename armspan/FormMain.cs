@@ -32,9 +32,12 @@ namespace Span.GUI
             int oldMax = pnlTimeline.HorizontalScroll.Maximum;
             float oldpos = (float)oldScroll / (float)oldMax;
             //temp draw timeline
-            Bitmap tl = new Bitmap(pnlTimeline.Width * TimeKeeper.ZoomFactor, pnlTimeline.Height);
+            m_tl = new Bitmap(pnlTimeline.Width * TimeKeeper.ZoomFactor, pnlTimeline.Height);
+            //replace the existing timeline image
+            //and get rid of it as soon as possible to prevent out-of-memory
+            GC.Collect();
             pbTimeline.Width = pnlTimeline.Width * TimeKeeper.ZoomFactor;
-            Graphics tlg = Graphics.FromImage(tl);
+            Graphics tlg = Graphics.FromImage(m_tl);
             tlg.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             //TimeSpan bte = TimeKeeper.End - TimeKeeper.Begin;
             Pen dayDasher = new Pen(Color.Black);
@@ -95,11 +98,19 @@ namespace Span.GUI
                 Occurrence o = Occurrence.All[s];
                 if (noInclude.Contains(o.Status))
                 {
+                    if (m_occurrenceGraphics.ContainsKey(s))
+                    {
+                        m_occurrenceGraphics.Remove(s);
+                    }
                     continue;
                 }
                 Event p = o.Parent();
                 if (!p.Exists)
                 {
+                    if (m_occurrenceGraphics.ContainsKey(s))
+                    {
+                        m_occurrenceGraphics.Remove(s);
+                    }
                     continue;
                 }
                 tlg.ResetClip();
@@ -116,23 +127,24 @@ namespace Span.GUI
                 RectangleF occRect = new RectangleF(startpt, ycoord, endpt - startpt, occHeight);
                 m_occurrenceGraphics[o.Id] = occRect;
                 
-                tlg.FillRectangle(new SolidBrush(Color.White), occRect);
-                tlg.FillRectangle(new SolidBrush(Color.FromArgb(128, prim.Color)), occRect);
+                tlg.FillRectangle(new SolidBrush(Color.FromArgb(o.Status == OccurrenceStatus.Ignored ? 128 : 255, Color.White)), occRect);
+                tlg.FillRectangle(new SolidBrush(Color.FromArgb(o.Status == OccurrenceStatus.Ignored ? 32 : 128, prim.Color)), occRect);
                 tlg.DrawRectangle(new Pen(new SolidBrush(prim.Color)), occRect.Left, occRect.Top, occRect.Width, occRect.Height);
                 tlg.Clip = new Region(occRect);
                 PointF occPt = new PointF(occRect.Left + 3, occRect.Top + 3);
                 string occCats = String.Join(", ", p.Categories.Select(x => Category.All[x].Name));
                 SizeF firstLine = tlg.MeasureString(occCats, this.Font);
-                tlg.DrawString(occCats, this.Font, new SolidBrush(Color.Black), occPt);
+                SolidBrush occFntColor = new SolidBrush(Color.FromArgb(o.Status == OccurrenceStatus.Ignored ? 128 : 255, Color.Black));
+                tlg.DrawString(occCats, this.Font, occFntColor, occPt);
                 string occTimePlace = o.StartActual.ToShortTimeString() + " - " + o.EndActual.ToShortTimeString();
                 if (p.Location != "")
                 {
                     occTimePlace += " at " + p.Location;
                 }
-                tlg.DrawString(occTimePlace, this.Font, new SolidBrush(Color.Black), occPt.X, occPt.Y + firstLine.Height);
-                tlg.DrawString(p.Name, new Font(this.Font, FontStyle.Bold), new SolidBrush(Color.Black), occPt.X, occPt.Y + firstLine.Height * 2);
+                tlg.DrawString(occTimePlace, this.Font, occFntColor, occPt.X, occPt.Y + firstLine.Height);
+                tlg.DrawString(p.Name, new Font(this.Font, FontStyle.Bold), occFntColor, occPt.X, occPt.Y + firstLine.Height * 2);
                 RectangleF occDescRect = new RectangleF(occPt.X, occPt.Y + firstLine.Height * 3, occRect.Width - 3, occRect.Height - (3 + firstLine.Height * 3));
-                tlg.DrawString(p.Description, this.Font, new SolidBrush(Color.Black), occDescRect);
+                tlg.DrawString(p.Description, this.Font, occFntColor, occDescRect);
             }
             tlg.ResetClip();
             if (m_selected != "")
@@ -142,7 +154,7 @@ namespace Span.GUI
             }
             
 
-            pbTimeline.Image = tl;
+            pbTimeline.Image = m_tl;
 
             //double assignment
             //CITE: comment on http://stackoverflow.com/a/263590 (#comment15236167_263590)
@@ -284,15 +296,27 @@ namespace Span.GUI
 
         private void btnStartOcc_Click(object sender, EventArgs e)
         {
-            FormAlarmWindow popup = new FormAlarmWindow();
-            popup.ShowDialog();
-            //popup.Activate();
+            Occurrence.All[m_selected].StartNow();
+            DrawTimeline();
         }
 
         private void btnRescheduleOcc_Click(object sender, EventArgs e)
         {
-            FormEventScheduler popup = new FormEventScheduler();
+            Occurrence o = Occurrence.All[m_selected];
+            if (o.IsChained())
+            {
+                DialogResult d = MessageBox.Show("This Occurrence appears to be part of a periodic set. "
+                     + "If you wish to edit the occurrence's schedule, it will become detached from the rest of the set. Proceed?", "", MessageBoxButtons.YesNo);
+                if (!d.Equals(DialogResult.Yes))
+                {
+                    return;
+                }
+                o.DeChain();
+            }
+            FormOccurrenceScheduler popup = new FormOccurrenceScheduler();
+            popup.Single = o;
             popup.ShowDialog();
+            DrawTimeline();
         }
 
         private void btnNewAppt_Click(object sender, EventArgs e)
@@ -332,6 +356,7 @@ namespace Span.GUI
 
         private Dictionary<string, RectangleF> m_occurrenceGraphics;
         private string m_selected;
+        private Bitmap m_tl;
 
         private void FormMain_Activated(object sender, EventArgs e)
         {
@@ -410,6 +435,56 @@ namespace Span.GUI
             //{
             //    MessageBox.Show(TimeKeeper.Alarms.Count.ToString());
             //}
+        }
+
+        private void btnStopOcc_Click(object sender, EventArgs e)
+        {
+            Occurrence.All[m_selected].StopNow();
+            DrawTimeline();
+        }
+
+        private void btnPostponeOcc_Click(object sender, EventArgs e)
+        {
+            Occurrence.All[m_selected].Postpone((uint)nudPostponeOcc.Value);
+            DrawTimeline();
+        }
+
+        private void btnIgnoreOcc_Click(object sender, EventArgs e)
+        {
+            Occurrence.All[m_selected].Ignore();
+            DrawTimeline();
+        }
+
+        private void btnCancelOcc_Click(object sender, EventArgs e)
+        {
+            Occurrence.All[m_selected].Cancel();
+            m_selected = "";
+            DrawTimeline();
+        }
+
+        private void btnDeleteOcc_Click(object sender, EventArgs e)
+        {
+            Occurrence o = Occurrence.All[m_selected];
+            DialogResult d = MessageBox.Show("Are you sure you want to delete this occurrence of \"" + o.Parent().Name + "\"?\nThis cannot be undone.", "", MessageBoxButtons.YesNo);
+            if (!d.Equals(DialogResult.Yes))
+            {
+                return;
+            }
+            o.Delete();
+            m_selected = "";
+            DrawTimeline();
+        }
+
+        private void btnAddOcc_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnEditEvent_Click(object sender, EventArgs e)
+        {
+            FormAddEvent popup = new FormAddEvent(Occurrence.All[m_selected].Parent());
+            popup.ShowDialog();
+            DrawTimeline();
         }
 
        
