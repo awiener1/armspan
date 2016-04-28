@@ -38,7 +38,7 @@
             this.nudPostponeOcc = new System.Windows.Forms.NumericUpDown();
             this.btnPostpone = new System.Windows.Forms.Button();
             this.pnlCurrent = new System.Windows.Forms.Panel();
-            this.cbMore = new System.Windows.Forms.CheckBox();
+            this.btnMore = new System.Windows.Forms.Button();
             this.rtbAlarm = new System.Windows.Forms.RichTextBox();
             this.btnPostponeFive = new System.Windows.Forms.Button();
             this.gbNext = new System.Windows.Forms.GroupBox();
@@ -207,24 +207,24 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlCurrent.BackColor = System.Drawing.SystemColors.ControlDark;
             this.pnlCurrent.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pnlCurrent.Controls.Add(this.cbMore);
+            this.pnlCurrent.Controls.Add(this.btnMore);
             this.pnlCurrent.Controls.Add(this.rtbAlarm);
             this.pnlCurrent.Location = new System.Drawing.Point(12, 22);
             this.pnlCurrent.Name = "pnlCurrent";
             this.pnlCurrent.Size = new System.Drawing.Size(503, 86);
             this.pnlCurrent.TabIndex = 0;
             // 
-            // cbMore
+            // btnMore
             // 
-            this.cbMore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbMore.Appearance = System.Windows.Forms.Appearance.Button;
-            this.cbMore.BackColor = System.Drawing.SystemColors.Control;
-            this.cbMore.Image = global::armspan.Properties.Resources.dropdown;
-            this.cbMore.Location = new System.Drawing.Point(461, 47);
-            this.cbMore.Name = "cbMore";
-            this.cbMore.Size = new System.Drawing.Size(35, 23);
-            this.cbMore.TabIndex = 6;
-            this.cbMore.UseVisualStyleBackColor = false;
+            this.btnMore.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMore.BackColor = System.Drawing.SystemColors.Control;
+            this.btnMore.Location = new System.Drawing.Point(461, 47);
+            this.btnMore.Name = "btnMore";
+            this.btnMore.Size = new System.Drawing.Size(35, 23);
+            this.btnMore.TabIndex = 7;
+            this.btnMore.Text = "...";
+            this.btnMore.UseVisualStyleBackColor = false;
+            this.btnMore.Click += new System.EventHandler(this.btnMore_Click);
             // 
             // rtbAlarm
             // 
@@ -232,6 +232,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.rtbAlarm.BackColor = System.Drawing.SystemColors.Window;
             this.rtbAlarm.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtbAlarm.Cursor = System.Windows.Forms.Cursors.Default;
             this.rtbAlarm.DetectUrls = false;
             this.rtbAlarm.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbAlarm.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -310,7 +311,6 @@
         private System.Windows.Forms.Button btnPostponeFive;
         private System.Windows.Forms.Panel pnlCurrent;
         private System.Windows.Forms.RichTextBox rtbAlarm;
-        private System.Windows.Forms.CheckBox cbMore;
         private System.Windows.Forms.Button btnAlarmSet;
         private System.Windows.Forms.NumericUpDown nudPostponeOcc;
         private System.Windows.Forms.Button btnPostpone;
@@ -321,5 +321,6 @@
         private System.Windows.Forms.Button btnIgnore;
         private System.Windows.Forms.GroupBox gbNext;
         private System.Windows.Forms.ListBox lbNext;
+        private System.Windows.Forms.Button btnMore;
     }
 }

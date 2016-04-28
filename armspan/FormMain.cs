@@ -185,6 +185,10 @@ namespace Span.GUI
             gbEvent.Enabled = true;
             gbOccurrence.Enabled = true;
             rtbTask.Text = "";
+            if (Occurrence.DebugMode)
+            {
+                rtbTask.AppendText(m_selected);
+            }
             rtbTask.SelectionFont = new Font(rtbTask.Font, FontStyle.Bold);
             rtbTask.AppendText(p.Name);
             rtbTask.SelectionFont = rtbTask.Font;
@@ -296,27 +300,41 @@ namespace Span.GUI
 
         private void btnStartOcc_Click(object sender, EventArgs e)
         {
-            Occurrence.All[m_selected].StartNow();
+            Occurrence o = Occurrence.All[m_selected];
+            if (!DeChainIfChained(o))
+            {
+                return;
+            }
+            o.StartNow();
             DrawTimeline();
         }
 
         private void btnRescheduleOcc_Click(object sender, EventArgs e)
         {
             Occurrence o = Occurrence.All[m_selected];
+            if (!DeChainIfChained(o))
+            {
+                return;
+            }
+            FormOccurrenceScheduler popup = new FormOccurrenceScheduler();
+            popup.Single = o;
+            popup.ShowDialog();
+            DrawTimeline();
+        }
+
+        private bool DeChainIfChained(Occurrence o)
+        {
             if (o.IsChained())
             {
                 DialogResult d = MessageBox.Show("This Occurrence appears to be part of a periodic set. "
                      + "If you wish to edit the occurrence's schedule, it will become detached from the rest of the set. Proceed?", "", MessageBoxButtons.YesNo);
                 if (!d.Equals(DialogResult.Yes))
                 {
-                    return;
+                    return false;
                 }
                 o.DeChain();
             }
-            FormOccurrenceScheduler popup = new FormOccurrenceScheduler();
-            popup.Single = o;
-            popup.ShowDialog();
-            DrawTimeline();
+            return true;
         }
 
         private void btnNewAppt_Click(object sender, EventArgs e)
@@ -439,25 +457,45 @@ namespace Span.GUI
 
         private void btnStopOcc_Click(object sender, EventArgs e)
         {
-            Occurrence.All[m_selected].StopNow();
+            Occurrence o = Occurrence.All[m_selected];
+            if (!DeChainIfChained(o))
+            {
+                return;
+            }
+            o.StopNow();
             DrawTimeline();
         }
 
         private void btnPostponeOcc_Click(object sender, EventArgs e)
         {
-            Occurrence.All[m_selected].Postpone((uint)nudPostponeOcc.Value);
+            Occurrence o = Occurrence.All[m_selected];
+            if (!DeChainIfChained(o))
+            {
+                return;
+            }
+            o.Postpone((uint)nudPostponeOcc.Value);
             DrawTimeline();
         }
 
         private void btnIgnoreOcc_Click(object sender, EventArgs e)
         {
-            Occurrence.All[m_selected].Ignore();
+            Occurrence o = Occurrence.All[m_selected];
+            if (!DeChainIfChained(o))
+            {
+                return;
+            }
+            o.Ignore();
             DrawTimeline();
         }
 
         private void btnCancelOcc_Click(object sender, EventArgs e)
         {
-            Occurrence.All[m_selected].Cancel();
+            Occurrence o = Occurrence.All[m_selected];
+            if (!DeChainIfChained(o))
+            {
+                return;
+            }
+            o.Cancel();
             m_selected = "";
             DrawTimeline();
         }
@@ -465,6 +503,10 @@ namespace Span.GUI
         private void btnDeleteOcc_Click(object sender, EventArgs e)
         {
             Occurrence o = Occurrence.All[m_selected];
+            if (!DeChainIfChained(o))
+            {
+                return;
+            }
             DialogResult d = MessageBox.Show("Are you sure you want to delete this occurrence of \"" + o.Parent().Name + "\"?\nThis cannot be undone.", "", MessageBoxButtons.YesNo);
             if (!d.Equals(DialogResult.Yes))
             {
@@ -483,7 +525,26 @@ namespace Span.GUI
         private void btnEditEvent_Click(object sender, EventArgs e)
         {
             FormAddEvent popup = new FormAddEvent(Occurrence.All[m_selected].Parent());
+            m_selected = "";
             popup.ShowDialog();
+            DrawTimeline();
+        }
+
+        private void btnRepeatTask_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnDeleteEvent_Click(object sender, EventArgs e)
+        {
+            Event p = Occurrence.All[m_selected].Parent();
+            DialogResult d = MessageBox.Show("Are you sure you want to delete \"" + p.Name + "\"?\nThis cannot be undone.", "", MessageBoxButtons.YesNo);
+            if (!d.Equals(DialogResult.Yes))
+            {
+                return;
+            }
+            p.Exists = false;
+            m_selected = "";
             DrawTimeline();
         }
 

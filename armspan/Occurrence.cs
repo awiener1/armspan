@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections.ObjectModel;
+using System.Web.Script.Serialization;
 
 namespace Span
 {   /**
@@ -498,6 +499,18 @@ namespace Span
             Event.All[ParentId].Rules.Find(x => x.Id == ChainId).DeChain(this);
         }
 
+        [ScriptIgnore]
+        public string Describe
+        {
+            get
+            {
+                string outputter = "Once, FROM: " + StartActual.ToShortDateString() + " at " + StartActual.ToShortTimeString()
+                    + " TO: " + EndActual.ToShortDateString() + " at " + EndActual.ToShortTimeString();
+
+                return outputter;
+            }
+        }
+
         /**
          * Gets or sets the id of the Period to which
          * this Occurrence is chained, or null if it
@@ -545,6 +558,14 @@ namespace Span
             get { return m_numId; }
         }
 
+        public static bool DebugMode
+        {
+            get
+            {
+                return m_debug;
+            }
+        }
+
         private static uint num = 1;
         private uint m_numId;
         private string m_id;
@@ -554,6 +575,9 @@ namespace Span
         private string m_parent;
         protected string m_chainId = null;
         protected static Dictionary<string, Occurrence> all = new Dictionary<string, Occurrence>();
+
+        private const bool m_debug = false;
+
         
     }
 }

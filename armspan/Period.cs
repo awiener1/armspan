@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections.ObjectModel;
+using System.Web.Script.Serialization;
 
 namespace Span
 {
@@ -268,6 +269,38 @@ namespace Span
             m_needUpdate = false;
         }
 
+        //TODO: document
+        public void WipeOut()
+        {
+            //delete all chained occurrences. non-chained ones will remain elsewhere.
+            if (m_occurrences != null)
+            {
+                foreach (Occurrence ocr in m_occurrences)
+                {
+                    if (ocr.IsChained())
+                    {
+                        ocr.Status = OccurrenceStatus.Deleted;
+                    }
+                }
+
+            }
+            Event.All[ParentId].Rules.Remove(this);
+        }
+
+        [ScriptIgnore]
+        public string Describe
+        {
+            get
+            {
+                string outputter = "FROM: " + StartTime.ToShortDateString() + " at " + StartTime.ToShortTimeString()
+                    + " TO: " + EndTime.ToShortDateString() + " at " + EndTime.ToShortTimeString()
+                    + " EVERY: " + PeriodicFrequency + " " + TimeUnit.ToString().ToLower() 
+                    + " for " + OccurrenceLength.TotalMinutes + " minutes";
+
+                return outputter;
+            }
+        }
+
         /**
          * Removes the specified Occurrence from the Period.
          * 
@@ -306,10 +339,14 @@ namespace Span
 
            
 
-            //TODO: make this work for a single occurrence too.
+            //single occurrence, rule is not needed
+            if (ocrPos == 0 && nextOcr == null)
+            {
+                Event.All[ParentId].Rules.Remove(this);
+            }
 
             //first occurrence, just start at the next one
-            if (ocrPos == 0)
+            else if (ocrPos == 0)
             {
                 StartTime = nextOcr.StartActual;
             }
@@ -326,7 +363,10 @@ namespace Span
                 EndTime = ocr.StartActual;
                
             }
-            
+            m_needUpdate = true;
+            //updateOccurrences();
+            //update?
+            Event.All[ParentId].Occurrences();
         }
 
         /**

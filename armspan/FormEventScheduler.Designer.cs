@@ -35,7 +35,6 @@
             this.cbExclude = new System.Windows.Forms.CheckBox();
             this.rbPeriodic = new System.Windows.Forms.RadioButton();
             this.rbManual = new System.Windows.Forms.RadioButton();
-            this.lblWritten = new System.Windows.Forms.Label();
             this.btnAddOcc = new System.Windows.Forms.Button();
             this.gbPeriodic = new System.Windows.Forms.GroupBox();
             this.lblDuration = new System.Windows.Forms.Label();
@@ -66,7 +65,7 @@
             this.gbSchedule.Controls.Add(this.lbSchedule);
             this.gbSchedule.Location = new System.Drawing.Point(12, 41);
             this.gbSchedule.Name = "gbSchedule";
-            this.gbSchedule.Size = new System.Drawing.Size(588, 127);
+            this.gbSchedule.Size = new System.Drawing.Size(588, 126);
             this.gbSchedule.TabIndex = 1;
             this.gbSchedule.TabStop = false;
             this.gbSchedule.Text = "Schedule for this event";
@@ -92,7 +91,7 @@
             this.lbSchedule.Location = new System.Drawing.Point(12, 27);
             this.lbSchedule.Name = "lbSchedule";
             this.lbSchedule.ScrollAlwaysVisible = true;
-            this.lbSchedule.Size = new System.Drawing.Size(509, 82);
+            this.lbSchedule.Size = new System.Drawing.Size(509, 69);
             this.lbSchedule.TabIndex = 0;
             // 
             // gbNewTime
@@ -102,16 +101,15 @@
             this.gbNewTime.Controls.Add(this.cbExclude);
             this.gbNewTime.Controls.Add(this.rbPeriodic);
             this.gbNewTime.Controls.Add(this.rbManual);
-            this.gbNewTime.Controls.Add(this.lblWritten);
             this.gbNewTime.Controls.Add(this.btnAddOcc);
             this.gbNewTime.Controls.Add(this.gbPeriodic);
             this.gbNewTime.Controls.Add(this.lblTo);
             this.gbNewTime.Controls.Add(this.dtpTo);
             this.gbNewTime.Controls.Add(this.lblFrom);
             this.gbNewTime.Controls.Add(this.dtpFrom);
-            this.gbNewTime.Location = new System.Drawing.Point(13, 175);
+            this.gbNewTime.Location = new System.Drawing.Point(13, 173);
             this.gbNewTime.Name = "gbNewTime";
-            this.gbNewTime.Size = new System.Drawing.Size(586, 217);
+            this.gbNewTime.Size = new System.Drawing.Size(586, 160);
             this.gbNewTime.TabIndex = 2;
             this.gbNewTime.TabStop = false;
             this.gbNewTime.Text = "New Time";
@@ -120,7 +118,7 @@
             // 
             this.cbExclude.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cbExclude.AutoSize = true;
-            this.cbExclude.Location = new System.Drawing.Point(498, 20);
+            this.cbExclude.Location = new System.Drawing.Point(498, 18);
             this.cbExclude.Name = "cbExclude";
             this.cbExclude.Size = new System.Drawing.Size(63, 17);
             this.cbExclude.TabIndex = 8;
@@ -132,7 +130,7 @@
             // 
             this.rbPeriodic.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.rbPeriodic.AutoSize = true;
-            this.rbPeriodic.Location = new System.Drawing.Point(227, 20);
+            this.rbPeriodic.Location = new System.Drawing.Point(227, 18);
             this.rbPeriodic.Name = "rbPeriodic";
             this.rbPeriodic.Size = new System.Drawing.Size(62, 17);
             this.rbPeriodic.TabIndex = 7;
@@ -146,7 +144,7 @@
             this.rbManual.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.rbManual.AutoSize = true;
             this.rbManual.Checked = true;
-            this.rbManual.Location = new System.Drawing.Point(16, 20);
+            this.rbManual.Location = new System.Drawing.Point(16, 18);
             this.rbManual.Name = "rbManual";
             this.rbManual.Size = new System.Drawing.Size(59, 17);
             this.rbManual.TabIndex = 6;
@@ -156,23 +154,11 @@
             this.rbManual.UseVisualStyleBackColor = true;
             this.rbManual.CheckedChanged += new System.EventHandler(this.rbManual_CheckedChanged);
             // 
-            // lblWritten
-            // 
-            this.lblWritten.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblWritten.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblWritten.Location = new System.Drawing.Point(68, 166);
-            this.lblWritten.Name = "lblWritten";
-            this.lblWritten.Size = new System.Drawing.Size(507, 45);
-            this.lblWritten.TabIndex = 5;
-            this.lblWritten.Text = "Every some amount of days from something to something, something to something";
-            this.lblWritten.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // btnAddOcc
             // 
             this.btnAddOcc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnAddOcc.Image = global::armspan.Properties.Resources.add_svg;
-            this.btnAddOcc.Location = new System.Drawing.Point(11, 166);
+            this.btnAddOcc.Location = new System.Drawing.Point(11, 109);
             this.btnAddOcc.Name = "btnAddOcc";
             this.btnAddOcc.Size = new System.Drawing.Size(45, 45);
             this.btnAddOcc.TabIndex = 3;
@@ -190,7 +176,7 @@
             this.gbPeriodic.Controls.Add(this.nudFrequency);
             this.gbPeriodic.Controls.Add(this.lblFrequency);
             this.gbPeriodic.Controls.Add(this.lblOften);
-            this.gbPeriodic.Location = new System.Drawing.Point(227, 47);
+            this.gbPeriodic.Location = new System.Drawing.Point(227, 45);
             this.gbPeriodic.Name = "gbPeriodic";
             this.gbPeriodic.Size = new System.Drawing.Size(348, 110);
             this.gbPeriodic.TabIndex = 4;
@@ -291,7 +277,7 @@
             // 
             this.lblTo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblTo.AutoSize = true;
-            this.lblTo.Location = new System.Drawing.Point(27, 88);
+            this.lblTo.Location = new System.Drawing.Point(27, 86);
             this.lblTo.Name = "lblTo";
             this.lblTo.Size = new System.Drawing.Size(19, 13);
             this.lblTo.TabIndex = 3;
@@ -303,7 +289,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.dtpTo.CustomFormat = "M/d/yy \'at\' h:mm tt";
             this.dtpTo.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpTo.Location = new System.Drawing.Point(53, 85);
+            this.dtpTo.Location = new System.Drawing.Point(53, 83);
             this.dtpTo.Name = "dtpTo";
             this.dtpTo.Size = new System.Drawing.Size(145, 21);
             this.dtpTo.TabIndex = 2;
@@ -312,7 +298,7 @@
             // 
             this.lblFrom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblFrom.AutoSize = true;
-            this.lblFrom.Location = new System.Drawing.Point(13, 61);
+            this.lblFrom.Location = new System.Drawing.Point(13, 59);
             this.lblFrom.Name = "lblFrom";
             this.lblFrom.Size = new System.Drawing.Size(31, 13);
             this.lblFrom.TabIndex = 1;
@@ -324,7 +310,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.dtpFrom.CustomFormat = "M/d/yy \'at\' h:mm tt";
             this.dtpFrom.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpFrom.Location = new System.Drawing.Point(53, 58);
+            this.dtpFrom.Location = new System.Drawing.Point(53, 56);
             this.dtpFrom.Name = "dtpFrom";
             this.dtpFrom.Size = new System.Drawing.Size(145, 21);
             this.dtpFrom.TabIndex = 0;
@@ -333,7 +319,7 @@
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.Image = global::armspan.Properties.Resources.ok_svg;
-            this.btnOK.Location = new System.Drawing.Point(554, 398);
+            this.btnOK.Location = new System.Drawing.Point(554, 340);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(45, 45);
             this.btnOK.TabIndex = 5;
@@ -345,7 +331,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnCancel.Image = global::armspan.Properties.Resources.cancel_svg;
-            this.btnCancel.Location = new System.Drawing.Point(12, 398);
+            this.btnCancel.Location = new System.Drawing.Point(12, 340);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(45, 45);
             this.btnCancel.TabIndex = 9;
@@ -357,12 +343,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(612, 450);
+            this.ClientSize = new System.Drawing.Size(612, 392);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.gbNewTime);
             this.Controls.Add(this.gbSchedule);
-            this.MinimumSize = new System.Drawing.Size(614, 438);
+            this.MinimumSize = new System.Drawing.Size(614, 400);
             this.Name = "FormEventScheduler";
             this.Text = "FormEventScheduler";
             this.Load += new System.EventHandler(this.FormEventScheduler_Load);
@@ -403,7 +389,6 @@
         private System.Windows.Forms.CheckBox cbExclude;
         private System.Windows.Forms.RadioButton rbPeriodic;
         private System.Windows.Forms.RadioButton rbManual;
-        private System.Windows.Forms.Label lblWritten;
         private System.Windows.Forms.Button btnCancel;
     }
 }

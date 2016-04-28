@@ -51,7 +51,7 @@ namespace Span.GUI
             m_manualocc = new List<Occurrence>(m_newevent.ManualOccurrences);
             m_rules = new List<Period>(m_newevent.Rules);
             m_settings = new AlarmSettings(m_newevent.Alarms.ParentId, m_newevent.Alarms.Alarms);
-
+            cbCatPrim.SelectedItem = Category.All[m_newevent.PrimaryCategory];
             tbName.Text = m_newevent.Name;
             tbLocation.Text = m_newevent.Location;
             tbDesc.Text = m_newevent.Description;
@@ -189,7 +189,9 @@ namespace Span.GUI
             popup.ManualOccurrences = m_manualocc;
             popup.Rules = m_rules;
             popup.ParentId = m_newevent.Id;
+            popup.EventExists = true;
             popup.ShowDialog();
+
             m_manualocc = popup.ManualOccurrences;
             m_rules = popup.Rules;
         }

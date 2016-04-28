@@ -48,41 +48,53 @@ namespace Span.GUI
 
         private void DisplayAlarm(uint index)
         {
+            rtbAlarm.Text = "";
             Occurrence thisOcc = Alarms.ElementAt((int)index).Value;
             DateTime thisTime = Alarms.ElementAt((int)index).Key;
-            string richtext = @"{\rtf0\ansi ";
+           
+            string beforetext = "";
+            string aftertext = "";
             Alarm thisAlarm = thisOcc.Parent().Alarms.Alarms.Where(x => thisOcc.Parent().Alarms.SingleAlarmTime(x).Equals(thisTime)).ElementAt(0);
             switch (thisAlarm.m_relativePlace)
             {
                 case When.Before:
-                    richtext += @"Are you getting ready for \b <EVNM>\b0 ?";
+                    
+                    beforetext = "Are you getting ready for ";
+                    aftertext = "?";
                     break;
                 case When.During:
-                    richtext += @"Is \b <EVNM>\b0  occurring?";
+                    
+                    beforetext = "Is ";
+                    aftertext = " occurring?";
                     break;
                 case When.After:
-                    richtext += @"Did \b <EVNM>\b0  occur on time?";
+                   
+                    beforetext = "Did ";
+                    aftertext = " occur on time?";
                     break;
             }
-            richtext += "}";
+           
 
-            //CITE: http://stackoverflow.com/a/4795785
-            //how to convert text to rich text automatically
-            RichTextBox temp = new RichTextBox();
-            temp.Text = thisOcc.Parent().Name;
-            temp.Text += " " + thisOcc.Parent().Alarms.SingleAlarmTime(thisAlarm).ToShortTimeString();
-            string richname = temp.Rtf;
-            int start = richname.IndexOf(@"\fs17") + 6;
-            int length = richname.LastIndexOf(@"\par") - start;
-            richname = richname.Substring(start, length);
+           
             Color thisColor = Category.All[thisOcc.Parent().PrimaryCategory].Color;
             pnlCurrent.BackColor = thisColor;
             rtbAlarm.BackColor = ControlPaint.LightLight(thisColor);
 
-            richtext = richtext.Replace("<EVNM>", richname);
+            
 
+            rtbAlarm.AppendText(beforetext);
+            rtbAlarm.SelectionFont = new Font(rtbAlarm.Font, FontStyle.Bold);
+            rtbAlarm.AppendText(thisOcc.Parent().Name);
+            rtbAlarm.SelectionFont = rtbAlarm.Font;
+            rtbAlarm.AppendText(aftertext + "\n");
+            rtbAlarm.AppendText(thisOcc.StartActual.ToShortDateString() + " " + thisOcc.StartActual.ToShortTimeString());
+            rtbAlarm.AppendText(" - ");
+            rtbAlarm.AppendText(thisOcc.EndActual.ToShortDateString() + " " + thisOcc.EndActual.ToShortTimeString());
+            DateTime alarmOff = thisOcc.Parent().Alarms.SingleAlarmTime(thisAlarm);
+            rtbAlarm.SelectionFont = new Font(rtbAlarm.Font.Name, rtbAlarm.Font.Size * 0.75f, rtbAlarm.Font.Unit);
+            rtbAlarm.AppendText("\nThis alarm was set to go off on " + alarmOff.ToShortDateString() + " at " + alarmOff.ToShortTimeString() + ".");
             //MessageBox.Show(richtext);
-            rtbAlarm.Rtf = richtext;
+            
             m_settings = thisOcc.Parent().Alarms;
         }
 
@@ -173,6 +185,12 @@ namespace Span.GUI
             Alarms.ElementAt(lbNext.SelectedIndex).Value.Parent().Alarms.Alarms = popup.Settings.Alarms;
             //due to alarm changes, close and possibly reopen in ten seconds
             this.Close();
+        }
+
+        private void btnMore_Click(object sender, EventArgs e)
+        {
+            Event thisEvent = Alarms.ElementAt(lbNext.SelectedIndex).Value.Parent();
+            MessageBox.Show(thisEvent.Description);
         }
 
         

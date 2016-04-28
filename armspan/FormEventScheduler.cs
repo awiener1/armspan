@@ -37,6 +37,17 @@ namespace Span.GUI
                 MessageBox.Show("You must include at least one manual time, or at least one periodic time that is not excluded.");
                 return;
             }
+            if (EventExists)
+            {
+                foreach (string s in m_manualToRemove)
+                {
+                    Occurrence.All[s].Delete();
+                }
+                foreach (string s in m_rulesToRemove)
+                {
+                    Event.All[ParentId].Rules.First(x => x.Id.Equals(s)).WipeOut();
+                }
+            }
             this.Close();
         }
 
@@ -58,6 +69,9 @@ namespace Span.GUI
 
         private List<Occurrence> m_manual;
         private List<Period> m_rules;
+        private List<string> m_manualToRemove;
+        private List<string> m_rulesToRemove;
+        private bool m_edit;
         
         private string m_parentid;
 
@@ -92,14 +106,14 @@ namespace Span.GUI
                 rule.Excluded = cbExclude.Checked;
                 m_rules.Add(rule);
                 lbSchedule.Items.Add(rule);
-                MessageBox.Show(rule.ToString());
+               
             }
             else
             {
                 Occurrence manual = new Occurrence(Event.All[ParentId].IsTask, start, end, ParentId);
                 m_manual.Add(manual);
                 lbSchedule.Items.Add(manual);
-                MessageBox.Show(manual.ToString());
+               
             }
             
             lbSchedule.Update();
@@ -129,6 +143,18 @@ namespace Span.GUI
             }
         }
 
+        public bool EventExists
+        {
+            get
+            {
+                return m_edit;
+            }
+            set
+            {
+                m_edit = value;
+            }
+        }
+
         private void btnRemoveOcc_Click(object sender, EventArgs e)
         {
             if (lbSchedule.Items.Count == 0)
@@ -140,21 +166,38 @@ namespace Span.GUI
                 Occurrence thisitem = (Occurrence)lbSchedule.SelectedItem;
                 lbSchedule.Items.Remove(thisitem);
                 m_manual.Remove(thisitem);
-                thisitem.Delete();
+                if (EventExists)
+                {
+                    m_manualToRemove.Add(thisitem.Id);
+                }
+                else
+                {
+                    thisitem.Delete();
+                }
             }
             else if (lbSchedule.SelectedItem is Period)
             {
                 Period thisitem = (Period)lbSchedule.SelectedItem;
                 lbSchedule.Items.Remove(thisitem);
                 m_rules.Remove(thisitem);
+                if (EventExists)
+                {
+                    m_rulesToRemove.Add(thisitem.Id);
+                }
             }
         }
 
         private void FormEventScheduler_Load(object sender, EventArgs e)
         {
             //assume pre-existing schedule
+            lbSchedule.DisplayMember = "Describe";
             lbSchedule.Items.AddRange(m_manual.ToArray());
             lbSchedule.Items.AddRange(m_rules.ToArray());
+            if (EventExists)
+            {
+                m_manualToRemove = new List<string>();
+                m_rulesToRemove = new List<string>();
+            }
         }
     }
 }

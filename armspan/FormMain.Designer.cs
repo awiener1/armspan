@@ -30,24 +30,46 @@
         {
             this.components = new System.ComponentModel.Container();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.btnNewAppt = new System.Windows.Forms.ToolStripButton();
+            this.btnNewTask = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnStartAppt = new System.Windows.Forms.ToolStripButton();
+            this.btnStartTask = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnStopAppts = new System.Windows.Forms.ToolStripButton();
+            this.btnStopTasks = new System.Windows.Forms.ToolStripButton();
+            this.btnCancelAppts = new System.Windows.Forms.ToolStripButton();
+            this.btnCancelTasks = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnCategories = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnSummary = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.pnlNow = new System.Windows.Forms.Panel();
             this.gbNow = new System.Windows.Forms.GroupBox();
             this.tlpNow = new System.Windows.Forms.TableLayoutPanel();
             this.pnlTimeline = new System.Windows.Forms.Panel();
+            this.pbTimeline = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnNow = new System.Windows.Forms.Button();
             this.gbEvent = new System.Windows.Forms.GroupBox();
             this.rtbTask = new System.Windows.Forms.RichTextBox();
+            this.btnDeleteEvent = new System.Windows.Forms.Button();
+            this.btnEditEvent = new System.Windows.Forms.Button();
+            this.pbEventColor = new System.Windows.Forms.PictureBox();
             this.mCalendar = new System.Windows.Forms.MonthCalendar();
             this.panel3 = new System.Windows.Forms.Panel();
             this.gbOccurrence = new System.Windows.Forms.GroupBox();
             this.nudPostponeOcc = new System.Windows.Forms.NumericUpDown();
             this.rtbOccurrence = new System.Windows.Forms.RichTextBox();
+            this.btnRescheduleOcc = new System.Windows.Forms.Button();
+            this.btnRepeatTask = new System.Windows.Forms.Button();
+            this.btnDeleteOcc = new System.Windows.Forms.Button();
+            this.btnCancelOcc = new System.Windows.Forms.Button();
+            this.btnIgnoreOcc = new System.Windows.Forms.Button();
+            this.btnPostponeOcc = new System.Windows.Forms.Button();
+            this.btnStopOcc = new System.Windows.Forms.Button();
+            this.btnStartOcc = new System.Windows.Forms.Button();
             this.ttNonMenu = new System.Windows.Forms.ToolTip(this.components);
             this.msTop = new System.Windows.Forms.MenuStrip();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,41 +81,19 @@
             this.btnZoomOut = new System.Windows.Forms.Button();
             this.btnZoomIn = new System.Windows.Forms.Button();
             this.tmWhole = new System.Windows.Forms.Timer(this.components);
-            this.btnRescheduleOcc = new System.Windows.Forms.Button();
-            this.btnRepeatTask = new System.Windows.Forms.Button();
-            this.btnDeleteOcc = new System.Windows.Forms.Button();
-            this.btnCancelOcc = new System.Windows.Forms.Button();
-            this.btnIgnoreOcc = new System.Windows.Forms.Button();
-            this.btnPostponeOcc = new System.Windows.Forms.Button();
-            this.btnStopOcc = new System.Windows.Forms.Button();
-            this.btnStartOcc = new System.Windows.Forms.Button();
-            this.btnDeleteEvent = new System.Windows.Forms.Button();
-            this.btnEditEvent = new System.Windows.Forms.Button();
-            this.pbEventColor = new System.Windows.Forms.PictureBox();
-            this.pbTimeline = new System.Windows.Forms.PictureBox();
-            this.btnNewAppt = new System.Windows.Forms.ToolStripButton();
-            this.btnNewTask = new System.Windows.Forms.ToolStripButton();
-            this.btnStartAppt = new System.Windows.Forms.ToolStripButton();
-            this.btnStartTask = new System.Windows.Forms.ToolStripButton();
-            this.btnStopAppts = new System.Windows.Forms.ToolStripButton();
-            this.btnStopTasks = new System.Windows.Forms.ToolStripButton();
-            this.btnCancelAppts = new System.Windows.Forms.ToolStripButton();
-            this.btnCancelTasks = new System.Windows.Forms.ToolStripButton();
-            this.btnCategories = new System.Windows.Forms.ToolStripButton();
-            this.btnSummary = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.pnlNow.SuspendLayout();
             this.gbNow.SuspendLayout();
             this.pnlTimeline.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbTimeline)).BeginInit();
             this.panel2.SuspendLayout();
             this.gbEvent.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbEventColor)).BeginInit();
             this.panel3.SuspendLayout();
             this.gbOccurrence.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudPostponeOcc)).BeginInit();
             this.msTop.SuspendLayout();
             this.tlpZoom.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbEventColor)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbTimeline)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -124,11 +124,67 @@
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // btnNewAppt
+            // 
+            this.btnNewAppt.AutoSize = false;
+            this.btnNewAppt.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnNewAppt.Image = global::armspan.Properties.Resources.apptshine_svg;
+            this.btnNewAppt.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnNewAppt.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnNewAppt.Name = "btnNewAppt";
+            this.btnNewAppt.Size = new System.Drawing.Size(48, 48);
+            this.btnNewAppt.Text = "New Appointment";
+            this.btnNewAppt.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnNewAppt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnNewAppt.Click += new System.EventHandler(this.btnNewAppt_Click);
+            // 
+            // btnNewTask
+            // 
+            this.btnNewTask.AutoSize = false;
+            this.btnNewTask.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnNewTask.Enabled = false;
+            this.btnNewTask.Image = global::armspan.Properties.Resources.taskshine_svg;
+            this.btnNewTask.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnNewTask.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnNewTask.Name = "btnNewTask";
+            this.btnNewTask.Size = new System.Drawing.Size(48, 48);
+            this.btnNewTask.Text = "New Task";
+            this.btnNewTask.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnNewTask.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnNewTask.Click += new System.EventHandler(this.btnNewTask_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 52);
+            // 
+            // btnStartAppt
+            // 
+            this.btnStartAppt.AutoSize = false;
+            this.btnStartAppt.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnStartAppt.Image = global::armspan.Properties.Resources.apptnow_svg;
+            this.btnStartAppt.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnStartAppt.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnStartAppt.Name = "btnStartAppt";
+            this.btnStartAppt.Size = new System.Drawing.Size(48, 48);
+            this.btnStartAppt.Text = "Start New Appointment Now";
+            this.btnStartAppt.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnStartAppt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
+            // btnStartTask
+            // 
+            this.btnStartTask.AutoSize = false;
+            this.btnStartTask.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnStartTask.Enabled = false;
+            this.btnStartTask.Image = global::armspan.Properties.Resources.tasknow_svg;
+            this.btnStartTask.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnStartTask.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnStartTask.Name = "btnStartTask";
+            this.btnStartTask.Size = new System.Drawing.Size(48, 48);
+            this.btnStartTask.Text = "Start New Task Now";
+            this.btnStartTask.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnStartTask.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // toolStripSeparator2
             // 
@@ -136,17 +192,103 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 52);
             // 
+            // btnStopAppts
+            // 
+            this.btnStopAppts.AutoSize = false;
+            this.btnStopAppts.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnStopAppts.Image = global::armspan.Properties.Resources.stopappts_svg;
+            this.btnStopAppts.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnStopAppts.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnStopAppts.Name = "btnStopAppts";
+            this.btnStopAppts.Size = new System.Drawing.Size(48, 48);
+            this.btnStopAppts.Text = "Stop All Appointments";
+            this.btnStopAppts.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnStopAppts.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
+            // btnStopTasks
+            // 
+            this.btnStopTasks.AutoSize = false;
+            this.btnStopTasks.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnStopTasks.Enabled = false;
+            this.btnStopTasks.Image = global::armspan.Properties.Resources.stoptasks_svg;
+            this.btnStopTasks.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnStopTasks.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnStopTasks.Name = "btnStopTasks";
+            this.btnStopTasks.Size = new System.Drawing.Size(48, 48);
+            this.btnStopTasks.Text = "Stop All Tasks";
+            this.btnStopTasks.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnStopTasks.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
+            // btnCancelAppts
+            // 
+            this.btnCancelAppts.AutoSize = false;
+            this.btnCancelAppts.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnCancelAppts.Image = global::armspan.Properties.Resources.cancelappts_svg;
+            this.btnCancelAppts.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnCancelAppts.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCancelAppts.Name = "btnCancelAppts";
+            this.btnCancelAppts.Size = new System.Drawing.Size(48, 48);
+            this.btnCancelAppts.Text = "Cancel All Appointments";
+            this.btnCancelAppts.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnCancelAppts.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnCancelAppts.Click += new System.EventHandler(this.btnCancelAppts_Click);
+            // 
+            // btnCancelTasks
+            // 
+            this.btnCancelTasks.AutoSize = false;
+            this.btnCancelTasks.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnCancelTasks.Enabled = false;
+            this.btnCancelTasks.Image = global::armspan.Properties.Resources.canceltasks_svg;
+            this.btnCancelTasks.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnCancelTasks.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCancelTasks.Name = "btnCancelTasks";
+            this.btnCancelTasks.Size = new System.Drawing.Size(48, 48);
+            this.btnCancelTasks.Text = "Cancel All Tasks";
+            this.btnCancelTasks.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnCancelTasks.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnCancelTasks.Click += new System.EventHandler(this.btnCancelTasks_Click);
+            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 52);
             // 
+            // btnCategories
+            // 
+            this.btnCategories.AutoSize = false;
+            this.btnCategories.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnCategories.Image = global::armspan.Properties.Resources.colors_svg;
+            this.btnCategories.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnCategories.ImageTransparentColor = System.Drawing.Color.Maroon;
+            this.btnCategories.Name = "btnCategories";
+            this.btnCategories.Size = new System.Drawing.Size(48, 48);
+            this.btnCategories.Text = "Manage Categories";
+            this.btnCategories.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnCategories.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnCategories.Click += new System.EventHandler(this.btnCategories_Click);
+            // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 52);
+            // 
+            // btnSummary
+            // 
+            this.btnSummary.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnSummary.AutoSize = false;
+            this.btnSummary.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnSummary.Image = global::armspan.Properties.Resources.summary_svg;
+            this.btnSummary.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnSummary.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSummary.Name = "btnSummary";
+            this.btnSummary.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.btnSummary.Size = new System.Drawing.Size(48, 48);
+            this.btnSummary.Text = "View Summary";
+            this.btnSummary.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnSummary.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnSummary.Click += new System.EventHandler(this.btnSummary_Click);
             // 
             // toolStripSeparator5
             // 
@@ -209,6 +351,19 @@
             this.pnlTimeline.Size = new System.Drawing.Size(584, 396);
             this.pnlTimeline.TabIndex = 2;
             // 
+            // pbTimeline
+            // 
+            this.pbTimeline.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.pbTimeline.BackColor = System.Drawing.SystemColors.Window;
+            this.pbTimeline.Location = new System.Drawing.Point(0, 0);
+            this.pbTimeline.Margin = new System.Windows.Forms.Padding(0);
+            this.pbTimeline.Name = "pbTimeline";
+            this.pbTimeline.Size = new System.Drawing.Size(581, 375);
+            this.pbTimeline.TabIndex = 2;
+            this.pbTimeline.TabStop = false;
+            this.pbTimeline.Click += new System.EventHandler(this.pbTimeline_Click);
+            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.btnNow);
@@ -264,6 +419,41 @@
             this.rtbTask.Size = new System.Drawing.Size(149, 104);
             this.rtbTask.TabIndex = 4;
             this.rtbTask.Text = "";
+            // 
+            // btnDeleteEvent
+            // 
+            this.btnDeleteEvent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnDeleteEvent.Image = global::armspan.Properties.Resources.trash_svg;
+            this.btnDeleteEvent.Location = new System.Drawing.Point(82, 136);
+            this.btnDeleteEvent.Name = "btnDeleteEvent";
+            this.btnDeleteEvent.Size = new System.Drawing.Size(45, 45);
+            this.btnDeleteEvent.TabIndex = 3;
+            this.ttNonMenu.SetToolTip(this.btnDeleteEvent, "Delete Event");
+            this.btnDeleteEvent.UseVisualStyleBackColor = true;
+            this.btnDeleteEvent.Click += new System.EventHandler(this.btnDeleteEvent_Click);
+            // 
+            // btnEditEvent
+            // 
+            this.btnEditEvent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnEditEvent.Image = global::armspan.Properties.Resources.edit_svg;
+            this.btnEditEvent.Location = new System.Drawing.Point(29, 136);
+            this.btnEditEvent.Name = "btnEditEvent";
+            this.btnEditEvent.Size = new System.Drawing.Size(45, 45);
+            this.btnEditEvent.TabIndex = 2;
+            this.ttNonMenu.SetToolTip(this.btnEditEvent, "Edit Event");
+            this.btnEditEvent.UseVisualStyleBackColor = true;
+            this.btnEditEvent.Click += new System.EventHandler(this.btnEditEvent_Click);
+            // 
+            // pbEventColor
+            // 
+            this.pbEventColor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.pbEventColor.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.pbEventColor.Location = new System.Drawing.Point(10, 17);
+            this.pbEventColor.Name = "pbEventColor";
+            this.pbEventColor.Size = new System.Drawing.Size(10, 165);
+            this.pbEventColor.TabIndex = 0;
+            this.pbEventColor.TabStop = false;
             // 
             // mCalendar
             // 
@@ -349,6 +539,103 @@
             this.rtbOccurrence.Size = new System.Drawing.Size(189, 58);
             this.rtbOccurrence.TabIndex = 5;
             this.rtbOccurrence.Text = "";
+            // 
+            // btnRescheduleOcc
+            // 
+            this.btnRescheduleOcc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRescheduleOcc.Image = global::armspan.Properties.Resources.schedule_svg;
+            this.btnRescheduleOcc.Location = new System.Drawing.Point(12, 335);
+            this.btnRescheduleOcc.Name = "btnRescheduleOcc";
+            this.btnRescheduleOcc.Size = new System.Drawing.Size(150, 68);
+            this.btnRescheduleOcc.TabIndex = 9;
+            this.ttNonMenu.SetToolTip(this.btnRescheduleOcc, "Reschedule Occurrence");
+            this.btnRescheduleOcc.UseVisualStyleBackColor = true;
+            this.btnRescheduleOcc.Click += new System.EventHandler(this.btnRescheduleOcc_Click);
+            // 
+            // btnRepeatTask
+            // 
+            this.btnRepeatTask.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRepeatTask.Enabled = false;
+            this.btnRepeatTask.Image = global::armspan.Properties.Resources.repeat_svg;
+            this.btnRepeatTask.Location = new System.Drawing.Point(12, 82);
+            this.btnRepeatTask.Name = "btnRepeatTask";
+            this.btnRepeatTask.Size = new System.Drawing.Size(150, 45);
+            this.btnRepeatTask.TabIndex = 8;
+            this.ttNonMenu.SetToolTip(this.btnRepeatTask, "Do Task Again");
+            this.btnRepeatTask.UseVisualStyleBackColor = true;
+            this.btnRepeatTask.Click += new System.EventHandler(this.btnRepeatTask_Click);
+            // 
+            // btnDeleteOcc
+            // 
+            this.btnDeleteOcc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDeleteOcc.Image = global::armspan.Properties.Resources.trash_svg;
+            this.btnDeleteOcc.Location = new System.Drawing.Point(117, 142);
+            this.btnDeleteOcc.Name = "btnDeleteOcc";
+            this.btnDeleteOcc.Size = new System.Drawing.Size(45, 45);
+            this.btnDeleteOcc.TabIndex = 7;
+            this.ttNonMenu.SetToolTip(this.btnDeleteOcc, "Delete Occurrence");
+            this.btnDeleteOcc.UseVisualStyleBackColor = true;
+            this.btnDeleteOcc.Click += new System.EventHandler(this.btnDeleteOcc_Click);
+            // 
+            // btnCancelOcc
+            // 
+            this.btnCancelOcc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancelOcc.Image = global::armspan.Properties.Resources.cancel_svg;
+            this.btnCancelOcc.Location = new System.Drawing.Point(65, 142);
+            this.btnCancelOcc.Name = "btnCancelOcc";
+            this.btnCancelOcc.Size = new System.Drawing.Size(45, 45);
+            this.btnCancelOcc.TabIndex = 6;
+            this.ttNonMenu.SetToolTip(this.btnCancelOcc, "Cancel Occurrence");
+            this.btnCancelOcc.UseVisualStyleBackColor = true;
+            this.btnCancelOcc.Click += new System.EventHandler(this.btnCancelOcc_Click);
+            // 
+            // btnIgnoreOcc
+            // 
+            this.btnIgnoreOcc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnIgnoreOcc.Image = global::armspan.Properties.Resources.ignore_svg;
+            this.btnIgnoreOcc.Location = new System.Drawing.Point(12, 142);
+            this.btnIgnoreOcc.Name = "btnIgnoreOcc";
+            this.btnIgnoreOcc.Size = new System.Drawing.Size(45, 45);
+            this.btnIgnoreOcc.TabIndex = 5;
+            this.ttNonMenu.SetToolTip(this.btnIgnoreOcc, "Ignore Occurrence");
+            this.btnIgnoreOcc.UseVisualStyleBackColor = true;
+            this.btnIgnoreOcc.Click += new System.EventHandler(this.btnIgnoreOcc_Click);
+            // 
+            // btnPostponeOcc
+            // 
+            this.btnPostponeOcc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPostponeOcc.Image = global::armspan.Properties.Resources.postpone_svg;
+            this.btnPostponeOcc.Location = new System.Drawing.Point(117, 23);
+            this.btnPostponeOcc.Name = "btnPostponeOcc";
+            this.btnPostponeOcc.Size = new System.Drawing.Size(45, 45);
+            this.btnPostponeOcc.TabIndex = 3;
+            this.ttNonMenu.SetToolTip(this.btnPostponeOcc, "Postpone Occurrence\r\nfor the specified number of minutes.");
+            this.btnPostponeOcc.UseVisualStyleBackColor = true;
+            this.btnPostponeOcc.Click += new System.EventHandler(this.btnPostponeOcc_Click);
+            // 
+            // btnStopOcc
+            // 
+            this.btnStopOcc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnStopOcc.Image = global::armspan.Properties.Resources.stop_svg;
+            this.btnStopOcc.Location = new System.Drawing.Point(65, 23);
+            this.btnStopOcc.Name = "btnStopOcc";
+            this.btnStopOcc.Size = new System.Drawing.Size(45, 45);
+            this.btnStopOcc.TabIndex = 2;
+            this.ttNonMenu.SetToolTip(this.btnStopOcc, "Stop Occurrence Now");
+            this.btnStopOcc.UseVisualStyleBackColor = true;
+            this.btnStopOcc.Click += new System.EventHandler(this.btnStopOcc_Click);
+            // 
+            // btnStartOcc
+            // 
+            this.btnStartOcc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnStartOcc.Image = global::armspan.Properties.Resources.now_svg;
+            this.btnStartOcc.Location = new System.Drawing.Point(12, 23);
+            this.btnStartOcc.Name = "btnStartOcc";
+            this.btnStartOcc.Size = new System.Drawing.Size(45, 45);
+            this.btnStartOcc.TabIndex = 1;
+            this.ttNonMenu.SetToolTip(this.btnStartOcc, "Start Occurrence Now");
+            this.btnStartOcc.UseVisualStyleBackColor = true;
+            this.btnStartOcc.Click += new System.EventHandler(this.btnStartOcc_Click);
             // 
             // msTop
             // 
@@ -447,291 +734,6 @@
             this.tmWhole.Interval = 10000;
             this.tmWhole.Tick += new System.EventHandler(this.tmWhole_Tick);
             // 
-            // btnRescheduleOcc
-            // 
-            this.btnRescheduleOcc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRescheduleOcc.Image = global::armspan.Properties.Resources.schedule_svg;
-            this.btnRescheduleOcc.Location = new System.Drawing.Point(12, 335);
-            this.btnRescheduleOcc.Name = "btnRescheduleOcc";
-            this.btnRescheduleOcc.Size = new System.Drawing.Size(150, 68);
-            this.btnRescheduleOcc.TabIndex = 9;
-            this.ttNonMenu.SetToolTip(this.btnRescheduleOcc, "Reschedule Occurrence");
-            this.btnRescheduleOcc.UseVisualStyleBackColor = true;
-            this.btnRescheduleOcc.Click += new System.EventHandler(this.btnRescheduleOcc_Click);
-            // 
-            // btnRepeatTask
-            // 
-            this.btnRepeatTask.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRepeatTask.Enabled = false;
-            this.btnRepeatTask.Image = global::armspan.Properties.Resources.repeat_svg;
-            this.btnRepeatTask.Location = new System.Drawing.Point(12, 82);
-            this.btnRepeatTask.Name = "btnRepeatTask";
-            this.btnRepeatTask.Size = new System.Drawing.Size(150, 45);
-            this.btnRepeatTask.TabIndex = 8;
-            this.ttNonMenu.SetToolTip(this.btnRepeatTask, "Do Task Again");
-            this.btnRepeatTask.UseVisualStyleBackColor = true;
-            // 
-            // btnDeleteOcc
-            // 
-            this.btnDeleteOcc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDeleteOcc.Image = global::armspan.Properties.Resources.trash_svg;
-            this.btnDeleteOcc.Location = new System.Drawing.Point(117, 142);
-            this.btnDeleteOcc.Name = "btnDeleteOcc";
-            this.btnDeleteOcc.Size = new System.Drawing.Size(45, 45);
-            this.btnDeleteOcc.TabIndex = 7;
-            this.ttNonMenu.SetToolTip(this.btnDeleteOcc, "Delete Occurrence");
-            this.btnDeleteOcc.UseVisualStyleBackColor = true;
-            this.btnDeleteOcc.Click += new System.EventHandler(this.btnDeleteOcc_Click);
-            // 
-            // btnCancelOcc
-            // 
-            this.btnCancelOcc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancelOcc.Image = global::armspan.Properties.Resources.cancel_svg;
-            this.btnCancelOcc.Location = new System.Drawing.Point(65, 142);
-            this.btnCancelOcc.Name = "btnCancelOcc";
-            this.btnCancelOcc.Size = new System.Drawing.Size(45, 45);
-            this.btnCancelOcc.TabIndex = 6;
-            this.ttNonMenu.SetToolTip(this.btnCancelOcc, "Cancel Occurrence");
-            this.btnCancelOcc.UseVisualStyleBackColor = true;
-            this.btnCancelOcc.Click += new System.EventHandler(this.btnCancelOcc_Click);
-            // 
-            // btnIgnoreOcc
-            // 
-            this.btnIgnoreOcc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnIgnoreOcc.Image = global::armspan.Properties.Resources.ignore_svg;
-            this.btnIgnoreOcc.Location = new System.Drawing.Point(12, 142);
-            this.btnIgnoreOcc.Name = "btnIgnoreOcc";
-            this.btnIgnoreOcc.Size = new System.Drawing.Size(45, 45);
-            this.btnIgnoreOcc.TabIndex = 5;
-            this.ttNonMenu.SetToolTip(this.btnIgnoreOcc, "Ignore Occurrence");
-            this.btnIgnoreOcc.UseVisualStyleBackColor = true;
-            this.btnIgnoreOcc.Click += new System.EventHandler(this.btnIgnoreOcc_Click);
-            // 
-            // btnPostponeOcc
-            // 
-            this.btnPostponeOcc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPostponeOcc.Image = global::armspan.Properties.Resources.postpone_svg;
-            this.btnPostponeOcc.Location = new System.Drawing.Point(117, 23);
-            this.btnPostponeOcc.Name = "btnPostponeOcc";
-            this.btnPostponeOcc.Size = new System.Drawing.Size(45, 45);
-            this.btnPostponeOcc.TabIndex = 3;
-            this.ttNonMenu.SetToolTip(this.btnPostponeOcc, "Postpone Occurrence\r\nfor the specified number of minutes.");
-            this.btnPostponeOcc.UseVisualStyleBackColor = true;
-            this.btnPostponeOcc.Click += new System.EventHandler(this.btnPostponeOcc_Click);
-            // 
-            // btnStopOcc
-            // 
-            this.btnStopOcc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnStopOcc.Image = global::armspan.Properties.Resources.stop_svg;
-            this.btnStopOcc.Location = new System.Drawing.Point(65, 23);
-            this.btnStopOcc.Name = "btnStopOcc";
-            this.btnStopOcc.Size = new System.Drawing.Size(45, 45);
-            this.btnStopOcc.TabIndex = 2;
-            this.ttNonMenu.SetToolTip(this.btnStopOcc, "Stop Occurrence Now");
-            this.btnStopOcc.UseVisualStyleBackColor = true;
-            this.btnStopOcc.Click += new System.EventHandler(this.btnStopOcc_Click);
-            // 
-            // btnStartOcc
-            // 
-            this.btnStartOcc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnStartOcc.Image = global::armspan.Properties.Resources.now_svg;
-            this.btnStartOcc.Location = new System.Drawing.Point(12, 23);
-            this.btnStartOcc.Name = "btnStartOcc";
-            this.btnStartOcc.Size = new System.Drawing.Size(45, 45);
-            this.btnStartOcc.TabIndex = 1;
-            this.ttNonMenu.SetToolTip(this.btnStartOcc, "Start Occurrence Now");
-            this.btnStartOcc.UseVisualStyleBackColor = true;
-            this.btnStartOcc.Click += new System.EventHandler(this.btnStartOcc_Click);
-            // 
-            // btnDeleteEvent
-            // 
-            this.btnDeleteEvent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnDeleteEvent.Image = global::armspan.Properties.Resources.trash_svg;
-            this.btnDeleteEvent.Location = new System.Drawing.Point(82, 136);
-            this.btnDeleteEvent.Name = "btnDeleteEvent";
-            this.btnDeleteEvent.Size = new System.Drawing.Size(45, 45);
-            this.btnDeleteEvent.TabIndex = 3;
-            this.ttNonMenu.SetToolTip(this.btnDeleteEvent, "Delete Event");
-            this.btnDeleteEvent.UseVisualStyleBackColor = true;
-            // 
-            // btnEditEvent
-            // 
-            this.btnEditEvent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnEditEvent.Image = global::armspan.Properties.Resources.edit_svg;
-            this.btnEditEvent.Location = new System.Drawing.Point(29, 136);
-            this.btnEditEvent.Name = "btnEditEvent";
-            this.btnEditEvent.Size = new System.Drawing.Size(45, 45);
-            this.btnEditEvent.TabIndex = 2;
-            this.ttNonMenu.SetToolTip(this.btnEditEvent, "Edit Event");
-            this.btnEditEvent.UseVisualStyleBackColor = true;
-            this.btnEditEvent.Click += new System.EventHandler(this.btnEditEvent_Click);
-            // 
-            // pbEventColor
-            // 
-            this.pbEventColor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
-            this.pbEventColor.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.pbEventColor.Location = new System.Drawing.Point(10, 17);
-            this.pbEventColor.Name = "pbEventColor";
-            this.pbEventColor.Size = new System.Drawing.Size(10, 165);
-            this.pbEventColor.TabIndex = 0;
-            this.pbEventColor.TabStop = false;
-            // 
-            // pbTimeline
-            // 
-            this.pbTimeline.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
-            this.pbTimeline.BackColor = System.Drawing.SystemColors.Window;
-            this.pbTimeline.Location = new System.Drawing.Point(0, 0);
-            this.pbTimeline.Margin = new System.Windows.Forms.Padding(0);
-            this.pbTimeline.Name = "pbTimeline";
-            this.pbTimeline.Size = new System.Drawing.Size(581, 375);
-            this.pbTimeline.TabIndex = 2;
-            this.pbTimeline.TabStop = false;
-            this.pbTimeline.Click += new System.EventHandler(this.pbTimeline_Click);
-            // 
-            // btnNewAppt
-            // 
-            this.btnNewAppt.AutoSize = false;
-            this.btnNewAppt.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnNewAppt.Image = global::armspan.Properties.Resources.apptshine_svg;
-            this.btnNewAppt.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnNewAppt.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnNewAppt.Name = "btnNewAppt";
-            this.btnNewAppt.Size = new System.Drawing.Size(48, 48);
-            this.btnNewAppt.Text = "New Appointment";
-            this.btnNewAppt.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnNewAppt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnNewAppt.Click += new System.EventHandler(this.btnNewAppt_Click);
-            // 
-            // btnNewTask
-            // 
-            this.btnNewTask.AutoSize = false;
-            this.btnNewTask.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnNewTask.Enabled = false;
-            this.btnNewTask.Image = global::armspan.Properties.Resources.taskshine_svg;
-            this.btnNewTask.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnNewTask.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnNewTask.Name = "btnNewTask";
-            this.btnNewTask.Size = new System.Drawing.Size(48, 48);
-            this.btnNewTask.Text = "New Task";
-            this.btnNewTask.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnNewTask.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnNewTask.Click += new System.EventHandler(this.btnNewTask_Click);
-            // 
-            // btnStartAppt
-            // 
-            this.btnStartAppt.AutoSize = false;
-            this.btnStartAppt.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnStartAppt.Image = global::armspan.Properties.Resources.apptnow_svg;
-            this.btnStartAppt.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnStartAppt.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnStartAppt.Name = "btnStartAppt";
-            this.btnStartAppt.Size = new System.Drawing.Size(48, 48);
-            this.btnStartAppt.Text = "Start New Appointment Now";
-            this.btnStartAppt.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnStartAppt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
-            // btnStartTask
-            // 
-            this.btnStartTask.AutoSize = false;
-            this.btnStartTask.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnStartTask.Enabled = false;
-            this.btnStartTask.Image = global::armspan.Properties.Resources.tasknow_svg;
-            this.btnStartTask.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnStartTask.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnStartTask.Name = "btnStartTask";
-            this.btnStartTask.Size = new System.Drawing.Size(48, 48);
-            this.btnStartTask.Text = "Start New Task Now";
-            this.btnStartTask.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnStartTask.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
-            // btnStopAppts
-            // 
-            this.btnStopAppts.AutoSize = false;
-            this.btnStopAppts.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnStopAppts.Image = global::armspan.Properties.Resources.stopappts_svg;
-            this.btnStopAppts.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnStopAppts.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnStopAppts.Name = "btnStopAppts";
-            this.btnStopAppts.Size = new System.Drawing.Size(48, 48);
-            this.btnStopAppts.Text = "Stop All Appointments";
-            this.btnStopAppts.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnStopAppts.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
-            // btnStopTasks
-            // 
-            this.btnStopTasks.AutoSize = false;
-            this.btnStopTasks.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnStopTasks.Enabled = false;
-            this.btnStopTasks.Image = global::armspan.Properties.Resources.stoptasks_svg;
-            this.btnStopTasks.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnStopTasks.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnStopTasks.Name = "btnStopTasks";
-            this.btnStopTasks.Size = new System.Drawing.Size(48, 48);
-            this.btnStopTasks.Text = "Stop All Tasks";
-            this.btnStopTasks.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnStopTasks.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            // 
-            // btnCancelAppts
-            // 
-            this.btnCancelAppts.AutoSize = false;
-            this.btnCancelAppts.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnCancelAppts.Image = global::armspan.Properties.Resources.cancelappts_svg;
-            this.btnCancelAppts.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnCancelAppts.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnCancelAppts.Name = "btnCancelAppts";
-            this.btnCancelAppts.Size = new System.Drawing.Size(48, 48);
-            this.btnCancelAppts.Text = "Cancel All Appointments";
-            this.btnCancelAppts.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnCancelAppts.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnCancelAppts.Click += new System.EventHandler(this.btnCancelAppts_Click);
-            // 
-            // btnCancelTasks
-            // 
-            this.btnCancelTasks.AutoSize = false;
-            this.btnCancelTasks.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnCancelTasks.Enabled = false;
-            this.btnCancelTasks.Image = global::armspan.Properties.Resources.canceltasks_svg;
-            this.btnCancelTasks.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnCancelTasks.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnCancelTasks.Name = "btnCancelTasks";
-            this.btnCancelTasks.Size = new System.Drawing.Size(48, 48);
-            this.btnCancelTasks.Text = "Cancel All Tasks";
-            this.btnCancelTasks.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnCancelTasks.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnCancelTasks.Click += new System.EventHandler(this.btnCancelTasks_Click);
-            // 
-            // btnCategories
-            // 
-            this.btnCategories.AutoSize = false;
-            this.btnCategories.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnCategories.Image = global::armspan.Properties.Resources.colors_svg;
-            this.btnCategories.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnCategories.ImageTransparentColor = System.Drawing.Color.Maroon;
-            this.btnCategories.Name = "btnCategories";
-            this.btnCategories.Size = new System.Drawing.Size(48, 48);
-            this.btnCategories.Text = "Manage Categories";
-            this.btnCategories.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnCategories.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnCategories.Click += new System.EventHandler(this.btnCategories_Click);
-            // 
-            // btnSummary
-            // 
-            this.btnSummary.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnSummary.AutoSize = false;
-            this.btnSummary.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnSummary.Image = global::armspan.Properties.Resources.summary_svg;
-            this.btnSummary.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnSummary.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSummary.Name = "btnSummary";
-            this.btnSummary.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.btnSummary.Size = new System.Drawing.Size(48, 48);
-            this.btnSummary.Text = "View Summary";
-            this.btnSummary.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnSummary.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnSummary.Click += new System.EventHandler(this.btnSummary_Click);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -757,16 +759,16 @@
             this.pnlNow.ResumeLayout(false);
             this.gbNow.ResumeLayout(false);
             this.pnlTimeline.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbTimeline)).EndInit();
             this.panel2.ResumeLayout(false);
             this.gbEvent.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbEventColor)).EndInit();
             this.panel3.ResumeLayout(false);
             this.gbOccurrence.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nudPostponeOcc)).EndInit();
             this.msTop.ResumeLayout(false);
             this.msTop.PerformLayout();
             this.tlpZoom.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pbEventColor)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbTimeline)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
