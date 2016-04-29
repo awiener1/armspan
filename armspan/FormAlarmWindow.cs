@@ -94,7 +94,20 @@ namespace Span.GUI
             rtbAlarm.SelectionFont = new Font(rtbAlarm.Font.Name, rtbAlarm.Font.Size * 0.75f, rtbAlarm.Font.Unit);
             rtbAlarm.AppendText("\nThis alarm was set to go off on " + alarmOff.ToShortDateString() + " at " + alarmOff.ToShortTimeString() + ".");
             //MessageBox.Show(richtext);
-            
+
+            if (thisOcc.StartActual <= TimeKeeper.Now.ToLocalTime() && thisOcc.EndActual > TimeKeeper.Now.ToLocalTime())
+            {
+                btnNow.Image = global::armspan.Properties.Resources.stop_svg;
+                btnNow.Text = "Stop Now";
+                m_stop = true;
+            }
+            else
+            {
+                btnNow.Image = global::armspan.Properties.Resources.now_svg;
+                btnNow.Text = "Start Now";
+                m_stop = false;
+            }
+
             m_settings = thisOcc.Parent().Alarms;
         }
 
@@ -117,13 +130,22 @@ namespace Span.GUI
         private void btnNow_Click(object sender, EventArgs e)
         {
             var toConfirm = Alarms.ElementAt(lbNext.SelectedIndex);
-            toConfirm.Value.StartNow();
+            if (m_stop)
+            {
+                toConfirm.Value.StopNow();
+            }
+            else
+            {
+                toConfirm.Value.StartNow();
+            }
+            
             toConfirm.Value.Confirm();
             RemoveAlarm(toConfirm);
         }
 
         private Dictionary<DateTime, Occurrence> m_alarms;
         private AlarmSettings m_settings;
+        private bool m_stop;
 
         public Dictionary<DateTime, Occurrence> Alarms
         {
