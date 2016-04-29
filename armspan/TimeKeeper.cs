@@ -32,8 +32,11 @@ namespace Span
         {
             //update current time and 48-hour radius
             DateTime temp = Now;
-            m_begin = m_now.AddDays(-1.0);
-            m_end = m_now.AddDays(1.0);
+            if (ViewingNow)
+            {
+                m_begin = m_now.AddDays(-1.0);
+                m_end = m_now.AddDays(1.0);
+            }
             //get all occurrences
             IEnumerable<KeyValuePair<string, Occurrence>> partial = Occurrence.All.Where
                 (x => x.Value.StartActual >= m_begin && x.Value.StartActual <= m_end ||
@@ -118,6 +121,10 @@ namespace Span
             {
                 return m_begin;
             }
+            set
+            {
+                m_begin = value;
+            }
         }
 
         public static DateTime End
@@ -125,6 +132,10 @@ namespace Span
             get
             {
                 return m_end;
+            }
+            set
+            {
+                m_end = value;
             }
         }
 
@@ -142,6 +153,18 @@ namespace Span
 
         }
 
+        public static bool ViewingNow
+        {
+            get
+            {
+                return m_viewingNow;
+            }
+            set
+            {
+                m_viewingNow = value;
+            }
+        }
+
         private static DateTime m_begin;
         private static DateTime m_end;
         private static DateTime m_now;
@@ -150,7 +173,9 @@ namespace Span
         private static List<string> m_current = new List<string>();
         private static List<string> m_inDate = new List<string>();
         private static int m_zoomFactor = 1;
+        private static bool m_viewingNow = true;
     }
+
 
     
 }

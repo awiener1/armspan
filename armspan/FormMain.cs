@@ -147,7 +147,7 @@ namespace Span.GUI
                 tlg.DrawString(p.Description, this.Font, occFntColor, occDescRect);
             }
             tlg.ResetClip();
-            if (m_selected != "")
+            if (m_selected != "" && m_occurrenceGraphics.ContainsKey(m_selected))
             {
                 RectangleF selRect = m_occurrenceGraphics[m_selected];
                 tlg.DrawRectangle(new Pen(new SolidBrush(Color.Red), 4.0f), selRect.Left, selRect.Top, selRect.Width, selRect.Height);
@@ -364,6 +364,8 @@ namespace Span.GUI
 
         private void btnNow_Click(object sender, EventArgs e)
         {
+            TimeKeeper.ViewingNow = true;
+            DrawTimeline();
         }
 
         private void btnSummary_Click(object sender, EventArgs e)
@@ -545,6 +547,22 @@ namespace Span.GUI
             }
             p.Exists = false;
             m_selected = "";
+            DrawTimeline();
+        }
+
+        private void mCalendar_DateChanged(object sender, DateRangeEventArgs e)
+        {
+            if (mCalendar.SelectionStart.ToUniversalTime().Date.Equals(TimeKeeper.Now.Date))
+            {
+                TimeKeeper.ViewingNow = true;
+            }
+            else
+            {
+                TimeKeeper.ViewingNow = false;
+                TimeKeeper.Begin = mCalendar.SelectionStart.ToUniversalTime();
+                TimeKeeper.End = mCalendar.SelectionEnd.ToUniversalTime();
+            }
+            m_occurrenceGraphics.Clear();
             DrawTimeline();
         }
 

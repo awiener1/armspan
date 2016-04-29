@@ -467,6 +467,7 @@
             this.mCalendar.TabIndex = 0;
             this.mCalendar.TitleBackColor = System.Drawing.SystemColors.Control;
             this.mCalendar.TitleForeColor = System.Drawing.SystemColors.ControlText;
+            this.mCalendar.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.mCalendar_DateChanged);
             // 
             // panel3
             // 
