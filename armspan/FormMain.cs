@@ -222,6 +222,8 @@ namespace Span.GUI
             if (overlapping.Item1 > 1)
             {
                 FormConflictMultiple popup = new FormConflictMultiple();
+                popup.ConflictingEvents = overlapping.Item2;
+                popup.NewEvent = p;
                 popup.ShowDialog();
             }
             else if (overlapping.Item1 == 1)

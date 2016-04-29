@@ -19,6 +19,15 @@ namespace Span.GUI
         private void FormConflictMultiple_Load(object sender, EventArgs e)
         {
             rtbConflict.Rtf = @"{\rtf0\ansi\pard\qc \b Something called x \b0 conflicts with the following events: \par}";
+            List<string> conflicts = new List<string>();
+            foreach (string s in ConflictingEvents)
+            {
+                Event p = Event.All[s];
+                string name = p.Name;
+                string cats = string.Join(", ", NewEvent.Categories.Intersect(p.Categories).Select(x => Category.All[x].Name));
+                conflicts.Add(name + " (" + cats + ")");
+            }
+            lbConflicts.DataSource = conflicts;
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -26,27 +35,19 @@ namespace Span.GUI
             this.Close();
         }
 
-        private void btnCancelNew_Click(object sender, EventArgs e)
+        private List<string> m_conflicting;
+        private Event m_newEv;
+
+        public List<string> ConflictingEvents
         {
-            this.Close();
+            get { return m_conflicting; }
+            set { m_conflicting = value; }
         }
 
-        private void btnIgnoreNew_Click(object sender, EventArgs e)
+        public Event NewEvent
         {
-            this.Close();
-
-        }
-
-        private void btnDeleteNew_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void btnReschedNew_Click(object sender, EventArgs e)
-        {
-            FormEventScheduler popup = new FormEventScheduler();
-            popup.ShowDialog();
-            this.Close();
+            get { return m_newEv; }
+            set { m_newEv = value; }
         }
     }
 }
