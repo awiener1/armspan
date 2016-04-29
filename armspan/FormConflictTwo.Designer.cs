@@ -291,6 +291,7 @@
             this.rtbConflict.Size = new System.Drawing.Size(727, 26);
             this.rtbConflict.TabIndex = 8;
             this.rtbConflict.Text = "";
+           
             // 
             // tlpOK
             // 

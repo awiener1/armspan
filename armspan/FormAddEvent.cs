@@ -124,7 +124,7 @@ namespace Span.GUI
                 m_newevent.Description = tbDesc.Text.Trim();
                 m_newevent.Exists = true;
                 TimeKeeper.Update();
-                //MessageBox.Show(m_newevent.FirstOccurrence().AlarmTimes().Count().ToString());
+                FormMain.CheckOverlapping(m_newevent);
                 
                 this.Close();
                 //check overlapping here

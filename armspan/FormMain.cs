@@ -147,6 +147,11 @@ namespace Span.GUI
                 tlg.DrawString(p.Description, this.Font, occFntColor, occDescRect);
             }
             tlg.ResetClip();
+            //cannot keep selecting something that isn't visible
+            if (m_selected != "" && noInclude.Contains(Occurrence.All[m_selected].Status))
+            {
+                m_selected = "";
+            }
             if (m_selected != "" && m_occurrenceGraphics.ContainsKey(m_selected))
             {
                 RectangleF selRect = m_occurrenceGraphics[m_selected];
@@ -209,6 +214,23 @@ namespace Span.GUI
             rtbOccurrence.AppendText("Ends: ");
             rtbOccurrence.SelectionFont = rtbOccurrence.Font;
             rtbOccurrence.AppendText(occ.EndActual.ToShortDateString() + ", " + occ.EndActual.ToShortTimeString() + "\n");
+        }
+
+        public static void CheckOverlapping(Event p)
+        {
+            Tuple<uint, List<string>> overlapping = p.getOverlapping();
+            if (overlapping.Item1 > 1)
+            {
+                FormConflictMultiple popup = new FormConflictMultiple();
+                popup.ShowDialog();
+            }
+            else if (overlapping.Item1 == 1)
+            {
+                FormConflictTwo popup = new FormConflictTwo();
+                popup.NewOccurrence = Occurrence.All[overlapping.Item2[1]];
+                popup.OldOccurrence = Occurrence.All[overlapping.Item2[2]];
+                popup.ShowDialog();
+            }
         }
 
         private void UpdateNow()
@@ -319,10 +341,11 @@ namespace Span.GUI
             FormOccurrenceScheduler popup = new FormOccurrenceScheduler();
             popup.Single = o;
             popup.ShowDialog();
+            CheckOverlapping(o.Parent());
             DrawTimeline();
         }
 
-        private bool DeChainIfChained(Occurrence o)
+        public static bool DeChainIfChained(Occurrence o)
         {
             if (o.IsChained())
             {
@@ -345,15 +368,12 @@ namespace Span.GUI
 
         private void btnCancelAppts_Click(object sender, EventArgs e)
         {
-            FormConflictTwo popup = new FormConflictTwo();
-            popup.ShowDialog();
+           
         }
 
         private void btnCancelTasks_Click(object sender, EventArgs e)
         {
-            FormConflictMultiple popup = new FormConflictMultiple();
-            popup.ShowDialog();
-
+           
         }
 
         private void btnCategories_Click(object sender, EventArgs e)
@@ -526,9 +546,11 @@ namespace Span.GUI
 
         private void btnEditEvent_Click(object sender, EventArgs e)
         {
-            FormAddEvent popup = new FormAddEvent(Occurrence.All[m_selected].Parent());
+            Event p = Occurrence.All[m_selected].Parent();
+            FormAddEvent popup = new FormAddEvent(p);
             m_selected = "";
             popup.ShowDialog();
+            CheckOverlapping(p);
             DrawTimeline();
         }
 
