@@ -157,6 +157,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.rtbOld.BackColor = System.Drawing.SystemColors.Window;
             this.rtbOld.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtbOld.Cursor = System.Windows.Forms.Cursors.Default;
             this.rtbOld.DetectUrls = false;
             this.rtbOld.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbOld.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -253,6 +254,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.rtbNew.BackColor = System.Drawing.SystemColors.Window;
             this.rtbNew.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtbNew.Cursor = System.Windows.Forms.Cursors.Default;
             this.rtbNew.DetectUrls = false;
             this.rtbNew.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbNew.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -282,6 +284,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.rtbConflict.BackColor = System.Drawing.SystemColors.Control;
             this.rtbConflict.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtbConflict.Cursor = System.Windows.Forms.Cursors.Default;
             this.rtbConflict.DetectUrls = false;
             this.rtbConflict.ForeColor = System.Drawing.SystemColors.ControlText;
             this.rtbConflict.Location = new System.Drawing.Point(12, 43);
@@ -291,7 +294,6 @@
             this.rtbConflict.Size = new System.Drawing.Size(727, 26);
             this.rtbConflict.TabIndex = 8;
             this.rtbConflict.Text = "";
-           
             // 
             // tlpOK
             // 

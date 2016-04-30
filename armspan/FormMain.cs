@@ -392,7 +392,16 @@ namespace Span.GUI
 
         private void btnSummary_Click(object sender, EventArgs e)
         {
+            FormAddCategories popupcat = new FormAddCategories(false);
+            popupcat.Checked = new List<int>();
+            popupcat.ShowDialog();
             FormSummaryWindow popup = new FormSummaryWindow();
+            List<string> cats = new List<string>();
+            foreach (int index in popupcat.Checked)
+            {
+                cats.Add(Category.All.First(x => x.Value.Number == index + 1).Key);
+            }
+            popup.Categories = cats;
             popup.ShowDialog();
         }
 

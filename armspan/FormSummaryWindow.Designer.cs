@@ -30,9 +30,11 @@
         {
             this.btnOK = new System.Windows.Forms.Button();
             this.gbSummary = new System.Windows.Forms.GroupBox();
-            this.tbName = new System.Windows.Forms.TextBox();
-            this.lblTimeframe = new System.Windows.Forms.Label();
-            this.cbTimeframe = new System.Windows.Forms.ComboBox();
+            this.tbSummary = new System.Windows.Forms.TextBox();
+            this.lblTo = new System.Windows.Forms.Label();
+            this.dtpTo = new System.Windows.Forms.DateTimePicker();
+            this.lblFrom = new System.Windows.Forms.Label();
+            this.dtpFrom = new System.Windows.Forms.DateTimePicker();
             this.gbSummary.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,7 +56,7 @@
             this.gbSummary.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbSummary.Controls.Add(this.tbName);
+            this.gbSummary.Controls.Add(this.tbSummary);
             this.gbSummary.Location = new System.Drawing.Point(12, 46);
             this.gbSummary.Name = "gbSummary";
             this.gbSummary.Size = new System.Drawing.Size(422, 310);
@@ -62,65 +64,86 @@
             this.gbSummary.TabStop = false;
             this.gbSummary.Text = "Summary";
             // 
-            // tbName
+            // tbSummary
             // 
-            this.tbName.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.tbSummary.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbName.BackColor = System.Drawing.SystemColors.Window;
-            this.tbName.Location = new System.Drawing.Point(9, 17);
-            this.tbName.Multiline = true;
-            this.tbName.Name = "tbName";
-            this.tbName.ReadOnly = true;
-            this.tbName.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbName.Size = new System.Drawing.Size(403, 284);
-            this.tbName.TabIndex = 6;
-            this.tbName.Text = "Here\'s the summary\r\n\r\nIt\'s going to be objective, not condescending.\r\n\r\nI can\'t b" +
-                "elieve I need to make that clear.";
+            this.tbSummary.BackColor = System.Drawing.SystemColors.Window;
+            this.tbSummary.Location = new System.Drawing.Point(9, 17);
+            this.tbSummary.Multiline = true;
+            this.tbSummary.Name = "tbSummary";
+            this.tbSummary.ReadOnly = true;
+            this.tbSummary.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbSummary.Size = new System.Drawing.Size(403, 284);
+            this.tbSummary.TabIndex = 6;
             // 
-            // lblTimeframe
+            // lblTo
             // 
-            this.lblTimeframe.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblTimeframe.AutoSize = true;
-            this.lblTimeframe.Location = new System.Drawing.Point(12, 379);
-            this.lblTimeframe.Name = "lblTimeframe";
-            this.lblTimeframe.Size = new System.Drawing.Size(57, 13);
-            this.lblTimeframe.TabIndex = 5;
-            this.lblTimeframe.Text = "Timeframe";
+            this.lblTo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblTo.AutoSize = true;
+            this.lblTo.Location = new System.Drawing.Point(34, 392);
+            this.lblTo.Name = "lblTo";
+            this.lblTo.Size = new System.Drawing.Size(19, 13);
+            this.lblTo.TabIndex = 30;
+            this.lblTo.Text = "To";
             // 
-            // cbTimeframe
+            // dtpTo
             // 
-            this.cbTimeframe.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cbTimeframe.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbTimeframe.FormattingEnabled = true;
-            this.cbTimeframe.Items.AddRange(new object[] {
-            "Past day",
-            "Past week",
-            "Past month",
-            "Past year",
-            "All events"});
-            this.cbTimeframe.Location = new System.Drawing.Point(75, 376);
-            this.cbTimeframe.Name = "cbTimeframe";
-            this.cbTimeframe.Size = new System.Drawing.Size(103, 21);
-            this.cbTimeframe.TabIndex = 27;
+            this.dtpTo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.dtpTo.CustomFormat = "M/d/yy";
+            this.dtpTo.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpTo.Location = new System.Drawing.Point(60, 389);
+            this.dtpTo.Name = "dtpTo";
+            this.dtpTo.Size = new System.Drawing.Size(68, 21);
+            this.dtpTo.TabIndex = 29;
+            this.dtpTo.ValueChanged += new System.EventHandler(this.dtpTo_ValueChanged);
+            // 
+            // lblFrom
+            // 
+            this.lblFrom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblFrom.AutoSize = true;
+            this.lblFrom.Location = new System.Drawing.Point(20, 365);
+            this.lblFrom.Name = "lblFrom";
+            this.lblFrom.Size = new System.Drawing.Size(31, 13);
+            this.lblFrom.TabIndex = 28;
+            this.lblFrom.Text = "From";
+            // 
+            // dtpFrom
+            // 
+            this.dtpFrom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.dtpFrom.CustomFormat = "M/d/yy";
+            this.dtpFrom.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpFrom.Location = new System.Drawing.Point(60, 362);
+            this.dtpFrom.Name = "dtpFrom";
+            this.dtpFrom.Size = new System.Drawing.Size(68, 21);
+            this.dtpFrom.TabIndex = 27;
+            this.dtpFrom.Value = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
+            this.dtpFrom.ValueChanged += new System.EventHandler(this.dtpFrom_ValueChanged);
             // 
             // FormSummaryWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(446, 417);
-            this.Controls.Add(this.cbTimeframe);
+            this.Controls.Add(this.lblTo);
+            this.Controls.Add(this.dtpTo);
+            this.Controls.Add(this.lblFrom);
+            this.Controls.Add(this.dtpFrom);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.gbSummary);
-            this.Controls.Add(this.lblTimeframe);
             this.MinimumSize = new System.Drawing.Size(300, 280);
             this.Name = "FormSummaryWindow";
             this.Text = "FormSummaryWindow";
             this.Load += new System.EventHandler(this.FormSummaryWindow_Load);
-            this.Controls.SetChildIndex(this.lblTimeframe, 0);
             this.Controls.SetChildIndex(this.gbSummary, 0);
             this.Controls.SetChildIndex(this.btnOK, 0);
-            this.Controls.SetChildIndex(this.cbTimeframe, 0);
+            this.Controls.SetChildIndex(this.dtpFrom, 0);
+            this.Controls.SetChildIndex(this.lblFrom, 0);
+            this.Controls.SetChildIndex(this.dtpTo, 0);
+            this.Controls.SetChildIndex(this.lblTo, 0);
             this.gbSummary.ResumeLayout(false);
             this.gbSummary.PerformLayout();
             this.ResumeLayout(false);
@@ -132,8 +155,10 @@
 
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.GroupBox gbSummary;
-        private System.Windows.Forms.TextBox tbName;
-        private System.Windows.Forms.Label lblTimeframe;
-        private System.Windows.Forms.ComboBox cbTimeframe;
+        private System.Windows.Forms.TextBox tbSummary;
+        private System.Windows.Forms.Label lblTo;
+        private System.Windows.Forms.DateTimePicker dtpTo;
+        private System.Windows.Forms.Label lblFrom;
+        private System.Windows.Forms.DateTimePicker dtpFrom;
     }
 }

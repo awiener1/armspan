@@ -18,7 +18,13 @@ namespace Span.GUI
 
         private void FormConflictMultiple_Load(object sender, EventArgs e)
         {
-            rtbConflict.Rtf = @"{\rtf0\ansi\pard\qc \b Something called x \b0 conflicts with the following events: \par}";
+            rtbConflict.Text = "";
+            Font rtbBold = new Font(rtbConflict.Font, FontStyle.Bold);
+            rtbConflict.SelectionAlignment = HorizontalAlignment.Center;
+            rtbConflict.SelectionFont = rtbBold;
+            rtbConflict.AppendText(NewEvent.Name);
+            rtbConflict.SelectionFont = rtbConflict.Font;
+            rtbConflict.AppendText(" conflicts with the following events:");
             List<string> conflicts = new List<string>();
             foreach (string s in ConflictingEvents)
             {

@@ -39,6 +39,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.rtbConflict.BackColor = System.Drawing.SystemColors.Control;
             this.rtbConflict.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtbConflict.Cursor = System.Windows.Forms.Cursors.Default;
             this.rtbConflict.DetectUrls = false;
             this.rtbConflict.ForeColor = System.Drawing.SystemColors.ControlText;
             this.rtbConflict.Location = new System.Drawing.Point(12, 41);
