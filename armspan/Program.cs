@@ -16,8 +16,21 @@ namespace Span.GUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            JSONCapable.LoadState(File.ReadAllText("iotest.txt"));
+            SaveFilename = "iotest.txt";
+            if (File.Exists(SaveFilename))
+            {
+                JSONCapable.LoadState(File.ReadAllText(SaveFilename));
+            }
             Application.Run(new FormMain());
         }
+
+        private static string m_savename;
+
+        public static string SaveFilename
+        {
+            get { return m_savename; }
+            set { m_savename = value; }
+        }
+        
     }
 }

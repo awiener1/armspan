@@ -753,6 +753,7 @@
             this.Name = "FormMain";
             this.Text = "armspan (A Calendar Program)";
             this.Activated += new System.EventHandler(this.FormMain_Activated);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.Resize += new System.EventHandler(this.FormMain_Resize);
             this.toolStrip1.ResumeLayout(false);

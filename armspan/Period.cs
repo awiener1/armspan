@@ -137,8 +137,8 @@ namespace Span
             string id = (string)jsd["Id"];
             Frequency timeunit = (Frequency)jsd["TimeUnit"];
            
-            DateTime starttime = (DateTime)jsd["StartTime"];
-            DateTime endtime = (DateTime)jsd["EndTime"];
+            DateTime starttime = ((DateTime)jsd["StartTime"]).ToLocalTime();
+            DateTime endtime = ((DateTime)jsd["EndTime"]).ToLocalTime();
             string parentid = (string)jsd["ParentId"];
             TimeSpan length = new TimeSpan((long)JSONDictionary(jsd["OccurrenceLength"])["Ticks"]);
            

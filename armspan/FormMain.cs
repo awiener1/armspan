@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Span.GUI
 {
@@ -597,6 +598,12 @@ namespace Span.GUI
             }
             m_occurrenceGraphics.Clear();
             DrawTimeline();
+        }
+
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            
+            File.WriteAllText(Program.SaveFilename, JSONCapable.SaveState());
         }
 
        

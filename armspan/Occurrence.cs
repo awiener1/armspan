@@ -154,10 +154,10 @@ namespace Span
             if (status == OccurrenceStatus.Deleted) return null; //no deleted objects
             string id = (string)jsd["Id"];
             bool istask = (bool)jsd["IsTask"];
-            DateTime startactual = (DateTime)jsd["StartActual"];
-            DateTime endactual = (DateTime)jsd["EndActual"];
-            DateTime startintended = (DateTime)jsd["StartIntended"];
-            DateTime endintended = (DateTime)jsd["EndIntended"];
+            DateTime startactual = ((DateTime)jsd["StartActual"]).ToLocalTime();
+            DateTime endactual = ((DateTime)jsd["EndActual"]).ToLocalTime();
+            DateTime startintended = ((DateTime)jsd["StartIntended"]).ToLocalTime();
+            DateTime endintended = ((DateTime)jsd["EndIntended"]).ToLocalTime();
             string parentid = (string)jsd["ParentId"];
             string chainid = (string)jsd["ChainId"];
             uint thisnum = (uint)(int)jsd["Number"];
