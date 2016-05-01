@@ -458,6 +458,10 @@ namespace Span.GUI
         private void tmWhole_Tick(object sender, EventArgs e)
         {
             DrawTimeline();
+            if (Occurrence.DebugMode && TimeKeeper.Alarms.Count > 0)
+            {
+                this.Text = TimeKeeper.Alarms.ElementAt(0).Key.ToString();
+            }
             Dictionary<DateTime, Occurrence> alarmOccs = TimeKeeper.Alarms.Where(x => (x.Key <= TimeKeeper.Now.ToLocalTime())).ToDictionary(x => x.Key, x => x.Value);
             if (alarmOccs.Count() > 0)
             {

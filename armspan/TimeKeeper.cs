@@ -39,8 +39,8 @@ namespace Span
             }
             //get all occurrences
             IEnumerable<KeyValuePair<string, Occurrence>> partial = Occurrence.All.Where
-                (x => x.Value.StartActual >= m_begin && x.Value.StartActual <= m_end ||
-                x.Value.EndActual >= m_begin && x.Value.EndActual <= m_end);
+                (x => x.Value.StartActual >= m_begin.ToLocalTime() && x.Value.StartActual <= m_end.ToLocalTime() ||
+                x.Value.EndActual >= m_begin.ToLocalTime() && x.Value.EndActual <= m_end.ToLocalTime());
             ////UNCOMMENT THE FOLLOWING LINE AND CHANGE THE DATA MEMBER NAME
             ////TO GET ALL OCCURRENCES IN A 48-HOUR RADIUS.
             m_inDate = partial.ToDictionary(x => x.Key, x => x.Value).Keys.ToList();

@@ -576,7 +576,7 @@ namespace Span
         protected string m_chainId = null;
         protected static Dictionary<string, Occurrence> all = new Dictionary<string, Occurrence>();
 
-        private const bool m_debug = false;
+        private const bool m_debug = true;
 
         
     }

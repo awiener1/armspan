@@ -189,7 +189,7 @@ namespace Span.GUI
             popup.ManualOccurrences = m_manualocc;
             popup.Rules = m_rules;
             popup.ParentId = m_newevent.Id;
-            popup.EventExists = true;
+            popup.EventExists = !m_isNew;
             popup.ShowDialog();
 
             m_manualocc = popup.ManualOccurrences;
