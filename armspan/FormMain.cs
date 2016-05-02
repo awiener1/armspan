@@ -668,6 +668,22 @@ namespace Span.GUI
             DrawTimeline();
         }
 
+        private void btnStartAppt_Click(object sender, EventArgs e)
+        {
+            Event p = new Event(false, "Automated Appointment", new List<Occurrence>(), new List<Period>(), "", new List<string>(), new AlarmSettings(""), "");
+            p.Alarms.ParentId = p.Id;
+            p.PrimaryCategory = Category.All.Keys.ElementAt(0);
+            Occurrence o = new Occurrence(false, TimeKeeper.Now.ToLocalTime(), TimeKeeper.Now.ToLocalTime().AddHours(1), p.Id);
+            p.ManualOccurrences.Add(o);
+            DrawTimeline();
+            FormAddEvent popup = new FormAddEvent(p);
+            m_selected = "";
+            popup.ShowDialog();
+            CheckOverlapping(p);
+            DrawTimeline();
+       
+        }
+
        
        
     }

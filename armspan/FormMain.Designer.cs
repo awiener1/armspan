@@ -59,6 +59,7 @@
             this.pbEventColor = new System.Windows.Forms.PictureBox();
             this.mCalendar = new System.Windows.Forms.MonthCalendar();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.lblAlarmTime = new System.Windows.Forms.Label();
             this.gbOccurrence = new System.Windows.Forms.GroupBox();
             this.nudPostponeOcc = new System.Windows.Forms.NumericUpDown();
             this.rtbOccurrence = new System.Windows.Forms.RichTextBox();
@@ -81,7 +82,6 @@
             this.btnZoomOut = new System.Windows.Forms.Button();
             this.btnZoomIn = new System.Windows.Forms.Button();
             this.tmWhole = new System.Windows.Forms.Timer(this.components);
-            this.lblAlarmTime = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
             this.pnlNow.SuspendLayout();
             this.gbNow.SuspendLayout();
@@ -173,6 +173,7 @@
             this.btnStartAppt.Text = "Start New Appointment Now";
             this.btnStartAppt.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnStartAppt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnStartAppt.Click += new System.EventHandler(this.btnStartAppt_Click);
             // 
             // btnStartTask
             // 
@@ -482,6 +483,14 @@
             this.panel3.Size = new System.Drawing.Size(216, 427);
             this.panel3.TabIndex = 4;
             // 
+            // lblAlarmTime
+            // 
+            this.lblAlarmTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblAlarmTime.Location = new System.Drawing.Point(7, 385);
+            this.lblAlarmTime.Name = "lblAlarmTime";
+            this.lblAlarmTime.Size = new System.Drawing.Size(206, 36);
+            this.lblAlarmTime.TabIndex = 6;
+            // 
             // gbOccurrence
             // 
             this.gbOccurrence.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -664,7 +673,7 @@
             // preferencesToolStripMenuItem
             // 
             this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
             this.preferencesToolStripMenuItem.Text = "Preferences";
             // 
             // helpToolStripMenuItem
@@ -679,13 +688,13 @@
             // manualToolStripMenuItem
             // 
             this.manualToolStripMenuItem.Name = "manualToolStripMenuItem";
-            this.manualToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.manualToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.manualToolStripMenuItem.Text = "Manual";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // tlpZoom
@@ -737,14 +746,6 @@
             this.tmWhole.Enabled = true;
             this.tmWhole.Interval = 10000;
             this.tmWhole.Tick += new System.EventHandler(this.tmWhole_Tick);
-            // 
-            // lblAlarmTime
-            // 
-            this.lblAlarmTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblAlarmTime.Location = new System.Drawing.Point(7, 385);
-            this.lblAlarmTime.Name = "lblAlarmTime";
-            this.lblAlarmTime.Size = new System.Drawing.Size(206, 36);
-            this.lblAlarmTime.TabIndex = 6;
             // 
             // FormMain
             // 
