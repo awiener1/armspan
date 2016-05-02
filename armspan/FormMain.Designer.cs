@@ -206,6 +206,7 @@
             this.btnStopAppts.Text = "Stop All Appointments";
             this.btnStopAppts.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnStopAppts.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnStopAppts.Click += new System.EventHandler(this.btnStopAppts_Click);
             // 
             // btnStopTasks
             // 

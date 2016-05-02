@@ -207,6 +207,11 @@ namespace Span.GUI
             Event p = occ.Parent();
             gbEvent.Enabled = true;
             gbOccurrence.Enabled = true;
+            bool ignored = (occ.Status == OccurrenceStatus.Ignored);
+            btnStartOcc.Enabled = !ignored;
+            btnStopOcc.Enabled = (!ignored && TimeKeeper.Current.Contains(occ.Id));
+            btnPostponeOcc.Enabled = !ignored;
+            btnIgnoreOcc.Enabled = !ignored;
             rtbTask.Text = "";
             if (Occurrence.DebugMode)
             {
@@ -374,7 +379,7 @@ namespace Span.GUI
         {
             if (o.IsChained())
             {
-                DialogResult d = MessageBox.Show("This Occurrence appears to be part of a periodic set. "
+                DialogResult d = MessageBox.Show(o.Parent().Name + " at " + o.StartActual.ToShortTimeString() + " appears to be part of a periodic set. "
                      + "If you wish to edit the occurrence's schedule, it will become detached from the rest of the set. Proceed?", "", MessageBoxButtons.YesNo);
                 if (!d.Equals(DialogResult.Yes))
                 {
@@ -393,7 +398,15 @@ namespace Span.GUI
 
         private void btnCancelAppts_Click(object sender, EventArgs e)
         {
-           
+            foreach (Occurrence occ in TimeKeeper.Current.Select(x => Occurrence.All[x]))
+            {
+                if (!DeChainIfChained(occ))
+                {
+                    continue;
+                }
+                occ.Cancel();
+            }
+            DrawTimeline();
         }
 
         private void btnCancelTasks_Click(object sender, EventArgs e)
@@ -640,6 +653,19 @@ namespace Span.GUI
         private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
+        }
+
+        private void btnStopAppts_Click(object sender, EventArgs e)
+        {
+            foreach (Occurrence occ in TimeKeeper.Current.Select(x=> Occurrence.All[x]))
+            {
+                if (!DeChainIfChained(occ))
+                {
+                    continue;
+                }
+                occ.StopNow();
+            }
+            DrawTimeline();
         }
 
        
