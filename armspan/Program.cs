@@ -16,7 +16,7 @@ namespace Span.GUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            SaveFilename = "iotest.txt";
+            SaveFilename = "schedule.spn";
             if (File.Exists(SaveFilename))
             {
                 JSONCapable.LoadState(File.ReadAllText(SaveFilename));

@@ -58,7 +58,7 @@ namespace Span
                 {
                     foreach (DateTime alarmtime in val.AlarmTimes())
                     {
-                        m_alarms.Add(alarmtime, val);
+                        m_alarms[alarmtime] = val;
                     }
                 }
             }

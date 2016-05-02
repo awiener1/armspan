@@ -314,13 +314,18 @@ namespace Span.GUI
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            rtbTask.Rtf = @"{\rtf0\ansi Some \b text \b0 is now bold.}";
-            rtbOccurrence.Rtf = @"{\rtf0\ansi But this is \b different \b0 text, somehow.}";
+           
             m_selected = "";
             m_occurrenceGraphics = new Dictionary<string, RectangleF>();
             m_current = new List<string>();
             m_currentView = new Dictionary<string, RichTextBox>();
             DrawTimeline();
+            if (Category.All.Count() < 1)
+            {
+                MessageBox.Show("It appears you have not used armspan before. Please add at least one category before scheduling any events.");
+                FormAddCategories popup = new FormAddCategories(true);
+                popup.ShowDialog();
+            }
         }
 
         private void btnStartOcc_Click(object sender, EventArgs e)
@@ -458,9 +463,14 @@ namespace Span.GUI
         private void tmWhole_Tick(object sender, EventArgs e)
         {
             DrawTimeline();
-            if (Occurrence.DebugMode && TimeKeeper.Alarms.Count > 0)
+            if (TimeKeeper.Alarms.Count > 0)
             {
-                this.Text = TimeKeeper.Alarms.ElementAt(0).Key.ToString();
+                DateTime nextAlarm = TimeKeeper.Alarms.ElementAt(0).Key;
+                lblAlarmTime.Text = "Next alarm on: " + nextAlarm.ToShortDateString() + " at " + nextAlarm.ToShortTimeString();
+            }
+            else
+            {
+                lblAlarmTime.Text = "No alarms expected";
             }
             Dictionary<DateTime, Occurrence> alarmOccs = TimeKeeper.Alarms.Where(x => (x.Key <= TimeKeeper.Now.ToLocalTime())).ToDictionary(x => x.Key, x => x.Value);
             if (alarmOccs.Count() > 0)
@@ -608,6 +618,11 @@ namespace Span.GUI
         {
             
             File.WriteAllText(Program.SaveFilename, JSONCapable.SaveState());
+        }
+
+        private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
         }
 
        

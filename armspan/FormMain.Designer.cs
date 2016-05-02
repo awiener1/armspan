@@ -81,6 +81,7 @@
             this.btnZoomOut = new System.Windows.Forms.Button();
             this.btnZoomIn = new System.Windows.Forms.Button();
             this.tmWhole = new System.Windows.Forms.Timer(this.components);
+            this.lblAlarmTime = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
             this.pnlNow.SuspendLayout();
             this.gbNow.SuspendLayout();
@@ -123,6 +124,7 @@
             this.toolStrip1.Stretch = true;
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
+            this.toolStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStrip1_ItemClicked);
             // 
             // btnNewAppt
             // 
@@ -471,6 +473,7 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.lblAlarmTime);
             this.panel3.Controls.Add(this.gbOccurrence);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel3.Location = new System.Drawing.Point(808, 76);
@@ -495,7 +498,7 @@
             this.gbOccurrence.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.gbOccurrence.Location = new System.Drawing.Point(3, 3);
             this.gbOccurrence.Name = "gbOccurrence";
-            this.gbOccurrence.Size = new System.Drawing.Size(210, 421);
+            this.gbOccurrence.Size = new System.Drawing.Size(210, 372);
             this.gbOccurrence.TabIndex = 5;
             this.gbOccurrence.TabStop = false;
             this.gbOccurrence.Text = "Occurrence";
@@ -533,11 +536,11 @@
             this.rtbOccurrence.Cursor = System.Windows.Forms.Cursors.Default;
             this.rtbOccurrence.DetectUrls = false;
             this.rtbOccurrence.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.rtbOccurrence.Location = new System.Drawing.Point(12, 271);
+            this.rtbOccurrence.Location = new System.Drawing.Point(12, 209);
             this.rtbOccurrence.Name = "rtbOccurrence";
             this.rtbOccurrence.ReadOnly = true;
             this.rtbOccurrence.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.rtbOccurrence.Size = new System.Drawing.Size(189, 58);
+            this.rtbOccurrence.Size = new System.Drawing.Size(189, 71);
             this.rtbOccurrence.TabIndex = 5;
             this.rtbOccurrence.Text = "";
             // 
@@ -545,7 +548,7 @@
             // 
             this.btnRescheduleOcc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRescheduleOcc.Image = global::armspan.Properties.Resources.schedule_svg;
-            this.btnRescheduleOcc.Location = new System.Drawing.Point(12, 335);
+            this.btnRescheduleOcc.Location = new System.Drawing.Point(12, 286);
             this.btnRescheduleOcc.Name = "btnRescheduleOcc";
             this.btnRescheduleOcc.Size = new System.Drawing.Size(150, 68);
             this.btnRescheduleOcc.TabIndex = 9;
@@ -648,7 +651,6 @@
             this.msTop.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.msTop.Size = new System.Drawing.Size(1024, 24);
             this.msTop.TabIndex = 5;
-            this.msTop.Text = "menuStrip1";
             // 
             // optionsToolStripMenuItem
             // 
@@ -661,7 +663,7 @@
             // preferencesToolStripMenuItem
             // 
             this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.preferencesToolStripMenuItem.Text = "Preferences";
             // 
             // helpToolStripMenuItem
@@ -676,13 +678,13 @@
             // manualToolStripMenuItem
             // 
             this.manualToolStripMenuItem.Name = "manualToolStripMenuItem";
-            this.manualToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.manualToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.manualToolStripMenuItem.Text = "Manual";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // tlpZoom
@@ -734,6 +736,14 @@
             this.tmWhole.Enabled = true;
             this.tmWhole.Interval = 10000;
             this.tmWhole.Tick += new System.EventHandler(this.tmWhole_Tick);
+            // 
+            // lblAlarmTime
+            // 
+            this.lblAlarmTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblAlarmTime.Location = new System.Drawing.Point(7, 385);
+            this.lblAlarmTime.Name = "lblAlarmTime";
+            this.lblAlarmTime.Size = new System.Drawing.Size(206, 36);
+            this.lblAlarmTime.TabIndex = 6;
             // 
             // FormMain
             // 
@@ -830,6 +840,7 @@
         private System.Windows.Forms.Button btnZoomIn;
         private System.Windows.Forms.Timer tmWhole;
         private System.Windows.Forms.TableLayoutPanel tlpNow;
+        private System.Windows.Forms.Label lblAlarmTime;
 
 
     }

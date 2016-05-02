@@ -35,6 +35,7 @@
             this.tbName = new System.Windows.Forms.TextBox();
             this.lblName = new System.Windows.Forms.Label();
             this.btnOK = new System.Windows.Forms.Button();
+            this.cdColor = new System.Windows.Forms.ColorDialog();
             this.gbCategory.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -77,6 +78,7 @@
             this.btnColor.Text = "...";
             this.ttThin.SetToolTip(this.btnColor, "Pick a color for the category");
             this.btnColor.UseVisualStyleBackColor = true;
+            this.btnColor.Click += new System.EventHandler(this.btnColor_Click);
             // 
             // lblColor
             // 
@@ -119,6 +121,13 @@
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
+            // cdColor
+            // 
+            this.cdColor.AnyColor = true;
+            this.cdColor.Color = System.Drawing.SystemColors.ControlDark;
+            this.cdColor.FullOpen = true;
+            this.cdColor.SolidColorOnly = true;
+            // 
             // FormEditCategory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -147,5 +156,6 @@
         private System.Windows.Forms.Button btnColor;
         private System.Windows.Forms.Label lblColor;
         private System.Windows.Forms.Button btnOK;
+        private System.Windows.Forms.ColorDialog cdColor;
     }
 }

@@ -22,9 +22,10 @@ namespace Span.GUI
             InitializeComponent();
             lvCategories.CheckBoxes = !a_canEdit;
             btnAddCat.Enabled = a_canEdit;
-            btnEditCat.Enabled = a_canEdit;
+            btnEditCat.Enabled = false;
             btnSelectAll.Enabled = !a_canEdit;
             btnSelectNone.Enabled = !a_canEdit;
+            m_canEdit = a_canEdit;
         }
 
         private void FormAddCategories_Load(object sender, EventArgs e)
@@ -36,6 +37,7 @@ namespace Span.GUI
         private void RefreshCategories()
         {
             lvCategories.SmallImageList.Images.Clear();
+            lvCategories.Items.Clear();
             foreach (Category cat in Category.All.Values)
             {
                 ListViewItem lvcat = new ListViewItem();
@@ -68,7 +70,10 @@ namespace Span.GUI
         private void btnAddCat_Click(object sender, EventArgs e)
         {
             FormEditCategory popup = new FormEditCategory();
+            popup.Color = SystemColors.ControlDark;
+            popup.Number = (uint)Category.All.Count() + 1;
             popup.ShowDialog();
+            RefreshCategories();
         }
 
         public List<int> Checked
@@ -87,6 +92,16 @@ namespace Span.GUI
 
         private void btnOK_Click(object sender, EventArgs e)
         {
+            if (Category.All.Count() < 1)
+            {
+                MessageBox.Show("Please add at least one category before using armspan.");
+                return;
+            }
+            if (m_canEdit)
+            {
+                this.Close();
+                return;
+            }
             Checked.Clear();
             foreach (int index in lvCategories.CheckedIndices)
             {
@@ -101,6 +116,7 @@ namespace Span.GUI
 
         private List<int> m_checked;
         private int m_disabled = -1;
+        private bool m_canEdit;
 
 
         public int Disabled 
@@ -121,6 +137,10 @@ namespace Span.GUI
             if (e.ItemIndex == Disabled){
                 e.Item.Selected = false;
             }
+            if (m_canEdit)
+            {
+                btnEditCat.Enabled = e.IsSelected;
+            }
         }
 
         private void lvCategories_ItemCheck(object sender, ItemCheckEventArgs e)
@@ -131,6 +151,36 @@ namespace Span.GUI
             }
 
         }
+
+        private void btnSelectAll_Click(object sender, EventArgs e)
+        {
+            
+            foreach (ListViewItem item in lvCategories.Items)
+            {
+                item.Checked = true;
+            }
+        }
+
+        private void btnSelectNone_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in lvCategories.Items)
+            {
+                item.Checked = false;
+            }
+        }
+
+        private void btnEditCat_Click(object sender, EventArgs e)
+        {
+            FormEditCategory popup = new FormEditCategory();
+            int c = lvCategories.SelectedIndices[0];
+            Category toEdit = Category.All.Values.ElementAt(c);
+            popup.NameCategory = toEdit.Name;
+            popup.Color = toEdit.Color;
+            popup.Number = toEdit.Number;
+            popup.ShowDialog();
+            RefreshCategories();
+        }
+
 
         
     }

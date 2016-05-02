@@ -55,6 +55,7 @@
             this.lvCategories.GridLines = true;
             this.lvCategories.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvCategories.Location = new System.Drawing.Point(17, 73);
+            this.lvCategories.MultiSelect = false;
             this.lvCategories.Name = "lvCategories";
             this.lvCategories.Size = new System.Drawing.Size(501, 124);
             this.lvCategories.SmallImageList = this.imageList1;
@@ -114,6 +115,7 @@
             this.btnEditCat.TabIndex = 3;
             this.ttThin.SetToolTip(this.btnEditCat, "Edit Category");
             this.btnEditCat.UseVisualStyleBackColor = true;
+            this.btnEditCat.Click += new System.EventHandler(this.btnEditCat_Click);
             // 
             // btnAddCat
             // 
@@ -138,6 +140,7 @@
             this.btnSelectAll.TabIndex = 5;
             this.ttThin.SetToolTip(this.btnSelectAll, "Select All");
             this.btnSelectAll.UseVisualStyleBackColor = true;
+            this.btnSelectAll.Click += new System.EventHandler(this.btnSelectAll_Click);
             // 
             // btnSelectNone
             // 
@@ -149,6 +152,7 @@
             this.btnSelectNone.TabIndex = 4;
             this.ttThin.SetToolTip(this.btnSelectNone, "Select None");
             this.btnSelectNone.UseVisualStyleBackColor = true;
+            this.btnSelectNone.Click += new System.EventHandler(this.btnSelectNone_Click);
             // 
             // btnOK
             // 
