@@ -16,3 +16,4 @@ G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\obj\x86\Relea
 G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\obj\x86\Release\armspan.csproj.GenerateResource.Cache
 G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\obj\x86\Release\armspan.exe
 G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\obj\x86\Release\armspan.pdb
+G:\CMPS 450-01 Senior Project\armspan (A Calendar Program)\armspan\obj\x86\Release\Span.GUI.FormOccurrenceScheduler.resources

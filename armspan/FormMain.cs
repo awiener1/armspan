@@ -28,6 +28,10 @@ namespace Span.GUI
         public void DrawTimeline()
         {
             TimeKeeper.Update();
+            if (WindowState == FormWindowState.Minimized)
+            {
+                return;
+            }
             int oldScroll = pnlTimeline.HorizontalScroll.Value;
            
             int oldMax = pnlTimeline.HorizontalScroll.Maximum;
