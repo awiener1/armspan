@@ -47,6 +47,9 @@ namespace Span.GUI
             hourDasher.DashPattern = new float[] { 2.0f, 2.0f };
             Pen nowDasher = new Pen(Color.Red, 2.0f);
             nowDasher.DashPattern = new float[] { 1.0f, 1.0f };
+            Region textAreas = new Region();
+            textAreas.MakeEmpty();
+            Font boldFont = new Font(this.Font, FontStyle.Bold);
             for (DateTime i = TimeKeeper.Begin.Date; i < TimeKeeper.End; i = i.AddHours(1))
             {
                 //TimeSpan ist = i - TimeKeeper.Begin;
@@ -56,13 +59,32 @@ namespace Span.GUI
                 if (i.ToLocalTime() == i.ToLocalTime().Date)
                 {
                     tlg.DrawLine(dayDasher, ipt, 0, ipt, pbTimeline.Height);
+                    string toPrint = i.ToString("ddd M/d");
+                    SizeF tpSize = tlg.MeasureString(toPrint, boldFont);
+                    PointF iptText = new PointF(ipt, 3);
+                    RectangleF textRect = new RectangleF(iptText, tpSize);
+                    tlg.FillRectangle(new SolidBrush(Color.White), textRect);
+                    tlg.DrawString(toPrint, boldFont, new SolidBrush(Color.Black), iptText);
+                    textAreas.Union(textRect);
                 }
                 else
                 {
                     tlg.DrawLine(hourDasher, ipt, 0, ipt, pbTimeline.Height);
+                    string toPrint = i.ToLocalTime().ToString("htt");
+                    SizeF tpSize = tlg.MeasureString(toPrint, this.Font);
+                    PointF iptText = new PointF(ipt, 3);
+                    
+                    RectangleF textRect = new RectangleF(iptText, tpSize);
+                    if (!textAreas.IsVisible(textRect))
+                    {
+                        tlg.DrawString(toPrint, this.Font, new SolidBrush(Color.Black), iptText);
+                        textAreas.Union(textRect);
+                    }
+                    
                 }
 
             }
+            //tlg.FillRegion(new SolidBrush(Color.FromArgb(128, Color.Red)), textAreas);
             //TimeSpan nowst = TimeKeeper.Now - TimeKeeper.Begin;
             //float nowpt = (float)(nowst.TotalMinutes / bte.TotalMinutes);
             //nowpt *= pbTimeline.Width;
@@ -117,12 +139,7 @@ namespace Span.GUI
                 tlg.ResetClip();
                 Category prim = Category.All[p.PrimaryCategory];
                 float ycoord = primCatHeight[p.PrimaryCategory] * occSpacing + 20f;
-                //TimeSpan starttime = o.StartActual - TimeKeeper.Begin;
-                //TimeSpan endtime = o.EndActual - TimeKeeper.Begin;
-                //float startpt = (float)(starttime.TotalMinutes / bte.TotalMinutes);
-                //float endpt = (float)(endtime.TotalMinutes / bte.TotalMinutes);
-                //startpt *= pbTimeline.Width;
-                //endpt *= pbTimeline.Width;
+               
                 float startpt = DateTimeToPixel(o.StartActual.ToUniversalTime());
                 float endpt = DateTimeToPixel(o.EndActual.ToUniversalTime());
                 RectangleF occRect = new RectangleF(startpt, ycoord, endpt - startpt, occHeight);
