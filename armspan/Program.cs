@@ -14,7 +14,7 @@ namespace Span.GUI
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
+            //Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             SaveFilename = "schedule.spn";
             if (File.Exists(SaveFilename))

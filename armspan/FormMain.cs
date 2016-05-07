@@ -705,6 +705,11 @@ namespace Span.GUI
        
         }
 
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("armspan (A Calendar Program)\nTrack your past, present, and future\n\nCreated by Allan Wiener\nfor CMPS 450 - Senior Project\nat Ramapo College of New Jersey\nSpring 2016");
+        }
+
        
        
     }
