@@ -37,15 +37,24 @@ namespace Span.GUI
                 MessageBox.Show("You must include at least one manual time, or at least one periodic time that is not excluded.");
                 return;
             }
+            //delete removed periods and occurrences that already existed
+            //but not ones that were created and immediately removed
             if (EventExists)
             {
                 foreach (string s in m_manualToRemove)
                 {
-                    Occurrence.All[s].Delete();
+                    if (Occurrence.All.ContainsKey(s))
+                    {
+                        Occurrence.All[s].Delete();
+                    }
                 }
                 foreach (string s in m_rulesToRemove)
                 {
-                    Event.All[ParentId].Rules.First(x => x.Id.Equals(s)).WipeOut();
+                    Period p =  Event.All[ParentId].Rules.FirstOrDefault(x => x.Id.Equals(s));
+                    if (p != null)
+                    {
+                        p.WipeOut();
+                    } 
                 }
             }
             this.Close();

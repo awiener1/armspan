@@ -136,17 +136,18 @@ namespace Span
             uint thisnum = (uint)(int)jsd["Number"];
             string id = (string)jsd["Id"];
             Frequency timeunit = (Frequency)jsd["TimeUnit"];
-           
+            bool exclude = (bool)jsd["Excluded"];
             DateTime starttime = ((DateTime)jsd["StartTime"]).ToLocalTime();
             DateTime endtime = ((DateTime)jsd["EndTime"]).ToLocalTime();
             string parentid = (string)jsd["ParentId"];
             TimeSpan length = new TimeSpan((long)JSONDictionary(jsd["OccurrenceLength"])["Ticks"]);
            
             Period loaded = new Period();
+            
             loaded.m_id = id;
             loaded.m_frequency = freq;
             loaded.m_timeUnit = timeunit;
-           
+            loaded.m_exclude = exclude;
             loaded.m_startTime = starttime;
             
             loaded.m_endTime = endtime;
@@ -428,7 +429,12 @@ namespace Span
             }
         }
 
-        
+
+        public void ForceUpdate()
+        {
+            m_needUpdate = true;
+        }
+
 
         /**
          * Gets or sets a DateTime struct specifying the latest

@@ -328,7 +328,14 @@ namespace Span
         public List<Period> Rules
         {
             get { return m_allRules; }
-            set { m_allRules = value; }
+            set 
+            { 
+                m_allRules = value;
+                foreach (Period p in m_allRules)
+                {
+                    p.ForceUpdate();
+                }
+            }
         }
 
         /**
