@@ -35,6 +35,8 @@ namespace Span.GUI
             int oldScroll = pnlTimeline.HorizontalScroll.Value;
            
             int oldMax = pnlTimeline.HorizontalScroll.Maximum;
+            
+            
             float oldpos = (float)oldScroll / (float)oldMax;
             //temp draw timeline
             m_tl = new Bitmap(pnlTimeline.Width * TimeKeeper.ZoomFactor, pnlTimeline.Height);
@@ -43,6 +45,7 @@ namespace Span.GUI
             GC.Collect();
             pbTimeline.Width = pnlTimeline.Width * TimeKeeper.ZoomFactor;
             Graphics tlg = Graphics.FromImage(m_tl);
+            tlg.Clear(SystemColors.Window);
             tlg.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             //TimeSpan bte = TimeKeeper.End - TimeKeeper.Begin;
             Pen dayDasher = new Pen(Color.Black);
@@ -60,6 +63,11 @@ namespace Span.GUI
                 //float ipt = (float)(ist.TotalMinutes / bte.TotalMinutes);
                 //ipt *= pbTimeline.Width;
                 float ipt = DateTimeToPixel(i);
+                //if huge, it can't possibly be on the timeline
+                if (float.IsInfinity(ipt))
+                {
+                    continue;
+                }
                 if (i.ToLocalTime() == i.ToLocalTime().Date)
                 {
                     tlg.DrawLine(dayDasher, ipt, 0, ipt, pbTimeline.Height);
@@ -93,6 +101,15 @@ namespace Span.GUI
             //float nowpt = (float)(nowst.TotalMinutes / bte.TotalMinutes);
             //nowpt *= pbTimeline.Width;
             float nowpt = DateTimeToPixel(TimeKeeper.Now);
+            //again, if huge, it can't possibly be on the timeline
+            if (float.IsInfinity(nowpt))
+            {
+                string badDate = "Please select a single day.";
+                SizeF messageSize = tlg.MeasureString(badDate, this.Font);
+                tlg.DrawString(badDate, this.Font, new SolidBrush(Color.Black), new PointF((pbTimeline.Width - messageSize.Width) / 2f, 3));
+                pbTimeline.Image = m_tl;
+                return;
+            }
             //offset by 2 so it is easier to see next to hours
             tlg.DrawLine(nowDasher, nowpt, 2, nowpt, pbTimeline.Height);
             tlg.FillPolygon(new SolidBrush(Color.Black), new PointF[] { new PointF(nowpt - 10.5f, -0.5f), new PointF(nowpt + 10.5f, -0.5f), new PointF(nowpt, 10.5f) });
