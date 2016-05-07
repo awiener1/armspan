@@ -140,7 +140,20 @@ namespace Span
             DateTime starttime = ((DateTime)jsd["StartTime"]).ToLocalTime();
             DateTime endtime = ((DateTime)jsd["EndTime"]).ToLocalTime();
             string parentid = (string)jsd["ParentId"];
-            TimeSpan length = new TimeSpan((long)JSONDictionary(jsd["OccurrenceLength"])["Ticks"]);
+            object olength = JSONDictionary(jsd["OccurrenceLength"])["Ticks"];
+            long llength = 1;
+            if (olength is long){
+                llength = (long)olength;
+            }
+            else if (olength is int)
+            {
+                llength = (long)(int)olength;
+            }
+            else
+            {
+                throw new ArgumentException("type of " + olength.GetType().ToString());
+            }
+            TimeSpan length = new TimeSpan(llength);
            
             Period loaded = new Period();
             
