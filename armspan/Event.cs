@@ -84,7 +84,7 @@ namespace Span
 
         /**
          * Generates an Event object from the
-         * specified JSON-serialized Period
+         * specified JSON-serialized Event
          * string.
          * 
          * @param json the serialized string

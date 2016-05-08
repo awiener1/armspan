@@ -54,7 +54,7 @@ namespace Span
             {
                 Occurrence val = Occurrence.All[occurrence];
                 Event e = val.Parent();
-                if (e.Alarms.ParentId == occurrence)
+                if (e.Alarms.ParentId == occurrence || (e.Alarms.HasNextAlarm.Length > 0 && e.Alarms.NextAlarmTimeToSave.ToLocalTime().Equals(val.StartActual)))
                 {
                     foreach (DateTime alarmtime in val.AlarmTimes())
                     {

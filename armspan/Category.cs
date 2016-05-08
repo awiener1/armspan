@@ -178,16 +178,35 @@ namespace Span
          * 
          * @date March 25, 2016
          */
-        public static List<string> getEvents(string cat){
+        public static List<string> GetEvents(string cat){
             IEnumerable<KeyValuePair<string, Event>> partial = Event.All.Where(x => x.Value.Categories.Contains(cat));
             return partial.ToDictionary(x => x.Key, x => x.Value).Keys.ToList();
         }
 
+        /**
+         * The color of the Category. See also Color.
+         */
         private Color m_color;
+
+        /**
+         * The number of the Category. See also Number.
+         */
         private uint m_num;
+        /**
+         * The name of the Category. See also Name.
+         */
         private string m_name;
+        /**
+         * The id of the Category. See also Id.
+         */
         private string m_id;
+        /**
+         * This counter is used to give each new Category a distinct Number.
+         */
         private static uint num = 1;
+        /**
+         * Contains all Category objects as values, with their Id strings as keys.
+         */
         private static Dictionary<string, Category> all = new Dictionary<string, Category>();
     }
 }

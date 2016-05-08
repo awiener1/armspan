@@ -39,6 +39,7 @@ namespace Span.GUI
             m_manualocc = new List<Occurrence>();
             m_rules = new List<Period>();
             m_settings = new AlarmSettings("");
+            
         }
 
         private void ExtraInitEdit(Event a_event)
@@ -120,6 +121,7 @@ namespace Span.GUI
                 m_newevent.ManualOccurrences = m_manualocc;
                 m_newevent.Rules = m_rules;
                 m_newevent.Alarms = new AlarmSettings(m_settings, m_newevent.FirstOccurrence().Id);
+               
                 m_newevent.Location = tbLocation.Text.Trim();
                 m_newevent.Description = tbDesc.Text.Trim();
                 m_newevent.Exists = true;

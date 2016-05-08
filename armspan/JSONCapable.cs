@@ -85,6 +85,17 @@ namespace Span
          */
         public static string SaveState(){
             Dictionary<string, object> state = new Dictionary<string, object>();
+            foreach (Event e in Event.All.Values)
+            {
+                
+                KeyValuePair<DateTime, Occurrence> occpair = TimeKeeper.Alarms.FirstOrDefault(x=>x.Value.Id.Equals(e.Alarms.ParentId));
+                e.Alarms.HasNextAlarm = (occpair.Value != null ? e.Id : "");
+                if (e.Alarms.HasNextAlarm.Length > 0)
+                {
+                    e.Alarms.NextAlarmTimeToSave = occpair.Value.StartActual.ToUniversalTime();
+                }
+                
+            }
             state.Add("Categories", Category.All);
             state.Add("Events", Event.All);
             string header = DateTime.Now.ToString() + "\n";

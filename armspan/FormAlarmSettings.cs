@@ -14,7 +14,7 @@ namespace Span.GUI
         public FormAlarmSettings()
         {
             InitializeComponent();
-
+            
         }
         private void InitializeControlLists()
         {
@@ -96,6 +96,7 @@ namespace Span.GUI
         private void btnOK_Click(object sender, EventArgs e)
         {
             m_settings.Alarms.Clear();
+            
             for (int i = 0; i < cbBeforeList.Count; i++)
             {
                 if (!cbBeforeList[i].Checked)

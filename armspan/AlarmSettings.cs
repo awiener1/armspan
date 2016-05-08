@@ -91,6 +91,8 @@ namespace Span
         {
             Alarms = a_alarms;
             m_parent = a_parent;
+            m_hasSavedTime = "";
+            
         }
 
         /**
@@ -108,7 +110,13 @@ namespace Span
         public AlarmSettings(AlarmSettings a_settings, string a_newParent)
         {
             Alarms = a_settings.Alarms;
+            HasNextAlarm = a_settings.HasNextAlarm;
+            if (HasNextAlarm.Length > 0)
+            {
+                NextAlarmTimeToSave = a_settings.NextAlarmTimeToSave;
+            }
             m_parent = a_newParent;
+
         }
 
         /**
@@ -124,6 +132,7 @@ namespace Span
         {
             Alarms = new List<Alarm>();
             m_parent = a_parent;
+            m_hasSavedTime = "";
         }
 
         /**
@@ -145,8 +154,37 @@ namespace Span
             List<Alarm> alarms = jss.ConvertToType<List<Alarm>>(jsd["Alarms"]);
             string parentid = (string)jsd["ParentId"];
             AlarmSettings loaded = new AlarmSettings(parentid, alarms);
+            bool hsexists = jsd.ContainsKey("HasNextAlarm");
+            if (hsexists)
+            {
+                string hasSaved = (string)jsd["HasNextAlarm"];
+                loaded.m_hasSavedTime = hasSaved;
+            }
+            else
+            {
+                loaded.m_hasSavedTime = "";
+            }
+            if (loaded.m_hasSavedTime.Length > 0)
+            {
+                DateTime serializeNext = ((DateTime)jsd["NextAlarmTimeToSave"]);
+                loaded.NextAlarmTimeToSave = serializeNext;
+            }
             
             return loaded;
+        }
+
+        private void updateParent()
+        {
+            if (m_hasSavedTime.Length > 0)
+            {
+                Event gparent = Event.All[m_hasSavedTime];
+                DateTime timeadjust = NextAlarmTimeToSave.ToLocalTime();
+                //find occurrence owned by this event with this time as one of its alarms
+                Occurrence newparent = Occurrence.All.Values.FirstOrDefault(x => x.StartActual.Equals(timeadjust));
+                // Occurrence newparent = gparent.Occurrences().FirstOrDefault(x => x.AlarmTimes().FirstOrDefault(y => y.Equals(timeadjust)) != null);
+                ParentId = newparent.Id;
+                m_hasSavedTime = "";
+            }
         }
 
         /**
@@ -157,7 +195,7 @@ namespace Span
          */
         private void updateAlarms()
         {
-
+            updateParent();
             Occurrence parent = Occurrence.All[ParentId];
             m_alarmTimes = new List<DateTime>();
             foreach (Alarm alarm in Alarms){
@@ -166,52 +204,13 @@ namespace Span
                 {
                     continue;
                 }
-                /*COMMENT OUT THE IF STATEMENT BELOW TO CHECK IF ALARMS ARE BEING DEALT WITH PROPERLY.*/
                 //if the occurrence has ended, only after-alarms should go off.
                 if (alarm.m_relativePlace != When.After && parent.EndActual < TimeKeeper.Now.ToLocalTime())
                 {
                     continue;
                 }
-
-
-                DateTime target = new DateTime();
-                TimeSpan offset = new TimeSpan();
-                //convert Length units into TimeSpan units
-
-                //TODO: change this TimeSpan code to work with DST
-                //(the TimeSpan class doesn't pay attention to
-                //DST, only the DateTime class does. Likely removing
-                //the offset object altogether will help.
-                switch(alarm.m_timeUnit)
-                {
-                    case Length.Minutes:
-                        offset = new TimeSpan(0, (int)alarm.m_timeLength, 0);
-                        break;
-                    case Length.Hours:
-                        offset = new TimeSpan((int)alarm.m_timeLength, 0, 0);
-                        break;
-                    case Length.Days:
-                        offset = new TimeSpan((int)alarm.m_timeLength, 0, 0, 0);
-                        break;
-                    case Length.Weeks:
-                        offset = new TimeSpan((int)alarm.m_timeLength * 7, 0, 0, 0);
-                        break;
-                }
-                //convert When into start or end time
-                switch (alarm.m_relativePlace)
-                {
-                    case When.Before:
-                        //should happen **before** start time
-                        offset = offset.Negate();
-                        goto case When.During;
-                    case When.During:
-                        target = parent.StartActual;
-                        break;
-                    case When.After:
-                        target = parent.EndActual;
-                        break;
-                }
-                target = target.Add(offset);
+                
+                DateTime target = SingleAlarmTime(alarm);
                 m_alarmTimes.Add(target);
             }
             m_alarmTimes.Sort();
@@ -221,7 +220,6 @@ namespace Span
 
         /**
          * Gets or sets the list of alarm settings to use.
-         * 
          */
         public List<Alarm> Alarms{
             get 
@@ -247,15 +245,12 @@ namespace Span
          */
         //TODO: change updateAlarms() to use this function instead
         public DateTime SingleAlarmTime(Alarm single){
+            updateParent();
             Occurrence parent = Occurrence.All[ParentId];
             DateTime target = new DateTime();
             TimeSpan offset = new TimeSpan();
             //convert Length units into TimeSpan units
 
-            //TODO: change this TimeSpan code to work with DST
-            //(the TimeSpan class doesn't pay attention to
-            //DST, only the DateTime class does. Likely removing
-            //the offset object altogether will help.
             switch (single.m_timeUnit)
             {
                 case Length.Minutes:
@@ -314,9 +309,23 @@ namespace Span
         }
 
 
+        public DateTime NextAlarmTimeToSave
+        {
+            get { return m_serializedNext; }
+            set { m_serializedNext = value; }
+        }
+
+        public string HasNextAlarm
+        {
+            get { return m_hasSavedTime; }
+            set { m_hasSavedTime = value; }
+        }
+
         private List<Alarm> m_alarms;
         private List<DateTime> m_alarmTimes;
         private string m_parent;
+        private DateTime m_serializedNext;
+        private string m_hasSavedTime; //PARENT EVENT ID
     }
 
     /**

@@ -73,7 +73,7 @@ namespace Span.GUI
             {
                 Category cat = Category.All[catid];
                 tbSummary.AppendText(cat.Name + "\n");
-                List<string> gottenEvents = Category.getEvents(catid);
+                List<string> gottenEvents = Category.GetEvents(catid);
                 var catevents = gottenEvents.Select(x => Event.All[x]);
                 var catoccs = Occurrence.All.Values.Where(x => gottenEvents.Contains(x.ParentId));
                 catoccs = catoccs.Where(x => x.StartIntended >= m_begin && x.EndIntended <= m_end && !noInclude.Contains(x.Status)).ToList();
