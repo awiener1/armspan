@@ -22,6 +22,24 @@ namespace Span.GUI
 {
     public partial class FormConflictMultiple : ThinDialog
     {
+        /**
+         * The list of conflicting Event ids.
+         */
+        public List<string> ConflictingEvents
+        {
+            get { return m_conflicting; }
+            set { m_conflicting = value; }
+        }
+
+        /**
+         * The new Event.
+         */
+        public Event NewEvent
+        {
+            get { return m_newEv; }
+            set { m_newEv = value; }
+        }
+
         public FormConflictMultiple()
         {
             InitializeComponent();
@@ -78,23 +96,5 @@ namespace Span.GUI
          * The new Event. See also NewEvent.
          */
         private Event m_newEv;
-
-        /**
-         * The list of conflicting Event ids.
-         */
-        public List<string> ConflictingEvents
-        {
-            get { return m_conflicting; }
-            set { m_conflicting = value; }
-        }
-
-        /**
-         * The new Event.
-         */
-        public Event NewEvent
-        {
-            get { return m_newEv; }
-            set { m_newEv = value; }
-        }
     }
 }

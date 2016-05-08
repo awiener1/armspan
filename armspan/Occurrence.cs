@@ -16,81 +16,139 @@ using System.Collections.ObjectModel;
 using System.Web.Script.Serialization;
 
 namespace Span
-{   /**
-     * Specifies the status of the Occurrence
-     * in terms of time management.
-     */
-    public enum OccurrenceStatus
-    {
-        /**
-         * The Event has not occurred yet.
-         */
-        Future, 
-        /**
-         * The Event is / was on time.
-         */
-        On_Time, 
-        /**
-         * The Event has been canceled.
-         * 
-         * This means that the event is not
-         * occurring at all.
-         */
-        Canceled, 
-        /**
-         * The Event has been / is being ignored.
-         * 
-         * This means that the user is choosing not
-         * to partake in the event, though it is not
-         * necessarily canceled.
-         */
-        Ignored, 
-        /**
-         * The Event has been postponed.
-         * 
-         * This is distinct from the idea of being
-         * rescheduled, in that a rescheduled event can
-         * still occur on time. Postponing an event means
-         * either the event is starting late (preferably
-         * if the user is in charge of the event), or the user
-         * is late to the event.
-         */
-        Postponed, 
-        /**
-         * The Event has been deleted from the Timeline.
-         * 
-         * Unlike canceling or ignoring an event, deleting
-         * it removes the event from the timeline
-         * completely (from the user's perspective). 
-         * This cannot be undone. However, an
-         * event will have the status of Deleted before the
-         * program closes to prevent any possible errors
-         * caused by actually removing the data. Instead,
-         * deleted events will not be deserialized from the
-         * save file.
-         */
-        Deleted,
-        /**
-         * This Occurrence specifies when the Event cannot happen.
-         * 
-         * Setting an Occurrence to Excluded means that it will not
-         * be counted as an Occurrence at all; instead, it requires
-         * that no chained Occurrence must exist at that time for this
-         * particular Event. This allows the user to specify
-         * times when the Event should not occur, regardless of
-         * any Period that already exists there. If any other
-         * chained Occurrence is scheduled to take place during this
-         * Occurrence, it will not be created.
-         * 
-         * Occurrences should only be given this status if they
-         * are chained.
-         */
-        Excluded
-      
-    };
-
+{   
     public class Occurrence : JSONCapable
     {
+       
+        /**
+         * Gets the id of the occurrence.
+         * 
+         * The id is written in the form of a string starting
+         * with the letter 'o', followed by a 32-bit unsigned
+         * integer in hexadecimal (all lowercase). This allows
+         * the occurrence to be looked up easily.
+         * 
+         * Currently, the integer portion of the id is
+         * simply equal to the occurrence's number.
+         */
+        public string Id { get { return m_id; } }
+
+        /**
+         * Specifies if the Occurrence is a task.
+         * 
+         * If false, the Occurrence is an appointment.
+         * This should only be true if the Occurrence is
+         * also a TaskOccurrence object.
+         */
+        public bool IsTask { get { return m_isTask; } }
+
+        /**
+         * Gets or sets the time at which the Occurrence
+         * has actually started.
+         */
+        public DateTime StartActual 
+        {
+            get { return m_actualStart; }
+            set { m_actualStart = value; }
+        }
+
+        /**
+         * Gets or sets the time at which the Occurrence
+         * has actually ended.
+         */
+        public DateTime EndActual
+        {
+            get { return m_actualEnd; }
+            set { m_actualEnd = value; }
+        }
+
+        /**
+         * Gets or sets the time at which the Occurrence
+         * is intended to start.
+         */
+        public DateTime StartIntended
+        {
+            get { return m_createStart; }
+            set { m_createStart = value; }
+        }
+
+        /**
+         * Gets or sets the time at which the Occurrence
+         * is intended to end.
+         */
+        public DateTime EndIntended
+        {
+            get { return m_createEnd; }
+            set { m_createEnd = value; }
+        }
+
+        /**
+         * Gets or sets the status of the Occurrence
+         * as an OccurrenceStatus value.
+         */
+        public OccurrenceStatus Status
+        {
+            get { return m_status; }
+            set { m_status = value; }
+        }       
+        
+        /**
+         * Gets the id of the parent Event to which
+         * the occurrence belongs.
+         */
+        public string ParentId { get { return m_parent; } }
+
+        /**
+         * Gets a Dictionary containing all Occurrences by Id.
+         */
+        public static Dictionary<string, Occurrence> All { get { return all; } }
+
+        /**
+         * Gets a written, intelligible description of the Occurrence as a string.
+         */
+        [ScriptIgnore]
+        public string Describe
+        {
+            get
+            {
+                string outputter = "Once, FROM: " + StartActual.ToShortDateString() + " at " + StartActual.ToShortTimeString()
+                    + " TO: " + EndActual.ToShortDateString() + " at " + EndActual.ToShortTimeString();
+
+                return outputter;
+            }
+        }
+
+        /**
+         * Gets or sets the id of the Period to which
+         * this Occurrence is chained, or null if it
+         * is not chained to anything.
+         */
+        public string ChainId
+        {
+            get { return m_chainId; }
+            set { m_chainId = value; }
+        }
+
+        /**
+         * Gets the number of the occurrence.
+         * 
+         * Note: please use this property sparingly,
+         * as the Id property is better-suited to
+         * keeping track of the object. This property
+         * exists in order to allow proper serialization
+         * of the object.
+         */
+        public uint Number { get { return m_numId; } }
+
+        /**
+         * Denotes if the program should be run in debug mode.
+         * 
+         * This bool is found in the Occurrence class because it
+         * would be present whether the GUI was implemented or not.
+         * However, it is presently only used in the GUI.
+         */
+        public static bool DebugMode { get { return m_debug; } }
+
         /**
          * Creates a new Occurrence from the specified times and parent id.
          * 
@@ -152,7 +210,9 @@ namespace Span
             //json to object types
             Dictionary<string, object> jsd = JSONDictionary(Occurrence.FromString(json));
             OccurrenceStatus status = (OccurrenceStatus)jsd["Status"];
-            if (status == OccurrenceStatus.Deleted) return null; //no deleted objects
+            //no deleted objects
+            if (status == OccurrenceStatus.Deleted) 
+                return null; 
             string id = (string)jsd["Id"];
             bool istask = (bool)jsd["IsTask"];
             DateTime startactual = ((DateTime)jsd["StartActual"]).ToLocalTime();
@@ -232,78 +292,6 @@ namespace Span
                 return true;
             }
             return false;
-        }
-
-        /**
-         * Gets the id of the occurrence.
-         * 
-         * The id is written in the form of a string starting
-         * with the letter 'o', followed by a 32-bit unsigned
-         * integer in hexadecimal (all lowercase). This allows
-         * the occurrence to be looked up easily.
-         * 
-         * Currently, the integer portion of the id is
-         * simply equal to the occurrence's number.
-         */
-        public string Id { get { return m_id; } }
-
-        /**
-         * Specifies if the Occurrence is a task.
-         * 
-         * If false, the Occurrence is an appointment.
-         * This should only be true if the Occurrence is
-         * also a TaskOccurrence object.
-         */
-        public bool IsTask { get { return m_isTask; } }
-
-        /**
-         * Gets or sets the time at which the Occurrence
-         * has actually started.
-         */
-        public DateTime StartActual 
-        {
-            get { return m_actualStart; }
-            set { m_actualStart = value; }
-        }
-
-        /**
-         * Gets or sets the time at which the Occurrence
-         * has actually ended.
-         */
-        public DateTime EndActual
-        {
-            get { return m_actualEnd; }
-            set { m_actualEnd = value; }
-        }
-
-        /**
-         * Gets or sets the time at which the Occurrence
-         * is intended to start.
-         */
-        public DateTime StartIntended
-        {
-            get { return m_createStart; }
-            set { m_createStart = value; }
-        }
-
-        /**
-         * Gets or sets the time at which the Occurrence
-         * is intended to end.
-         */
-        public DateTime EndIntended
-        {
-            get { return m_createEnd; }
-            set { m_createEnd = value; }
-        }
-
-        /**
-         * Gets or sets the status of the Occurrence
-         * as an OccurrenceStatus value.
-         */
-        public OccurrenceStatus Status
-        {
-            get { return m_status; }
-            set { m_status = value; }
         }
 
         /**
@@ -443,12 +431,6 @@ namespace Span
         }
 
         /**
-         * Gets the id of the parent Event to which
-         * the occurrence belongs.
-         */
-        public string ParentId { get { return m_parent; } }
-
-        /**
          * Gets the parent Event to which the
          * occurrence belongs.
          * 
@@ -458,11 +440,6 @@ namespace Span
          * @date March 16, 2016
          */
         public Event Parent() { return Event.All[ParentId]; }
-
-        /**
-         * Gets a Dictionary containing all Occurrences by Id.
-         */
-        public static Dictionary<string, Occurrence> All { get { return all; } }
 
         /**
          * Specifies whether the Occurrence is part of
@@ -497,32 +474,6 @@ namespace Span
         }
 
         /**
-         * Gets a written, intelligible description of the Occurrence as a string.
-         */
-        [ScriptIgnore]
-        public string Describe
-        {
-            get
-            {
-                string outputter = "Once, FROM: " + StartActual.ToShortDateString() + " at " + StartActual.ToShortTimeString()
-                    + " TO: " + EndActual.ToShortDateString() + " at " + EndActual.ToShortTimeString();
-
-                return outputter;
-            }
-        }
-
-        /**
-         * Gets or sets the id of the Period to which
-         * this Occurrence is chained, or null if it
-         * is not chained to anything.
-         */
-        public string ChainId
-        {
-            get { return m_chainId; }
-            set { m_chainId = value; }
-        }
-
-        /**
          * Gets the list of times when the alarms for this
          * Occurrence will go off.
          * 
@@ -533,26 +484,6 @@ namespace Span
             AlarmSettings tempSettings = new AlarmSettings(Parent().Alarms, Id);
             return tempSettings.AlarmTimes();
         }
-
-        /**
-         * Gets the number of the occurrence.
-         * 
-         * Note: please use this property sparingly,
-         * as the Id property is better-suited to
-         * keeping track of the object. This property
-         * exists in order to allow proper serialization
-         * of the object.
-         */
-        public uint Number { get { return m_numId; } }
-
-        /**
-         * Denotes if the program should be run in debug mode.
-         * 
-         * This bool is found in the Occurrence class because it
-         * would be present whether the GUI was implemented or not.
-         * However, it is presently only used in the GUI.
-         */
-        public static bool DebugMode { get { return m_debug; } }
 
         /**
          * This counter is used to give each new Occurrence a distinct Number.
@@ -590,12 +521,84 @@ namespace Span
          * Contains all Occurrence objects as values, with their Id strings as keys. See also All.
          */
         protected static Dictionary<string, Occurrence> all = new Dictionary<string, Occurrence>();
-
         /**
          * Denotes if the program should be run in debug mode. See also DebugMode.
          */
         private const bool m_debug = false;
-
-        
     }
+
+    /**
+     * Specifies the status of the Occurrence
+     * in terms of time management.
+     */
+    public enum OccurrenceStatus
+    {
+        /**
+         * The Event has not occurred yet.
+         */
+        Future, 
+        /**
+         * The Event is / was on time.
+         */
+        On_Time, 
+        /**
+         * The Event has been canceled.
+         * 
+         * This means that the event is not
+         * occurring at all.
+         */
+        Canceled, 
+        /**
+         * The Event has been / is being ignored.
+         * 
+         * This means that the user is choosing not
+         * to partake in the event, though it is not
+         * necessarily canceled.
+         */
+        Ignored, 
+        /**
+         * The Event has been postponed.
+         * 
+         * This is distinct from the idea of being
+         * rescheduled, in that a rescheduled event can
+         * still occur on time. Postponing an event means
+         * either the event is starting late (preferably
+         * if the user is in charge of the event), or the user
+         * is late to the event.
+         */
+        Postponed, 
+        /**
+         * The Event has been deleted from the Timeline.
+         * 
+         * Unlike canceling or ignoring an event, deleting
+         * it removes the event from the timeline
+         * completely (from the user's perspective). 
+         * This cannot be undone. However, an
+         * event will have the status of Deleted before the
+         * program closes to prevent any possible errors
+         * caused by actually removing the data. Instead,
+         * deleted events will not be deserialized from the
+         * save file.
+         */
+        Deleted,
+        /**
+         * This Occurrence specifies when the Event cannot happen.
+         * 
+         * Setting an Occurrence to Excluded means that it will not
+         * be counted as an Occurrence at all; instead, it requires
+         * that no chained Occurrence must exist at that time for this
+         * particular Event. This allows the user to specify
+         * times when the Event should not occur, regardless of
+         * any Period that already exists there. If any other
+         * chained Occurrence is scheduled to take place during this
+         * Occurrence, it will not be created.
+         * 
+         * Occurrences should only be given this status if they
+         * are chained.
+         */
+        Excluded
+      
+    };
+
+
 }

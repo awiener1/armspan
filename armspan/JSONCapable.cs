@@ -20,11 +20,6 @@ namespace Span
     public class JSONCapable
     {
         /**
-         * Provides serialization functionality.
-         */
-        public static JavaScriptSerializer jss = new JavaScriptSerializer();
-
-        /**
          * Creates an object from the specified JSON-serialized
          * string.
          * 
@@ -141,5 +136,10 @@ namespace Span
             }
             
         }
+
+        /**
+         * Provides serialization functionality.
+         */
+        public static JavaScriptSerializer jss = new JavaScriptSerializer();
     }
 }

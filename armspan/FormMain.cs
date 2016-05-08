@@ -396,6 +396,34 @@ namespace Span.GUI
         }
 
         /**
+         * Prompts the user to dechain the Occurrence, if necessary.
+         * 
+         * @param the specified Occurrence.
+         * 
+         * @return true if the Occurrence is not chained
+         * (eg, if it was never chained or if it has been
+         * dechained) and false otherwise. This means that
+         * if false is returned, the user has effectively
+         * canceled the action.
+         * 
+         * @date April 27, 2016
+         */
+        public static bool DeChainIfChained(Occurrence o)
+        {
+            if (o.IsChained())
+            {
+                DialogResult d = MessageBox.Show(o.Parent().Name + " at " + o.StartActual.ToShortTimeString() + " appears to be part of a periodic set. "
+                     + "If you wish to edit the occurrence's schedule, it will become detached from the rest of the set. Proceed?", "", MessageBoxButtons.YesNo);
+                if (!d.Equals(DialogResult.Yes))
+                {
+                    return false;
+                }
+                o.DeChain();
+            }
+            return true;
+        }
+
+        /**
          * Selects the specified Occurrence RichTextBox control in the bottom pane.
          * 
          * @date April 24, 2016
@@ -406,15 +434,6 @@ namespace Span.GUI
             m_selected = selOcc;
             DrawTimeline();
         }
-
-        /**
-         * The list of Occurrences happening now, as listed in the bottom pane.
-         */
-        private List<string> m_current;
-        /**
-         * The list of Occurrences happening now, encapsulated in RichTextBoxes in the bottom pane.
-         */
-        private Dictionary<string, RichTextBox> m_currentView;
 
         /**
          * Initializes the form. If the schedule doesn't exist, prompts the user to add categories.
@@ -469,34 +488,6 @@ namespace Span.GUI
             popup.ShowDialog();
             CheckOverlapping(o.Parent());
             DrawTimeline();
-        }
-
-        /**
-         * Prompts the user to dechain the Occurrence, if necessary.
-         * 
-         * @param the specified Occurrence.
-         * 
-         * @return true if the Occurrence is not chained
-         * (eg, if it was never chained or if it has been
-         * dechained) and false otherwise. This means that
-         * if false is returned, the user has effectively
-         * canceled the action.
-         * 
-         * @date April 27, 2016
-         */
-        public static bool DeChainIfChained(Occurrence o)
-        {
-            if (o.IsChained())
-            {
-                DialogResult d = MessageBox.Show(o.Parent().Name + " at " + o.StartActual.ToShortTimeString() + " appears to be part of a periodic set. "
-                     + "If you wish to edit the occurrence's schedule, it will become detached from the rest of the set. Proceed?", "", MessageBoxButtons.YesNo);
-                if (!d.Equals(DialogResult.Yes))
-                {
-                    return false;
-                }
-                o.DeChain();
-            }
-            return true;
         }
 
         /**
@@ -569,19 +560,6 @@ namespace Span.GUI
             popup.Categories = cats;
             popup.ShowDialog();
         }
-
-        /**
-         * A dictionary containing Occurrence ids as keys and their corresponding RectangleF on the timeline as values.
-         */
-        private Dictionary<string, RectangleF> m_occurrenceGraphics;
-        /**
-         * The id of the selected Occurrence, or an empty string if nothing is selected.
-         */
-        private string m_selected;
-        /**
-         * The current timeline image.
-         */
-        private Bitmap m_tl;
 
         private void FormMain_Activated(object sender, EventArgs e)
         {
@@ -880,5 +858,27 @@ namespace Span.GUI
         {
             MessageBox.Show("armspan (A Calendar Program)\nTrack your past, present, and future\n\nCreated by Allan Wiener\nfor CMPS 450 - Senior Project\nat Ramapo College of New Jersey\nSpring 2016");
         }
+
+        /**
+         * The list of Occurrences happening now, as listed in the bottom pane.
+         */
+        private List<string> m_current;
+        /**
+         * The list of Occurrences happening now, encapsulated in RichTextBoxes in the bottom pane.
+         */
+        private Dictionary<string, RichTextBox> m_currentView;
+
+        /**
+         * A dictionary containing Occurrence ids as keys and their corresponding RectangleF on the timeline as values.
+         */
+        private Dictionary<string, RectangleF> m_occurrenceGraphics;
+        /**
+         * The id of the selected Occurrence, or an empty string if nothing is selected.
+         */
+        private string m_selected;
+        /**
+         * The current timeline image.
+         */
+        private Bitmap m_tl;
     }
 }

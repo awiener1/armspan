@@ -26,12 +26,6 @@ namespace Span.GUI
 {
     public partial class ThinDialog : Form
     {
-        public ThinDialog()
-        {
-            InitializeComponent();
-        }
-
-
         /**
          * Allows form to have button-like edges,
          * and eliminates the title bar while keeping
@@ -44,21 +38,18 @@ namespace Span.GUI
             get
             {
                 var parms = base.CreateParams;
-                parms.Style &= -0x00C00000; //remove WS_CAPTION
-                parms.Style |= 0x00040000; //add WS_SIZEBOX
+                //remove WS_CAPTION
+                parms.Style &= -0x00C00000; 
+                //add WS_SIZEBOX
+                parms.Style |= 0x00040000; 
                 return parms;
             }
         }
 
-
-
-        /**
-         * Allows a control (PictureBox here) to
-         * be used to drag the form around,
-         * since there is no longer a title bar. 
-         */
-        //taken from http://stackoverflow.com/a/2384459
-        Point dragOffset;
+        public ThinDialog()
+        {
+            InitializeComponent();
+        }
 
         /**
          * Allows a control (PictureBox here) to
@@ -100,5 +91,12 @@ namespace Span.GUI
             this.dragBox.Width = this.ClientSize.Width - 24;
         }
 
+        /**
+         * Allows a control (PictureBox here) to
+         * be used to drag the form around,
+         * since there is no longer a title bar. 
+         */
+        //taken from http://stackoverflow.com/a/2384459
+        Point dragOffset;
     }
 }

@@ -21,6 +21,15 @@ namespace Span.GUI
 {
     public partial class FormAlarmSettings : ThinDialog
     {
+        /**
+         * The AlarmSettings to modify.
+         */
+        public AlarmSettings Settings
+        {
+            get { return m_settings; }
+            set { m_settings = value; }
+        }
+
         public FormAlarmSettings()
         {
             InitializeComponent();  
@@ -138,6 +147,21 @@ namespace Span.GUI
             this.Close();
         }
 
+        private void cbBeforeGroup_CheckedChanged(object sender, EventArgs e)
+        {
+            gbBefore.Enabled = cbBeforeGroup.Checked;
+        }
+
+        private void cbDuringGroup_CheckedChanged(object sender, EventArgs e)
+        {
+            gbDuring.Enabled = cbDuringGroup.Checked;
+        }
+
+        private void cbAfterGroup_CheckedChanged(object sender, EventArgs e)
+        {
+            gbAfter.Enabled = cbAfterGroup.Checked;
+        }
+
         /**
          * The list of CheckBoxes for Before alarms.
          */
@@ -182,29 +206,5 @@ namespace Span.GUI
          * The AlarmSettings to modify. See also Settings.
          */
         private AlarmSettings m_settings;
-
-        /**
-         * The AlarmSettings to modify.
-         */
-        public AlarmSettings Settings
-        {
-            get { return m_settings; }
-            set { m_settings = value; }
-        }
-
-        private void cbBeforeGroup_CheckedChanged(object sender, EventArgs e)
-        {
-            gbBefore.Enabled = cbBeforeGroup.Checked;
-        }
-
-        private void cbDuringGroup_CheckedChanged(object sender, EventArgs e)
-        {
-            gbDuring.Enabled = cbDuringGroup.Checked;
-        }
-
-        private void cbAfterGroup_CheckedChanged(object sender, EventArgs e)
-        {
-            gbAfter.Enabled = cbAfterGroup.Checked;
-        }
     }
 }

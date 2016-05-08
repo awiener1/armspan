@@ -22,6 +22,22 @@ namespace Span.GUI
 {
     public partial class FormAddEvent : ThinDialog
     {
+        /**
+         * Denotes if the Event being added or edited is a task.
+         * 
+         * If set, the form will be updated accordingly.
+         */
+        public bool IsTask
+        {
+            get { return m_isTask; }
+            set
+            {
+                m_isTask = value;
+                lblTaskNum.Enabled = m_isTask;
+                nudTaskNum.Enabled = m_isTask;
+            }
+        }
+
         public FormAddEvent()
         {
             InitializeComponent();
@@ -94,22 +110,6 @@ namespace Span.GUI
         }
 
         /**
-         * Denotes if the Event being added or edited is a task.
-         * 
-         * If set, the form will be updated accordingly.
-         */
-        public bool IsTask
-        {
-            get { return m_isTask; }
-            set
-            {
-                m_isTask = value;
-                lblTaskNum.Enabled = m_isTask;
-                nudTaskNum.Enabled = m_isTask;
-            }
-        }
-
-        /**
          * Allows the user to change the alarm settings.
          * 
          * @date April 13, 2016
@@ -174,17 +174,6 @@ namespace Span.GUI
             }
         }
 
-        /**
-         * Denotes if the Event is a task. See also IsTask.
-         */
-        private bool m_isTask;
-        /**
-         * Denotes if the Event is new.
-         * 
-         * (eg, being added instead of edited)
-         */
-        private bool m_isNew;
-
         private void cbType_SelectedIndexChanged(object sender, EventArgs e)
         {
             IsTask = (cbType.SelectedItem.ToString().Equals("Task"));
@@ -216,6 +205,40 @@ namespace Span.GUI
             }
         }
 
+        private void cbCatPrim_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            m_primarycat = (string)cbCatPrim.SelectedValue;
+        }
+
+        /**
+         * Allows the user to change the schedule for the Event.
+         * 
+         * @date April 20, 2016
+         */
+        private void btnTime_Click(object sender, EventArgs e)
+        {
+            //set up dialog
+            FormEventScheduler popup = new FormEventScheduler();
+            popup.ManualOccurrences = m_manualocc;
+            popup.Rules = m_rules;
+            popup.ParentId = m_newevent.Id;
+            popup.EventExists = !m_isNew;
+            popup.ShowDialog();
+            //update schedule
+            m_manualocc = popup.ManualOccurrences;
+            m_rules = popup.Rules;
+        }
+
+        /**
+         * Denotes if the Event is a task. See also IsTask.
+         */
+        private bool m_isTask;
+        /**
+         * Denotes if the Event is new.
+         * 
+         * (eg, being added instead of edited)
+         */
+        private bool m_isNew;
         /**
          * The list of secondary Category ids for the Event.
          */
@@ -240,30 +263,5 @@ namespace Span.GUI
          * The AlarmSettings for the Event.
          */
         private AlarmSettings m_settings;
-        
-
-        private void cbCatPrim_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            m_primarycat = (string)cbCatPrim.SelectedValue;
-        }
-
-        /**
-         * Allows the user to change the schedule for the Event.
-         * 
-         * @date April 20, 2016
-         */
-        private void btnTime_Click(object sender, EventArgs e)
-        {
-            //set up dialog
-            FormEventScheduler popup = new FormEventScheduler();
-            popup.ManualOccurrences = m_manualocc;
-            popup.Rules = m_rules;
-            popup.ParentId = m_newevent.Id;
-            popup.EventExists = !m_isNew;
-            popup.ShowDialog();
-            //update schedule
-            m_manualocc = popup.ManualOccurrences;
-            m_rules = popup.Rules;
-        }
     }
 }

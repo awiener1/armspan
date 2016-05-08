@@ -17,48 +17,143 @@ using System.Web.Script.Serialization;
 
 namespace Span
 {
-
-    /**
-     * Denotes the unit of time in which to specify the
-     * frequency of the Period.
-     */
-    public enum Frequency
-    {
-        /**
-         * The Occurrence will reoccur in the specified
-         * number of minutes.
-         */
-        Minutes,
-        /**
-         * The Occurrence will reoccur in the specified
-         * number of hours.
-         */
-        Hours,
-        /**
-         * The Occurrence will reoccur in the specified
-         * number of days.
-         */
-        Days,
-        /**
-         * The Occurrence will reoccur in the specified
-         * number of weeks.
-         */
-        Weeks,
-        /**
-         * The Occurrence will reoccur in the specified
-         * number of months.
-         */
-        Months,
-        /**
-         * The Occurrence will reoccur in the specified
-         * number of years.
-         */
-        Years
-    }
-
-   
     public class Period : JSONCapable
     {
+        /**
+         * Gets a written, intelligible description of the Period as a string.
+         */
+        [ScriptIgnore]
+        public string Describe
+        {
+            get
+            {
+                string outputter = Excluded ? "NEVER " : "";
+                outputter += "FROM: " + StartTime.ToShortDateString() + " at " + StartTime.ToShortTimeString()
+                    + " TO: " + EndTime.ToShortDateString() + " at " + EndTime.ToShortTimeString()
+                    + " EVERY: " + PeriodicFrequency + " " + TimeUnit.ToString().ToLower() 
+                    + " for " + OccurrenceLength.TotalMinutes + " minutes";
+
+                return outputter;
+            }
+        }
+
+        /**
+         * Gets or sets the frequency at which the Event will
+         * occur. Must be greater than or equal to 1.
+         */
+        public uint PeriodicFrequency
+        {
+            get { return m_frequency; }
+            set 
+            { 
+                m_frequency = Math.Max(value, 1);
+                m_needUpdate = true;
+            }
+        }
+
+        /**
+         * Gets or sets the time unit used to describe the
+         * frequency.
+         */
+        public Frequency TimeUnit
+        {
+            get { return m_timeUnit; }
+
+            set  
+            { 
+                m_timeUnit = value;
+                m_needUpdate = true;
+            }
+        }
+
+        /**
+         * Gets or sets a DateTime struct specifying the day and time
+         * at which the first Occurrence will start.
+         */
+        public DateTime StartTime
+        {
+            get { return m_startTime; }
+            set 
+            { 
+                m_startTime = value;
+                m_needUpdate = true;
+            }
+        }
+
+        /**
+         * Gets or sets a DateTime struct specifying the date and time at which the Period must end.
+         */
+        public DateTime EndTime
+        {
+            get { return m_endTime; }
+            set 
+            { 
+                m_endTime = value;
+                m_needUpdate = true;
+            }
+        }
+
+        /**
+         * Gets or sets a TimeSpan struct specifying the length of 
+         * each Occurrence.
+         */
+        public TimeSpan OccurrenceLength
+        {
+            get { return m_length; }
+            set 
+            { 
+                m_length = value;
+                m_needUpdate = true;
+            }
+        }
+
+        /**
+         * Gets the id of the parent Event to which
+         * the occurrence belongs.
+         */
+        public string ParentId { get { return m_parent; } }
+
+        /**
+         * Gets the id of the Period.
+         * 
+         * The id is written in the form of a string starting
+         * with the letter 'p', followed by a 32-bit unsigned
+         * integer in hexadecimal (all lowercase). This allows
+         * the period to be looked up easily.
+         * 
+         * Currently, the integer portion of the id is
+         * simply equal to the period's number.
+         */
+        public string Id { get { return m_id; } }
+
+        /**
+         * Gets the number of the occurrence.
+         * 
+         * Note: please use this property sparingly,
+         * as the Id property is better-suited to
+         * keeping track of the object. This property
+         * exists in order to allow proper serialization
+         * of the object.
+         */
+        public uint Number { get { return m_numId; } }
+
+        /**
+         * Gets a bool denoting if the Period is Excluded or not.
+         * 
+         * If it is excluded, the Period's Occurrences will never
+         * occur, but instead prevent other periodic Occurrences from occurring.
+         * This is useful to, for example, specify a periodic meal break
+         * or sleeping hours when the user would not expect to be doing other
+         * things.
+         * 
+         * This only affects other Period chained Occurrences, not manual
+         * Occurrences.
+         */
+        public bool Excluded
+        {
+            get { return m_exclude; }
+            set { m_exclude = value; }
+        }
 
         /**
          * Creates a new Period from the specified times, length, and parent id.
@@ -194,16 +289,13 @@ namespace Span
                         ocr.Status = OccurrenceStatus.Deleted;
                     }
                 }
-
             }
             m_occurrences = new List<Occurrence>();
             //set up start/end dates
             DateTime eachStartTime = StartTime;
             DateTime finalEndTime = EndTime;
-
             IEnumerable<Period> excludeRules = new List<Period>();
             IEnumerable<Occurrence> excludes = new List<Occurrence>();
-
             if (!Excluded)
             {
                 excludeRules = Event.All[ParentId].Rules.Where(x => x.Excluded);
@@ -308,24 +400,6 @@ namespace Span
         }
 
         /**
-         * Gets a written, intelligible description of the Period as a string.
-         */
-        [ScriptIgnore]
-        public string Describe
-        {
-            get
-            {
-                string outputter = Excluded ? "NEVER " : "";
-                outputter += "FROM: " + StartTime.ToShortDateString() + " at " + StartTime.ToShortTimeString()
-                    + " TO: " + EndTime.ToShortDateString() + " at " + EndTime.ToShortTimeString()
-                    + " EVERY: " + PeriodicFrequency + " " + TimeUnit.ToString().ToLower() 
-                    + " for " + OccurrenceLength.TotalMinutes + " minutes";
-
-                return outputter;
-            }
-        }
-
-        /**
          * Removes the specified Occurrence from the Period.
          * 
          * @param ocr the Occurrence to remove. It will not be deleted,
@@ -398,49 +472,6 @@ namespace Span
         }
 
         /**
-         * Gets or sets the frequency at which the Event will
-         * occur. Must be greater than or equal to 1.
-         */
-        public uint PeriodicFrequency
-        {
-            get { return m_frequency; }
-            set 
-            { 
-                m_frequency = Math.Max(value, 1);
-                m_needUpdate = true;
-            }
-        }
-
-        /**
-         * Gets or sets the time unit used to describe the
-         * frequency.
-         */
-        public Frequency TimeUnit
-        {
-            get { return m_timeUnit; }
-
-            set  
-            { 
-                m_timeUnit = value;
-                m_needUpdate = true;
-            }
-        }
-
-        /**
-         * Gets or sets a DateTime struct specifying the day and time
-         * at which the first Occurrence will start.
-         */
-        public DateTime StartTime
-        {
-            get { return m_startTime; }
-            set 
-            { 
-                m_startTime = value;
-                m_needUpdate = true;
-            }
-        }
-
-        /**
          * Forces the Period to update when possible.
          * 
          * The Period will update before it returns
@@ -454,82 +485,6 @@ namespace Span
         public void ForceUpdate()
         {
             m_needUpdate = true;
-        }
-
-
-        /**
-         * Gets or sets a DateTime struct specifying the date and time at which the Period must end.
-         */
-        public DateTime EndTime
-        {
-            get { return m_endTime; }
-            set 
-            { 
-                m_endTime = value;
-                m_needUpdate = true;
-            }
-        }
-
-        /**
-         * Gets or sets a TimeSpan struct specifying the length of 
-         * each Occurrence.
-         */
-        public TimeSpan OccurrenceLength
-        {
-            get { return m_length; }
-            set 
-            { 
-                m_length = value;
-                m_needUpdate = true;
-            }
-        }
-
-        /**
-         * Gets the id of the parent Event to which
-         * the occurrence belongs.
-         */
-        public string ParentId { get { return m_parent; } }
-
-        /**
-         * Gets the id of the Period.
-         * 
-         * The id is written in the form of a string starting
-         * with the letter 'p', followed by a 32-bit unsigned
-         * integer in hexadecimal (all lowercase). This allows
-         * the period to be looked up easily.
-         * 
-         * Currently, the integer portion of the id is
-         * simply equal to the period's number.
-         */
-        public string Id { get { return m_id; } }
-
-        /**
-         * Gets the number of the occurrence.
-         * 
-         * Note: please use this property sparingly,
-         * as the Id property is better-suited to
-         * keeping track of the object. This property
-         * exists in order to allow proper serialization
-         * of the object.
-         */
-        public uint Number { get { return m_numId; } }
-
-        /**
-         * Gets a bool denoting if the Period is Excluded or not.
-         * 
-         * If it is excluded, the Period's Occurrences will never
-         * occur, but instead prevent other periodic Occurrences from occurring.
-         * This is useful to, for example, specify a periodic meal break
-         * or sleeping hours when the user would not expect to be doing other
-         * things.
-         * 
-         * This only affects other Period chained Occurrences, not manual
-         * Occurrences.
-         */
-        public bool Excluded
-        {
-            get { return m_exclude; }
-            set { m_exclude = value; }
         }
 
         /**
@@ -580,5 +535,43 @@ namespace Span
          * Denotes if this Period is to be excluded. See also Excluded.
          */
         private bool m_exclude;
+    }
+
+    /**
+     * Denotes the unit of time in which to specify the
+     * frequency of the Period.
+     */
+    public enum Frequency
+    {
+        /**
+         * The Occurrence will reoccur in the specified
+         * number of minutes.
+         */
+        Minutes,
+        /**
+         * The Occurrence will reoccur in the specified
+         * number of hours.
+         */
+        Hours,
+        /**
+         * The Occurrence will reoccur in the specified
+         * number of days.
+         */
+        Days,
+        /**
+         * The Occurrence will reoccur in the specified
+         * number of weeks.
+         */
+        Weeks,
+        /**
+         * The Occurrence will reoccur in the specified
+         * number of months.
+         */
+        Months,
+        /**
+         * The Occurrence will reoccur in the specified
+         * number of years.
+         */
+        Years
     }
 }

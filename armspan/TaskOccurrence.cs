@@ -21,6 +21,29 @@ namespace Span
     class TaskOccurrence : Occurrence
     {
         /**
+         * Gets or sets the number of times the task should be done during
+         * the Occurrence.
+         */
+        public uint Times
+        {
+            get { return m_times; }
+            set 
+            { 
+                //parent exists, assume task for now
+                if (Event.All.ContainsKey(ParentId))
+                {
+                    m_times = Math.Max(value, ((TaskEvent)Event.All[ParentId]).Times); 
+                }
+                //to prevent crashing
+                else
+                {
+                    m_times = Math.Max(value, 1);
+                }
+
+            }
+        }
+
+        /**
          * Creates a new TaskOccurrence from the specified times, parent id,
          * and task quantity.
          * 
@@ -42,29 +65,6 @@ namespace Span
             : base(true, a_createStart, a_createEnd, a_parent)
         {
             Times = a_times;
-        }
-
-        /**
-         * Gets or sets the number of times the task should be done during
-         * the Occurrence.
-         */
-        public uint Times
-        {
-            get { return m_times; }
-            set 
-            { 
-                //parent exists, assume task for now
-                if (Event.All.ContainsKey(ParentId))
-                {
-                    m_times = Math.Max(value, ((TaskEvent)Event.All[ParentId]).Times); 
-                }
-                //to prevent crashing
-                else
-                {
-                    m_times = Math.Max(value, 1);
-                }
-
-            }
         }
 
         /**

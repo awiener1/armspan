@@ -18,9 +18,22 @@ namespace Span.GUI
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
+        /**
+         * Gets or sets the name of the file to load and save.
+         * 
+         * This property is static rather than constant so that,
+         * if an options feature is added to the program,
+         * it can be changed from a configuration file.
+         */
+        public static string SaveFilename
+        {
+            get { return m_savename; }
+            set { m_savename = value; }
+        }
+
+        /**
+         * The main entry point for the application.
+         */
         [STAThread]
         static void Main()
         {
@@ -42,19 +55,5 @@ namespace Span.GUI
          * The name of the file to load and save. See also SaveFileName.
          */
         private static string m_savename;
-
-        /**
-         * Gets or sets the name of the file to load and save.
-         * 
-         * This property is static rather than constant so that,
-         * if an options feature is added to the program,
-         * it can be changed from a configuration file.
-         */
-        public static string SaveFilename
-        {
-            get { return m_savename; }
-            set { m_savename = value; }
-        }
-        
     }
 }

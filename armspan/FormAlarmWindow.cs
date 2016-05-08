@@ -25,33 +25,22 @@ namespace Span.GUI
 {
     public partial class FormAlarmWindow : ThinDialog
     {
+        /**
+         * Gets the list of alarms currently going off.
+         * 
+         * The Alarm structs themselves are not very useful, so
+         * the dictionary contains each alarm's time as a key and
+         * parent Occurrence as a value.
+         */
+        public Dictionary<DateTime, Occurrence> Alarms
+        {
+            get { return m_alarms; }
+            set { m_alarms = value; }
+        }
+
         public FormAlarmWindow()
         {
             InitializeComponent();
-        }
-
-        /**
-         * Postpones all Occurrences mentioned in the alarm window for five minutes.
-         * 
-         * This allows the user to quickly close the window,
-         * but effectively forces it to open again in five minutes.
-         * 
-         * @date April 23, 2016
-         */
-        private void btnPostponeFive_Click(object sender, EventArgs e)
-        {
-            var distinctOccurrences = Alarms.Select(x => x.Value).Distinct();
-            foreach (Occurrence occ in distinctOccurrences){
-                occ.Postpone(5);
-            }
-            this.Close();
-        }
-
-        private void FormAlarmWindow_Load(object sender, EventArgs e)
-        {
-            UpdateList();
-            lbNext.SelectedIndex = 0;
-            DisplayAlarm(0);
         }
 
         /**
@@ -135,6 +124,54 @@ namespace Span.GUI
         }
 
         /**
+         * Removes the specified alarm and updates the list of alarms.
+         * 
+         * @param toConfirm a KeyValuePair, with the alarm's time as
+         * the key and the alarm's parent Occurrence as the value, of
+         * the alarm to remove.
+         * 
+         * @date April 23, 2016
+         */
+        private void RemoveAlarm(KeyValuePair<DateTime, Occurrence> toConfirm)
+        {
+            Alarms.Remove(toConfirm.Key);
+            if (Alarms.Count > 0)
+            {
+                UpdateList();
+                lbNext.SelectedIndex = 0;
+                DisplayAlarm(0);
+            }
+            else
+            {
+                this.Close();
+            }
+        }
+
+        /**
+         * Postpones all Occurrences mentioned in the alarm window for five minutes.
+         * 
+         * This allows the user to quickly close the window,
+         * but effectively forces it to open again in five minutes.
+         * 
+         * @date April 23, 2016
+         */
+        private void btnPostponeFive_Click(object sender, EventArgs e)
+        {
+            var distinctOccurrences = Alarms.Select(x => x.Value).Distinct();
+            foreach (Occurrence occ in distinctOccurrences){
+                occ.Postpone(5);
+            }
+            this.Close();
+        }
+
+        private void FormAlarmWindow_Load(object sender, EventArgs e)
+        {
+            UpdateList();
+            lbNext.SelectedIndex = 0;
+            DisplayAlarm(0);
+        }
+
+        /**
          * Cancels the Occurrence associated with the alarm.
          * 
          * @date April 23, 2016
@@ -181,32 +218,6 @@ namespace Span.GUI
             RemoveAlarm(toConfirm);
         }
 
-        /**
-         * The list of alarms going off. See also Alarms.
-         */
-        private Dictionary<DateTime, Occurrence> m_alarms;
-        /**
-         * The settings for the current alarm.
-         */
-        private AlarmSettings m_settings;
-        /**
-         * Denotes if the start now button should change to "stop now".
-         */
-        private bool m_stop;
-
-        /**
-         * Gets the list of alarms currently going off.
-         * 
-         * The Alarm structs themselves are not very useful, so
-         * the dictionary contains each alarm's time as a key and
-         * parent Occurrence as a value.
-         */
-        public Dictionary<DateTime, Occurrence> Alarms
-        {
-            get { return m_alarms; }
-            set { m_alarms = value; }
-        }
-
         private void lbNext_SelectedIndexChanged(object sender, EventArgs e)
         {
             DisplayAlarm((uint)lbNext.SelectedIndex);
@@ -222,30 +233,6 @@ namespace Span.GUI
             var toConfirm = Alarms.ElementAt(lbNext.SelectedIndex);
             toConfirm.Value.Confirm();
             RemoveAlarm(toConfirm);
-        }
-
-        /**
-         * Removes the specified alarm and updates the list of alarms.
-         * 
-         * @param toConfirm a KeyValuePair, with the alarm's time as
-         * the key and the alarm's parent Occurrence as the value, of
-         * the alarm to remove.
-         * 
-         * @date April 23, 2016
-         */
-        private void RemoveAlarm(KeyValuePair<DateTime, Occurrence> toConfirm)
-        {
-            Alarms.Remove(toConfirm.Key);
-            if (Alarms.Count > 0)
-            {
-                UpdateList();
-                lbNext.SelectedIndex = 0;
-                DisplayAlarm(0);
-            }
-            else
-            {
-                this.Close();
-            }
         }
 
         /**
@@ -276,11 +263,24 @@ namespace Span.GUI
             //due to alarm changes, close and possibly reopen in ten seconds
             this.Close();
         }
-
+        
         private void btnMore_Click(object sender, EventArgs e)
         {
             Event thisEvent = Alarms.ElementAt(lbNext.SelectedIndex).Value.Parent();
             MessageBox.Show(thisEvent.Description);
         }
+        
+        /**
+         * The list of alarms going off. See also Alarms.
+         */
+        private Dictionary<DateTime, Occurrence> m_alarms;
+        /**
+         * The settings for the current alarm.
+         */
+        private AlarmSettings m_settings;
+        /**
+         * Denotes if the start now button should change to "stop now".
+         */
+        private bool m_stop;
     }
 }

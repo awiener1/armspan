@@ -22,6 +22,45 @@ namespace Span.GUI
 {
     public partial class FormEventScheduler : ThinDialog
     {
+        /**
+         * The id of the Event.
+         */
+        public string ParentId
+        {
+            get { return m_parentid; }
+            set { m_parentid = value; }
+        }
+
+        /**
+         * The list of all manual Occurrences.
+         */
+        public List<Occurrence> ManualOccurrences
+        {
+            get { return m_manual; }
+            set { m_manual = value; }
+        }
+
+        /**
+         * The list of all Periods.
+         */
+        public List<Period> Rules
+        { 
+            get { return m_rules; }
+            set { m_rules = value; }
+        }
+
+        /**
+         * Denotes if the Event already exists.
+         * 
+         * If it does, removing any Periods or Occurrences
+         * requires referencing them.
+         */
+        public bool EventExists
+        {
+            get { return m_edit; }
+            set { m_edit = value; }
+        }
+
         public FormEventScheduler()
         {
             InitializeComponent();
@@ -33,6 +72,12 @@ namespace Span.GUI
         {
             UpdateOptions();
             cbFrequency.SelectedIndex = cbFrequency.FindStringExact("Minutes");
+        }
+
+        private void UpdateOptions()
+        {
+            gbPeriodic.Enabled = !rbManual.Checked;
+            cbExclude.Enabled = !rbManual.Checked;
         }
 
         /**
@@ -75,49 +120,9 @@ namespace Span.GUI
             this.Close();
         }
 
-        private void UpdateOptions()
-        {
-            gbPeriodic.Enabled = !rbManual.Checked;
-            cbExclude.Enabled = !rbManual.Checked;
-        }
-
         private void rbManual_CheckedChanged(object sender, EventArgs e)
         {
             UpdateOptions();
-        }
-
-        /**
-         * The list of all manual Occurrences. See also ManualOccurrences.
-         */
-        private List<Occurrence> m_manual;
-        /**
-         * The list of all Periods. See also Rules.
-         */
-        private List<Period> m_rules;
-        /**
-         * The list of all manual Occurrences to remove that already exist.
-         */
-        private List<string> m_manualToRemove;
-        /**
-         * The list of all Periods to remove that already exist.
-         */
-        private List<string> m_rulesToRemove;
-        /**
-         * Denotes if the Event already exists. See also EventExists.
-         */
-        private bool m_edit;
-        /**
-         * The id of the Event. See also ParentId.
-         */
-        private string m_parentid;
-
-        /**
-         * The id of the Event.
-         */
-        public string ParentId
-        {
-            get { return m_parentid; }
-            set { m_parentid = value; }
         }
 
         /**
@@ -156,36 +161,6 @@ namespace Span.GUI
                 lbSchedule.Items.Add(manual);
             }
             lbSchedule.Update();
-        }
-
-        /**
-         * The list of all manual Occurrences.
-         */
-        public List<Occurrence> ManualOccurrences
-        {
-            get { return m_manual; }
-            set { m_manual = value; }
-        }
-
-        /**
-         * The list of all Periods.
-         */
-        public List<Period> Rules
-        { 
-            get { return m_rules; }
-            set { m_rules = value; }
-        }
-
-        /**
-         * Denotes if the Event already exists.
-         * 
-         * If it does, removing any Periods or Occurrences
-         * requires referencing them.
-         */
-        public bool EventExists
-        {
-            get { return m_edit; }
-            set { m_edit = value; }
         }
 
         /**
@@ -243,5 +218,30 @@ namespace Span.GUI
                 m_rulesToRemove = new List<string>();
             }
         }
+
+        /**
+         * The list of all manual Occurrences. See also ManualOccurrences.
+         */
+        private List<Occurrence> m_manual;
+        /**
+         * The list of all Periods. See also Rules.
+         */
+        private List<Period> m_rules;
+        /**
+         * The list of all manual Occurrences to remove that already exist.
+         */
+        private List<string> m_manualToRemove;
+        /**
+         * The list of all Periods to remove that already exist.
+         */
+        private List<string> m_rulesToRemove;
+        /**
+         * Denotes if the Event already exists. See also EventExists.
+         */
+        private bool m_edit;
+        /**
+         * The id of the Event. See also ParentId.
+         */
+        private string m_parentid;
     }
 }

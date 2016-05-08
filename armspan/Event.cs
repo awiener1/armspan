@@ -19,6 +19,201 @@ namespace Span
     public class Event : JSONCapable
     {
         /**
+         * Gets or sets a name or title for the event. 
+         * This string must be single-line.
+         */
+        public string Name 
+        {
+            get { return m_name; }
+            set { m_name = value; }
+        }
+
+        /**
+         * Specifies or sets whether this Event exists. True by
+         * default. If false, the Event is removed from the timeline
+         * and is not saved when the program closes, effectively and
+         * safely deleting it from existence.
+         */
+        public bool Exists
+        {
+            get { return m_exists; }
+            set { m_exists = value; }
+        }
+
+        /**
+         * Gets or sets a list of Occurrences defined
+         * manually. These will occur only once on the timeline.
+         */
+        public List<Occurrence> ManualOccurrences
+        {
+            get { return m_manualOccurrences; }
+            set { m_manualOccurrences = value; }
+        }
+
+        /**
+         * Gets or sets the list of all Period objects
+         * that define the periodic Occurrences of this
+         * Event.
+         */
+        public List<Period> Rules
+        {
+            get { return m_allRules; }
+            set 
+            { 
+                m_allRules = value;
+                foreach (Period p in m_allRules)
+                {
+                    p.ForceUpdate();
+                }
+            }
+        }
+
+        /**
+         * Gets or sets a place or location for the event. This
+         * property will be ignored if it is
+         * set to a blank string. This string must be single-line.
+         */
+        public string Location
+        {
+            get { return m_loc; }
+            set { m_loc = value; }
+        }
+
+        /**
+         * Gets or sets a list of ids for Categories to which
+         * this Event belongs. Index 0 is the PrimaryCategory and
+         * the rest are SecondaryCategories.
+         */
+        public List<string> Categories
+        {
+            get { return m_categories; }
+            set { m_categories = value; }
+        }
+
+        /**
+         * Gets or sets the primary Category to which this Event
+         * belongs. If the primary category is set to one that
+         * is already a secondary category, the existing primary
+         * category and the desired one will switch.
+         */
+        [ScriptIgnore]
+        public string PrimaryCategory
+        {
+            get { return Categories[0]; }
+            set 
+            { 
+                int index = Categories.IndexOf(value);
+                //no change required
+                if (index == 0) return;
+                //category hasn't been added yet
+                if (index < 0)
+                {
+                    m_categories.Insert(0, value);
+                    return;
+                }
+                //category is secondary
+                m_categories[index] = m_categories[0];
+                m_categories[0] = value;
+            }
+        }
+
+        /**
+         * Gets or sets the list of secondary Categories to
+         * which this Event belongs. The existing primary
+         * Category cannot be added to this list, and must be
+         * changed first.
+         * 
+         * @throws ArgumentException if the primary category
+         * is included in the list of secondary categories
+         * to be set.
+         */
+        [ScriptIgnore]
+        public List<string> SecondaryCategories
+        {
+            get 
+            {
+                //just return Categories without 1st element
+                List<string> copy = new List<string>(Categories);
+                copy.RemoveAt(0);
+                return copy;
+            }
+            set 
+            {
+                if (value.IndexOf(PrimaryCategory) >= 0)
+                {
+                    throw new ArgumentException("Secondary categories cannot include primary category");
+                }
+                //updating Categories list indirectly updates SecondaryCategories
+                List<string> copy = new List<string>(value);
+                copy.Insert(0, PrimaryCategory);
+                Categories = copy;
+            }
+        }
+
+        /**
+         * Gets or sets an AlarmSettings object indicating when
+         * alarms should go off for each Occurrence of this Event.
+         * Note: the alarm settings are the same for every Occurrence,
+         * but they can be changed at any time.
+         */
+        public AlarmSettings Alarms
+        {
+            get { return m_alarms; }
+            set { m_alarms = value; }
+        }
+
+        /**
+         * Gets or sets a description for the Event. This string may
+         * be multi-line.
+         */
+        public string Description
+        {
+            get { return m_desc; }
+            set { m_desc = value; }
+        }
+
+        /**
+         * Gets the id of the Event.
+         * 
+         * The id is written in the form of a string starting
+         * with the letter 'e', followed by a 32-bit unsigned
+         * integer in hexadecimal (all lowercase). This allows
+         * the event to be looked up easily.
+         * 
+         * Currently, the integer portion of the id is
+         * simply equal to the event's number.
+         */
+        public string Id { get { return m_id; } }
+
+        /**
+         * Gets a Dictionary containing all Events by Id.
+         */
+        public static Dictionary<string, Event> All { get { return all; } }
+
+        /**
+         * Gets the number of the occurrence.
+         * 
+         * Note: please use this property sparingly,
+         * as the Id property is better-suited to
+         * keeping track of the object. This property
+         * exists in order to allow proper serialization
+         * of the object.
+         */
+        public uint Number
+        {
+            get { return m_numId; }
+        }
+
+        /**
+         * Specifies if the Event is a task.
+         * 
+         * If false, the Event is an appointment.
+         * This should only be true if the Event is
+         * also a TaskEvent object.
+         */
+        public bool IsTask { get { return m_isTask; } }
+
+        /**
          * Creates a new Event from the specified information.
          * 
          * @param a_isTask specifies if the Event is a task.
@@ -235,38 +430,6 @@ namespace Span
         }
 
         /**
-         * Gets or sets a name or title for the event. 
-         * This string must be single-line.
-         */
-        public string Name 
-        {
-            get { return m_name; }
-            set { m_name = value; }
-        }
-
-        /**
-         * Specifies or sets whether this Event exists. True by
-         * default. If false, the Event is removed from the timeline
-         * and is not saved when the program closes, effectively and
-         * safely deleting it from existence.
-         */
-        public bool Exists
-        {
-            get { return m_exists; }
-            set { m_exists = value; }
-        }
-
-        /**
-         * Gets or sets a list of Occurrences defined
-         * manually. These will occur only once on the timeline.
-         */
-        public List<Occurrence> ManualOccurrences
-        {
-            get { return m_manualOccurrences; }
-            set { m_manualOccurrences = value; }
-        }
-
-        /**
          * Updates the list of all Occurrences based on the list of
          * ManualOccurrences and the list of Rules.
          * 
@@ -324,169 +487,6 @@ namespace Span
         }
 
         /**
-         * Gets or sets the list of all Period objects
-         * that define the periodic Occurrences of this
-         * Event.
-         */
-        public List<Period> Rules
-        {
-            get { return m_allRules; }
-            set 
-            { 
-                m_allRules = value;
-                foreach (Period p in m_allRules)
-                {
-                    p.ForceUpdate();
-                }
-            }
-        }
-
-        /**
-         * Gets or sets a place or location for the event. This
-         * property will be ignored if it is
-         * set to a blank string. This string must be single-line.
-         */
-        public string Location
-        {
-            get { return m_loc; }
-            set { m_loc = value; }
-        }
-
-        /**
-         * Gets or sets a list of ids for Categories to which
-         * this Event belongs. Index 0 is the PrimaryCategory and
-         * the rest are SecondaryCategories.
-         */
-        public List<string> Categories
-        {
-            get { return m_categories; }
-            set { m_categories = value; }
-        }
-
-        /**
-         * Gets or sets the primary Category to which this Event
-         * belongs. If the primary category is set to one that
-         * is already a secondary category, the existing primary
-         * category and the desired one will switch.
-         */
-        [ScriptIgnore]
-        public string PrimaryCategory
-        {
-            get { return Categories[0]; }
-            set 
-            { 
-                int index = Categories.IndexOf(value);
-                //no change required
-                if (index == 0) return;
-                //category hasn't been added yet
-                if (index < 0)
-                {
-                    m_categories.Insert(0, value);
-                    return;
-                }
-                //category is secondary
-                m_categories[index] = m_categories[0];
-                m_categories[0] = value;
-            }
-        }
-
-        /**
-         * Gets or sets the list of secondary Categories to
-         * which this Event belongs. The existing primary
-         * Category cannot be added to this list, and must be
-         * changed first.
-         * 
-         * @throws ArgumentException if the primary category
-         * is included in the list of secondary categories
-         * to be set.
-         */
-        [ScriptIgnore]
-        public List<string> SecondaryCategories
-        {
-            get 
-            {
-                //just return Categories without 1st element
-                List<string> copy = new List<string>(Categories);
-                copy.RemoveAt(0);
-                return copy;
-            }
-            set 
-            {
-                if (value.IndexOf(PrimaryCategory) >= 0)
-                {
-                    throw new ArgumentException("Secondary categories cannot include primary category");
-                }
-                //updating Categories list indirectly updates SecondaryCategories
-                List<string> copy = new List<string>(value);
-                copy.Insert(0, PrimaryCategory);
-                Categories = copy;
-            }
-        }
-
-        /**
-         * Gets or sets an AlarmSettings object indicating when
-         * alarms should go off for each Occurrence of this Event.
-         * Note: the alarm settings are the same for every Occurrence,
-         * but they can be changed at any time.
-         */
-        public AlarmSettings Alarms
-        {
-            get { return m_alarms; }
-            set { m_alarms = value; }
-        }
-
-        /**
-         * Gets or sets a description for the Event. This string may
-         * be multi-line.
-         */
-        public string Description
-        {
-            get { return m_desc; }
-            set { m_desc = value; }
-        }
-
-        /**
-         * Gets the id of the Event.
-         * 
-         * The id is written in the form of a string starting
-         * with the letter 'e', followed by a 32-bit unsigned
-         * integer in hexadecimal (all lowercase). This allows
-         * the event to be looked up easily.
-         * 
-         * Currently, the integer portion of the id is
-         * simply equal to the event's number.
-         */
-        public string Id { get { return m_id; } }
-
-        /**
-         * Gets a Dictionary containing all Events by Id.
-         */
-        public static Dictionary<string, Event> All { get { return all; } }
-
-        /**
-         * Gets the number of the occurrence.
-         * 
-         * Note: please use this property sparingly,
-         * as the Id property is better-suited to
-         * keeping track of the object. This property
-         * exists in order to allow proper serialization
-         * of the object.
-         */
-        public uint Number
-        {
-            get { return m_numId; }
-        }
-
-        /**
-         * Specifies if the Event is a task.
-         * 
-         * If false, the Event is an appointment.
-         * This should only be true if the Event is
-         * also a TaskEvent object.
-         */
-        public bool IsTask { get { return m_isTask; } }
-
-        /**
          * The list of all Occurrences. See also Occurrences().
          */
         protected List<Occurrence> m_allOccurrences;
@@ -542,6 +542,5 @@ namespace Span
          * Contains all Event objects as values, with their Id strings as keys. See also All.
          */
         protected static Dictionary<string, Event> all = new Dictionary<string, Event>();
-
     }
 }

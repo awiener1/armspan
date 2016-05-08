@@ -22,6 +22,24 @@ namespace Span.GUI
 {
     public partial class FormConflictTwo : ThinDialog
     {
+        /**
+         * The old Occurrence.
+         */
+        public Occurrence OldOccurrence
+        {
+            get { return m_oldOcc; }
+            set { m_oldOcc = value; }
+        }
+
+        /**
+         * The new Occurrence.
+         */
+        public Occurrence NewOccurrence
+        {
+            get { return m_newOcc; }
+            set { m_newOcc = value; }
+        }
+
         public FormConflictTwo()
         {
             InitializeComponent();
@@ -223,24 +241,6 @@ namespace Span.GUI
             popup.Single = OldOccurrence;
             popup.ShowDialog();
             this.Close();
-        }
-
-        /**
-         * The old Occurrence.
-         */
-        public Occurrence OldOccurrence
-        {
-            get { return m_oldOcc; }
-            set { m_oldOcc = value; }
-        }
-
-        /**
-         * The new Occurrence.
-         */
-        public Occurrence NewOccurrence
-        {
-            get { return m_newOcc; }
-            set { m_newOcc = value; }
         }
 
         /**

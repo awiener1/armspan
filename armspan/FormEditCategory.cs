@@ -21,6 +21,36 @@ namespace Span.GUI
 {
     public partial class FormEditCategory : ThinDialog
     {
+        /**
+         * The name of the Category.
+         * 
+         * Not to be confused with the name property
+         * of the form itself.
+         */
+        public string NameCategory
+        {
+            get { return m_name; }
+            set { m_name = value; }
+        }
+
+        /**
+         * The Color of the Category.
+         */
+        public Color Color
+        {
+            get { return m_color; }
+            set { m_color = value; }
+        }
+
+        /**
+         * The Number of the Category.
+         */
+        public uint Number
+        {
+            get { return m_num; }
+            set { m_num = value; }
+        }
+
         public FormEditCategory()
         {
             InitializeComponent();
@@ -62,34 +92,13 @@ namespace Span.GUI
             this.Close();
         }
 
-        /**
-         * The name of the Category.
-         * 
-         * Not to be confused with the name property
-         * of the form itself.
-         */
-        public string NameCategory
+        private void btnColor_Click(object sender, EventArgs e)
         {
-            get { return m_name; }
-            set { m_name = value; }
-        }
-
-        /**
-         * The Color of the Category.
-         */
-        public Color Color
-        {
-            get { return m_color; }
-            set { m_color = value; }
-        }
-
-        /**
-         * The Number of the Category.
-         */
-        public uint Number
-        {
-            get { return m_num; }
-            set { m_num = value; }
+            if (cdColor.ShowDialog() == DialogResult.OK)
+            {
+                Color = cdColor.Color;
+                pnlColor.BackColor = Color;
+            }
         }
 
         /**
@@ -104,14 +113,5 @@ namespace Span.GUI
          * The number of the Category. See also Number.
          */
         private uint m_num;
-
-        private void btnColor_Click(object sender, EventArgs e)
-        {
-            if (cdColor.ShowDialog() == DialogResult.OK)
-            {
-                Color = cdColor.Color;
-                pnlColor.BackColor = Color;
-            }
-        }
     }
 }

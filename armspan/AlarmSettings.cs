@@ -16,64 +16,60 @@ using System.Collections.ObjectModel;
 
 namespace Span
 {
-    /**
-     * Specifies if the alarm is set to go off before, during,
-     * or after the occurrence.
-     */
-    public enum When
-    {
-        /**
-         * The alarm will go off before the beginning
-         * of the occurrence by the specified amount
-         * of time.
-         */
-        Before,
-        /**
-         * The alarm will go off after the beginning
-         * of the occurrence by the specified amount
-         * of time, assuming the occurrence has not
-         * yet ended.
-         */
-        During,
-        /**
-         * The alarm will go off after the end
-         * of the occurrence by the specified amount
-         * of time.
-         */
-        After   
-    };
 
-    /**
-     * Denotes the unit of time in which to specify the
-     * time when the alarm will go off.
-     */
-    public enum Length
-    {
-        /**
-         * The alarm will go off in the specified
-         * number of minutes.
-         */
-        Minutes, 
-        /**
-         * The alarm will go off in the specified
-         * number of hours.
-         */
-        Hours,   
-        /**
-         * The alarm will go off in the specified
-         * number of days.
-         */
-        Days,    
-        /**
-         * The alarm will go off in the specified
-         * number of weeks.
-         */
-        Weeks    
-    };
 
     public class AlarmSettings : JSONCapable
     {
-        
+        /**
+         * Gets or sets the list of alarm settings to use.
+         */
+        public List<Alarm> Alarms
+        {
+            get { return m_alarms; }
+            set { m_alarms = value; }
+        }
+
+        /**
+         * Gets or sets the id of the parent Occurrence to which
+         * the alarm settings currently apply.
+         * 
+         * Note: this is the parent Occurrence, not the parent
+         * Event.
+         */
+        public string ParentId { 
+            get { return m_parent; }
+            set { m_parent = value; }
+        }
+
+        /**
+         * Gets or sets the time, in universal time,
+         * when the Occurrence specified in ParentId
+         * is set to start. 
+         * 
+         * This value is only used
+         * during serialization and deserialization.
+         */
+        public DateTime NextAlarmTimeToSave
+        {
+            get { return m_serializedNext; }
+            set { m_serializedNext = value; }
+        }
+
+        /**
+         * Gets or sets the id of the Event
+         * to which these alarm settings apply.
+         * 
+         * This value is only used during
+         * serialization and deserialization. If
+         * it is set to an empty string, the
+         * NextAlarmTimeToSave property should be
+         * ignored.
+         */
+        public string HasNextAlarm
+        {
+            get { return m_hasSavedTime; }
+            set { m_hasSavedTime = value; }
+        }
 
         /**
          * Creates an AlarmSettings object from a parent Occurrence
@@ -226,17 +222,6 @@ namespace Span
             }
             m_alarmTimes.Sort();
         }
-        
-
-
-        /**
-         * Gets or sets the list of alarm settings to use.
-         */
-        public List<Alarm> Alarms
-        {
-            get { return m_alarms; }
-            set { m_alarms = value; }
-        }
 
         /**
          * Gets the absolute time that the specified Alarm will occur.
@@ -302,48 +287,6 @@ namespace Span
         }
 
         /**
-         * Gets or sets the id of the parent Occurrence to which
-         * the alarm settings currently apply.
-         * 
-         * Note: this is the parent Occurrence, not the parent
-         * Event.
-         */
-        public string ParentId { 
-            get { return m_parent; }
-            set { m_parent = value; }
-        }
-
-        /**
-         * Gets or sets the time, in universal time,
-         * when the Occurrence specified in ParentId
-         * is set to start. 
-         * 
-         * This value is only used
-         * during serialization and deserialization.
-         */
-        public DateTime NextAlarmTimeToSave
-        {
-            get { return m_serializedNext; }
-            set { m_serializedNext = value; }
-        }
-
-        /**
-         * Gets or sets the id of the Event
-         * to which these alarm settings apply.
-         * 
-         * This value is only used during
-         * serialization and deserialization. If
-         * it is set to an empty string, the
-         * NextAlarmTimeToSave property should be
-         * ignored.
-         */
-        public string HasNextAlarm
-        {
-            get { return m_hasSavedTime; }
-            set { m_hasSavedTime = value; }
-        }
-
-        /**
          * The list of Alarm structs. See also Alarms.
          */
         private List<Alarm> m_alarms;
@@ -382,6 +325,31 @@ namespace Span
     public struct Alarm
     {
         /**
+         * Creates an Alarm at the specified relative time.
+         * 
+         * @param a_relativePlace specifies if the alarm should 
+         * go off before, during, or after the Occurrence.
+         * 
+         * @param a_timeLength specifies the quantity of time 
+         * units before/during/after the Occurrence when the 
+         * alarm goes off.
+         * 
+         * @param a_timeUnit specifies the time unit to use.
+         * 
+         * @param a_dealtWith denotes if the alarm has gone
+         * off yet. False by default.
+         * 
+         * @date March 9, 2016
+         */
+        public Alarm(When a_relativePlace, uint a_timeLength, Length a_timeUnit, bool a_dealtWith = false)
+        {
+            m_relativePlace = a_relativePlace;
+            m_timeLength = a_timeLength;
+            m_timeUnit = a_timeUnit;
+            m_dealtWith = a_dealtWith;
+        }
+    
+        /**
          * Specifies if the alarm should go off before, during, or
          * after the Occurrence.
          */
@@ -417,30 +385,60 @@ namespace Span
          * later.
          */
         public bool m_dealtWith;
-
-        /**
-         * Creates an Alarm at the specified relative time.
-         * 
-         * @param a_relativePlace specifies if the alarm should 
-         * go off before, during, or after the Occurrence.
-         * 
-         * @param a_timeLength specifies the quantity of time 
-         * units before/during/after the Occurrence when the 
-         * alarm goes off.
-         * 
-         * @param a_timeUnit specifies the time unit to use.
-         * 
-         * @param a_dealtWith denotes if the alarm has gone
-         * off yet. False by default.
-         * 
-         * @date March 9, 2016
-         */
-        public Alarm(When a_relativePlace, uint a_timeLength, Length a_timeUnit, bool a_dealtWith = false)
-        {
-            m_relativePlace = a_relativePlace;
-            m_timeLength = a_timeLength;
-            m_timeUnit = a_timeUnit;
-            m_dealtWith = a_dealtWith;
-        }
     }
+
+    /**
+     * Specifies if the alarm is set to go off before, during,
+     * or after the occurrence.
+     */
+    public enum When
+    {
+        /**
+         * The alarm will go off before the beginning
+         * of the occurrence by the specified amount
+         * of time.
+         */
+        Before,
+        /**
+         * The alarm will go off after the beginning
+         * of the occurrence by the specified amount
+         * of time, assuming the occurrence has not
+         * yet ended.
+         */
+        During,
+        /**
+         * The alarm will go off after the end
+         * of the occurrence by the specified amount
+         * of time.
+         */
+        After   
+    };
+
+    /**
+     * Denotes the unit of time in which to specify the
+     * time when the alarm will go off.
+     */
+    public enum Length
+    {
+        /**
+         * The alarm will go off in the specified
+         * number of minutes.
+         */
+        Minutes, 
+        /**
+         * The alarm will go off in the specified
+         * number of hours.
+         */
+        Hours,   
+        /**
+         * The alarm will go off in the specified
+         * number of days.
+         */
+        Days,    
+        /**
+         * The alarm will go off in the specified
+         * number of weeks.
+         */
+        Weeks    
+    };
 }

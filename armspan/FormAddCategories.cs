@@ -19,11 +19,30 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-
 namespace Span.GUI
 {
     public partial class FormAddCategories : ThinDialog
     {
+        /**
+         * The list of checked indices in the Category list.
+         */
+        public List<int> Checked
+        {
+            get { return m_checked; }
+            set { m_checked = value; }
+        }
+
+        /**
+         * The index of the disabled Category, which will
+         * appear greyed out and will not be clickable.
+         * If there is no disabled Category, use -1.
+         */
+        public int Disabled 
+        {
+            get { return m_disabled; }
+            set { m_disabled = value; }
+        }
+
         public FormAddCategories()
         {
             InitializeComponent();
@@ -48,11 +67,6 @@ namespace Span.GUI
             btnSelectAll.Enabled = !a_canEdit;
             btnSelectNone.Enabled = !a_canEdit;
             m_canEdit = a_canEdit;
-        }
-
-        private void FormAddCategories_Load(object sender, EventArgs e)
-        {
-            RefreshCategories();
         }
 
         /**
@@ -96,6 +110,11 @@ namespace Span.GUI
             }
         }
 
+        private void FormAddCategories_Load(object sender, EventArgs e)
+        {
+            RefreshCategories();
+        }
+
         /**
          * Allows the user to add a new Category.
          * 
@@ -108,15 +127,6 @@ namespace Span.GUI
             popup.Number = (uint)Category.All.Count() + 1;
             popup.ShowDialog();
             RefreshCategories();
-        }
-
-        /**
-         * The list of checked indices in the Category list.
-         */
-        public List<int> Checked
-        {
-            get { return m_checked; }
-            set { m_checked = value; }
         }
 
         /**
@@ -149,30 +159,6 @@ namespace Span.GUI
                 }
             }
             this.Close();
-        }
-
-        /**
-         * The list of checked indices in the Category list. See also Checked.
-         */
-        private List<int> m_checked;
-        /**
-         * The index of the disabled Category. See also Disabled.
-         */
-        private int m_disabled = -1;
-        /**
-         * Denotes if the user can add and edit categories.
-         */
-        private bool m_canEdit;
-
-        /**
-         * The index of the disabled Category, which will
-         * appear greyed out and will not be clickable.
-         * If there is no disabled Category, use -1.
-         */
-        public int Disabled 
-        {
-            get { return m_disabled; }
-            set { m_disabled = value; }
         }
 
         private void lvCategories_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
@@ -237,5 +223,18 @@ namespace Span.GUI
             popup.ShowDialog();
             RefreshCategories();
         }
+
+        /**
+         * The list of checked indices in the Category list. See also Checked.
+         */
+        private List<int> m_checked;
+        /**
+         * The index of the disabled Category. See also Disabled.
+         */
+        private int m_disabled = -1;
+        /**
+         * Denotes if the user can add and edit categories.
+         */
+        private bool m_canEdit;
     }
 }

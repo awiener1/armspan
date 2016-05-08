@@ -20,6 +20,16 @@ namespace Span
 {
     class TaskEvent : Event
     {
+        /**
+         * Gets or sets the minimum number of times the task may
+         * occur during each Occurrence. Must be greater than or equal
+         * to 1.
+         */
+        public uint Times
+        {
+            get { return m_times; }
+            set { m_times = Math.Max(value, 1); }
+        }
 
         /**
          * Creates a new TaskEvent from the specified information.
@@ -64,22 +74,8 @@ namespace Span
         }
 
         /**
-         * Gets or sets the minimum number of times the task may
-         * occur during each Occurrence. Must be greater than or equal
-         * to 1.
-         */
-        public uint Times
-        {
-            get { return m_times; }
-            set { m_times = Math.Max(value, 1); }
-        }
-
-        /**
          * The minimum number of times the task may occur. See also Occurrence.
          */
         private uint m_times;
-
-
-
     }
 }

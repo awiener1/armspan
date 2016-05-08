@@ -19,41 +19,6 @@ namespace Span
     class Category : JSONCapable
     {
         /**
-         * Creates a new Category from the specified name and color.
-         * The category is assigned an Id number so that it can be
-         * referenced regardless of name.
-         * 
-         * @param a_name the name of the category.
-         * 
-         * @param a_color the color of the category, as a Color
-         * struct. If an event sets this Category as its primary
-         * category, then the event will appear in this color.
-         * 
-         * @date March 4, 2016
-         */
-        public Category(string a_name, Color a_color)
-        {
-            Name = a_name;
-            Color = a_color;
-            m_num = num++;
-
-            //change this to implement a better hashing function
-            m_id = "c" + m_num.ToString("x8");
-            All.Add(m_id, this);
-        }
-
-        /**
-         * Creates a new Category object without
-         * any initialized data.
-         * 
-         * Please only use this constructor for
-         * deserialization.
-         * 
-         * @date March 26, 2016
-         */
-        protected Category(){}
-
-        /**
          * Gets or sets the name of the Category.
          * 
          * This can be changed at any time.
@@ -128,6 +93,43 @@ namespace Span
             }
         }
 
+        /**
+         * Gets a Dictionary containing all Categories by Id.
+         */
+        public static Dictionary<string, Category> All { get { return all; } }
+
+        /**
+         * Creates a new Category from the specified name and color.
+         * The category is assigned an Id number so that it can be
+         * referenced regardless of name.
+         * 
+         * @param a_name the name of the category.
+         * 
+         * @param a_color the color of the category, as a Color
+         * struct. If an event sets this Category as its primary
+         * category, then the event will appear in this color.
+         * 
+         * @date March 4, 2016
+         */
+        public Category(string a_name, Color a_color)
+        {
+            Name = a_name;
+            Color = a_color;
+            m_num = num++;
+            m_id = "c" + m_num.ToString("x8");
+            All.Add(m_id, this);
+        }
+
+        /**
+         * Creates a new Category object without
+         * any initialized data.
+         * 
+         * Please only use this constructor for
+         * deserialization.
+         * 
+         * @date March 26, 2016
+         */
+        protected Category(){}
 
         /**
          * Generates a Category object from the
@@ -144,14 +146,14 @@ namespace Span
          */
         public static Category FromJSON(string json)
         {
-            //
+            //json to object types
             Dictionary<string, object> jsd = JSONDictionary(Category.FromString(json));
             Dictionary<string, object> rawcolor = jss.ConvertToType<Dictionary<string, object>>(jsd["Color"]);
             Color c = Color.FromArgb((int)rawcolor["R"], (int)rawcolor["G"], (int)rawcolor["B"]);
-            
             string name = (string)jsd["Name"];
             string id = (string)jsd["Id"];
             uint numId = (uint)(int)jsd["Number"];
+            //loose objects to Category
             Category loaded = new Category();
             loaded.Color = c;
             loaded.Name = name;
@@ -164,11 +166,6 @@ namespace Span
             All.Add(id, loaded);
             return loaded;
         }
-
-        /**
-         * Gets a Dictionary containing all Categories by Id.
-         */
-        public static Dictionary<string, Category> All { get { return all; } }
 
         /**
          * Gets a list of all Events that are marked under this Category.
@@ -188,7 +185,6 @@ namespace Span
          * The color of the Category. See also Color.
          */
         private Color m_color;
-
         /**
          * The number of the Category. See also Number.
          */

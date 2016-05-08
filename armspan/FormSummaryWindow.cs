@@ -22,43 +22,6 @@ namespace Span.GUI
 {
     public partial class FormSummaryWindow : ThinDialog
     {
-        public FormSummaryWindow()
-        {
-            InitializeComponent();
-        }
-
-        private void FormSummaryWindow_Load(object sender, EventArgs e)
-        {
-            if (m_dateChanged)
-            {
-                dtpFrom.Value = m_begin;
-                dtpTo.Value = m_end;
-            }
-            UpdateSummary();
-        }
-
-        private void btnOK_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        /**
-        * The start of the summarized time. See also Begin.
-        */
-        private static DateTime m_begin;
-        /**
-        * The end of the summarized time. See also End.
-        */
-        private static DateTime m_end;
-        /**
-         * Specifies if Begin and End have been changed from the default.
-         */
-        private static bool m_dateChanged = false;
-        /**
-         * The list of ids of the Categories to use. See also Categories.
-         */
-        private List<string> m_catsToUse;
-
         /**
          * The list of ids of the Categories to use.
          */
@@ -68,14 +31,9 @@ namespace Span.GUI
             set { m_catsToUse = value; }
         }
 
-        private void dtpFrom_ValueChanged(object sender, EventArgs e)
+        public FormSummaryWindow()
         {
-            UpdateSummary();
-        }
-
-        private void dtpTo_ValueChanged(object sender, EventArgs e)
-        {
-            UpdateSummary();
+            InitializeComponent();
         }
 
         /**
@@ -120,5 +78,47 @@ namespace Span.GUI
                 tbSummary.AppendText("-Started Late: " + occLate + " (" + (int)(occLate * 100 / occCount) + "%)" + nl + nl);
             }
         }
+
+        private void FormSummaryWindow_Load(object sender, EventArgs e)
+        {
+            if (m_dateChanged)
+            {
+                dtpFrom.Value = m_begin;
+                dtpTo.Value = m_end;
+            }
+            UpdateSummary();
+        }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void dtpFrom_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateSummary();
+        }
+
+        private void dtpTo_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateSummary();
+        }
+
+        /**
+        * The start of the summarized time. See also Begin.
+        */
+        private static DateTime m_begin;
+        /**
+        * The end of the summarized time. See also End.
+        */
+        private static DateTime m_end;
+        /**
+         * Specifies if Begin and End have been changed from the default.
+         */
+        private static bool m_dateChanged = false;
+        /**
+         * The list of ids of the Categories to use. See also Categories.
+         */
+        private List<string> m_catsToUse;
     }
 }

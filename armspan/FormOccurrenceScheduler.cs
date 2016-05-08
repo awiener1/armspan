@@ -22,16 +22,6 @@ namespace Span.GUI
 {
     public partial class FormOccurrenceScheduler : ThinDialog
     {
-        public FormOccurrenceScheduler()
-        {
-            InitializeComponent();
-        }
-
-        /**
-         * The Occurrence to edit. See also Single.
-         */
-        private Occurrence m_single;
-
         /**
          * The Occurrence to edit.
          * 
@@ -41,6 +31,11 @@ namespace Span.GUI
         {
             get { return m_single; }
             set { m_single = value; }
+        }
+        
+        public FormOccurrenceScheduler()
+        {
+            InitializeComponent();
         }
 
         /**
@@ -79,5 +74,10 @@ namespace Span.GUI
         {
             this.Close();
         }
+
+        /**
+         * The Occurrence to edit. See also Single.
+         */
+        private Occurrence m_single;
     }
 }

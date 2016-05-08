@@ -9,7 +9,6 @@
  * all current alarms, based on the current time.
  * 
  */
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,54 +19,6 @@ namespace Span
 {
     static class TimeKeeper
     {
-
-        /**
-         * Updates the current time, list of occurrences within
-         * 48 hours, list of occurrences currently happening,
-         * and pending alarms.
-         * 
-         * @date March 28, 2016
-         */
-        public static void Update()
-        {
-            //update current time and 48-hour radius
-            DateTime temp = Now;
-            if (ViewingNow)
-            {
-                m_begin = m_now.AddDays(-1.0);
-                m_end = m_now.AddDays(1.0);
-            }
-            //get all occurrences in date range
-            IEnumerable<KeyValuePair<string, Occurrence>> partial = Occurrence.All.Where
-                (x => x.Value.StartActual >= m_begin.ToLocalTime() && x.Value.StartActual <= m_end.ToLocalTime() ||
-                x.Value.EndActual >= m_begin.ToLocalTime() && x.Value.EndActual <= m_end.ToLocalTime());
-            m_inDate = partial.ToDictionary(x => x.Key, x => x.Value).Keys.ToList();
-            //get all occurrences
-            m_occurrences = Occurrence.All.Keys.ToList();
-            //get all alarms for the occurrences
-            m_alarms = new Dictionary<DateTime, Occurrence>();
-            foreach (string occurrence in m_occurrences)
-            {
-                Occurrence val = Occurrence.All[occurrence];
-                Event e = val.Parent();
-                //include NextAlarmTimeToSave alarms or the parent id won't be set properly
-                if (e.Alarms.ParentId == occurrence || (e.Alarms.HasNextAlarm.Length > 0 && e.Alarms.NextAlarmTimeToSave.ToLocalTime().Equals(val.StartActual)))
-                {
-                    foreach (DateTime alarmtime in val.AlarmTimes())
-                    {
-                        m_alarms[alarmtime] = val;
-                    }
-                }
-            }
-            //get all occurrences happening now, but not the canceled/deleted/excluded ones
-            OccurrenceStatus[] noInclude = { OccurrenceStatus.Canceled, OccurrenceStatus.Deleted, OccurrenceStatus.Excluded };
-            partial = Occurrence.All.Where
-                (x => x.Value.StartActual <= m_now.ToLocalTime() && x.Value.EndActual > m_now.ToLocalTime());
-            Dictionary<string, Occurrence> tempp = partial.ToDictionary(x => x.Key, x => x.Value);
-            m_current = partial.Select(x => x.Key).ToList();
-            m_current.RemoveAll(x => noInclude.Contains(Occurrence.All[x].Status) || !Occurrence.All[x].Parent().Exists);
-        }
-
         /**
          * Gets the current time, rounded to minutes, and in
          * UTC time.
@@ -133,7 +84,6 @@ namespace Span
             {
                 m_zoomFactor = Math.Min(60, Math.Max(1, value));
             }
-
         }
 
         /**
@@ -146,6 +96,53 @@ namespace Span
         {
             get { return m_viewingNow; }
             set { m_viewingNow = value; }
+        }
+
+        /**
+         * Updates the current time, list of occurrences within
+         * 48 hours, list of occurrences currently happening,
+         * and pending alarms.
+         * 
+         * @date March 28, 2016
+         */
+        public static void Update()
+        {
+            //update current time and 48-hour radius
+            DateTime temp = Now;
+            if (ViewingNow)
+            {
+                m_begin = m_now.AddDays(-1.0);
+                m_end = m_now.AddDays(1.0);
+            }
+            //get all occurrences in date range
+            IEnumerable<KeyValuePair<string, Occurrence>> partial = Occurrence.All.Where
+                (x => x.Value.StartActual >= m_begin.ToLocalTime() && x.Value.StartActual <= m_end.ToLocalTime() ||
+                x.Value.EndActual >= m_begin.ToLocalTime() && x.Value.EndActual <= m_end.ToLocalTime());
+            m_inDate = partial.ToDictionary(x => x.Key, x => x.Value).Keys.ToList();
+            //get all occurrences
+            m_occurrences = Occurrence.All.Keys.ToList();
+            //get all alarms for the occurrences
+            m_alarms = new Dictionary<DateTime, Occurrence>();
+            foreach (string occurrence in m_occurrences)
+            {
+                Occurrence val = Occurrence.All[occurrence];
+                Event e = val.Parent();
+                //include NextAlarmTimeToSave alarms or the parent id won't be set properly
+                if (e.Alarms.ParentId == occurrence || (e.Alarms.HasNextAlarm.Length > 0 && e.Alarms.NextAlarmTimeToSave.ToLocalTime().Equals(val.StartActual)))
+                {
+                    foreach (DateTime alarmtime in val.AlarmTimes())
+                    {
+                        m_alarms[alarmtime] = val;
+                    }
+                }
+            }
+            //get all occurrences happening now, but not the canceled/deleted/excluded ones
+            OccurrenceStatus[] noInclude = { OccurrenceStatus.Canceled, OccurrenceStatus.Deleted, OccurrenceStatus.Excluded };
+            partial = Occurrence.All.Where
+                (x => x.Value.StartActual <= m_now.ToLocalTime() && x.Value.EndActual > m_now.ToLocalTime());
+            Dictionary<string, Occurrence> tempp = partial.ToDictionary(x => x.Key, x => x.Value);
+            m_current = partial.Select(x => x.Key).ToList();
+            m_current.RemoveAll(x => noInclude.Contains(Occurrence.All[x].Status) || !Occurrence.All[x].Parent().Exists);
         }
 
         /**
@@ -184,8 +181,5 @@ namespace Span
          * Denotes if the displayed time centers on Now. See also ViewingNow.
          */
         private static bool m_viewingNow = true;
-    }
-
-
-    
+    }  
 }
