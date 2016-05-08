@@ -163,7 +163,7 @@ namespace Span.GUI
             popup.Checked = incats;
             popup.Disabled = (int)Category.All[m_primarycat].Number - 1;
             popup.ShowDialog();
-            MessageBox.Show("end");
+            
             
             m_secondcats.Clear();
             foreach (int index in popup.Checked)

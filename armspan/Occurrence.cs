@@ -66,7 +66,7 @@ namespace Span
          * event will have the status of Deleted before the
          * program closes to prevent any possible errors
          * caused by actually removing the data. Instead,
-         * deleted events will not be serialized to the
+         * deleted events will not be deserialized from the
          * save file.
          */
         Deleted,
@@ -149,6 +149,7 @@ namespace Span
          */
         public static Occurrence FromJSON(string json)
         {
+            //json to object types
             Dictionary<string, object> jsd = JSONDictionary(Occurrence.FromString(json));
             OccurrenceStatus status = (OccurrenceStatus)jsd["Status"];
             if (status == OccurrenceStatus.Deleted) return null; //no deleted objects
@@ -161,6 +162,7 @@ namespace Span
             string parentid = (string)jsd["ParentId"];
             string chainid = (string)jsd["ChainId"];
             uint thisnum = (uint)(int)jsd["Number"];
+            //loose objects to Occurrence
             Occurrence loaded = new Occurrence();
             loaded.m_id = id;
             loaded.m_isTask = istask;
@@ -184,8 +186,6 @@ namespace Span
             All.Add(id, loaded);
             return loaded;
         }
-
-
 
         /**
          * Determines if this Occurrence overlaps with another.
@@ -370,6 +370,7 @@ namespace Span
             DateTime now = DateTime.Now;
             now = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0);
             if (StartActual > now) throw new ArgumentOutOfRangeException("Occurrence hasn't started yet");
+            //can't have occurrence with length 0
             if (StartActual == now)
             {
                 StartActual = StartActual.AddMinutes(-1);
@@ -401,17 +402,13 @@ namespace Span
                 {
                     DeChain();
                 }
+                //find index of first (as in queue) alarm entry based on its time, and set it as done.
                 OccurrenceStatus[] noInclude = {OccurrenceStatus.Canceled, OccurrenceStatus.Deleted, OccurrenceStatus.Excluded, OccurrenceStatus.Ignored};
                 DateTime firstTime = Parent().Alarms.AlarmTimes()[0];
                 int alarmIndex = alarmtemp.FindIndex(x => Parent().Alarms.SingleAlarmTime(x) == firstTime);
                 alarmtemp[alarmIndex] = new Alarm(alarmtemp[alarmIndex].m_relativePlace, alarmtemp[alarmIndex].m_timeLength, alarmtemp[alarmIndex].m_timeUnit, true);
-                //GET THE LIST OF ALARM TIMES. TAKE THE FIRST ENTRY.
-                //LOOP THROUGH ALL OF alarmtemp AND FIND THE ALARM STRUCT
-                //WITH THE SAME DATETIME AS THAT FIRST ENTRY.
-                //IF THE LIST OF ALARM TIMES IS EMPTY, THEN YOU MOVE ON.
-                //preceding message has already been coded
-                
-                
+                //now AlarmTimes will not include it anymore, so the next one is first.
+                //but if that was the last one in the occurrence, there are no more alarm times.
                 if (Parent().Alarms.AlarmTimes().Count == 0)
                 {
                     //move to next occurrence
@@ -499,6 +496,9 @@ namespace Span
             Event.All[ParentId].Rules.Find(x => x.Id == ChainId).DeChain(this);
         }
 
+        /**
+         * Gets a written, intelligible description of the Occurrence as a string.
+         */
         [ScriptIgnore]
         public string Describe
         {
@@ -528,20 +528,10 @@ namespace Span
          * 
          * @date March 17, 2016
          */
-        //TODO: make this work when the alarm has been dealtWith.
-        //that means giving each occurrence a permanent alarm.
-        ////SIDE NOTE: No, it doesn't.
-        ////once an alarm has gone off, it is dealt with. But once 
-        ////all alarms have been dealt with, set them all to false 
-        ////again and deal with the next set.
-        //maybe also, if there are multiple alarms going off from
-        //this Occurrence, only display the last one.
         public ReadOnlyCollection<DateTime> AlarmTimes()
         {
-            
             AlarmSettings tempSettings = new AlarmSettings(Parent().Alarms, Id);
             return tempSettings.AlarmTimes();
-            
         }
 
         /**
@@ -553,29 +543,57 @@ namespace Span
          * exists in order to allow proper serialization
          * of the object.
          */
-        public uint Number
-        {
-            get { return m_numId; }
-        }
+        public uint Number { get { return m_numId; } }
 
-        public static bool DebugMode
-        {
-            get
-            {
-                return m_debug;
-            }
-        }
+        /**
+         * Denotes if the program should be run in debug mode.
+         * 
+         * This bool is found in the Occurrence class because it
+         * would be present whether the GUI was implemented or not.
+         * However, it is presently only used in the GUI.
+         */
+        public static bool DebugMode { get { return m_debug; } }
 
+        /**
+         * This counter is used to give each new Occurrence a distinct Number.
+         */
         private static uint num = 1;
+        /**
+         * The number of the Occurrence. See also Number.
+         */
         private uint m_numId;
+        /**
+         * The id of the Occurrence. See also Id.
+         */
         private string m_id;
+        /**
+         * Denotes if the Occurrence is a TaskOccurrence. See also IsTask.
+         */
         private bool m_isTask;
+        /**
+         * The actual and intended start and end times of the Occurrence. See also StartActual, EndActual, StartIntended, and EndIntended.
+         */
         protected DateTime m_actualStart, m_actualEnd, m_createStart, m_createEnd;
+        /**
+         * The status of the Occurrence. See also Status.
+         */
         protected OccurrenceStatus m_status;
+        /**
+         * The id of the parent Event of this Occurrence. See also ParentId.
+         */
         private string m_parent;
+        /**
+         * The id of the parent Period of this Occurrence, if it is chained. See also ChainId.
+         */
         protected string m_chainId = null;
+        /**
+         * Contains all Occurrence objects as values, with their Id strings as keys. See also All.
+         */
         protected static Dictionary<string, Occurrence> all = new Dictionary<string, Occurrence>();
 
+        /**
+         * Denotes if the program should be run in debug mode. See also DebugMode.
+         */
         private const bool m_debug = false;
 
         

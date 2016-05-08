@@ -144,6 +144,7 @@ namespace Span
          */
         public static Category FromJSON(string json)
         {
+            //
             Dictionary<string, object> jsd = JSONDictionary(Category.FromString(json));
             Dictionary<string, object> rawcolor = jss.ConvertToType<Dictionary<string, object>>(jsd["Color"]);
             Color c = Color.FromArgb((int)rawcolor["R"], (int)rawcolor["G"], (int)rawcolor["B"]);
@@ -205,7 +206,7 @@ namespace Span
          */
         private static uint num = 1;
         /**
-         * Contains all Category objects as values, with their Id strings as keys.
+         * Contains all Category objects as values, with their Id strings as keys. See also All.
          */
         private static Dictionary<string, Category> all = new Dictionary<string, Category>();
     }

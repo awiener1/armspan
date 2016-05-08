@@ -95,9 +95,7 @@ namespace Span
             m_id = "p" + m_numId.ToString("x8");
             PeriodicFrequency = a_frequency;
             TimeUnit = a_timeUnit;
-           
             StartTime = a_startTime;
-           
             EndTime = a_endTime;
             OccurrenceLength = a_length;
             m_parent = a_parent;
@@ -131,6 +129,7 @@ namespace Span
          */
         public static Period FromJSON(string json)
         {
+            //json to object types
             Dictionary<string, object> jsd = JSONDictionary(Period.FromString(json));
             uint freq = (uint)(int)jsd["PeriodicFrequency"];
             uint thisnum = (uint)(int)jsd["Number"];
@@ -140,6 +139,8 @@ namespace Span
             DateTime starttime = ((DateTime)jsd["StartTime"]).ToLocalTime();
             DateTime endtime = ((DateTime)jsd["EndTime"]).ToLocalTime();
             string parentid = (string)jsd["ParentId"];
+            //length can be imported as int or long. Object must be
+            //unboxed as its own type before being cast.
             object olength = JSONDictionary(jsd["OccurrenceLength"])["Ticks"];
             long llength = 1;
             if (olength is long){
@@ -154,19 +155,16 @@ namespace Span
                 throw new ArgumentException("type of " + olength.GetType().ToString());
             }
             TimeSpan length = new TimeSpan(llength);
-           
+            //loose objects to Period
             Period loaded = new Period();
-            
             loaded.m_id = id;
             loaded.m_frequency = freq;
             loaded.m_timeUnit = timeunit;
             loaded.m_exclude = exclude;
             loaded.m_startTime = starttime;
-            
             loaded.m_endTime = endtime;
             loaded.m_length = length;
             loaded.m_parent = parentid;
-           
             loaded.m_numId = thisnum;
             if (thisnum >= num)
             {
@@ -183,7 +181,7 @@ namespace Span
          * 
          * @date March 10, 2016
          */
-        private void updateOccurrences()
+        private void UpdateOccurrences()
         {
             if (!m_needUpdate) return;
             //delete all chained occurrences. non-chained ones will remain elsewhere.
@@ -211,7 +209,7 @@ namespace Span
                 excludeRules = Event.All[ParentId].Rules.Where(x => x.Excluded);
                 excludes = excludeRules.SelectMany(x => x.Occurrences());
             }
-            
+            //populate with occurrences
             while (eachStartTime < finalEndTime)
             {
                 DateTime eachEndTime = eachStartTime.Add(OccurrenceLength);
@@ -246,6 +244,7 @@ namespace Span
                         break;
                     }
                 }
+                //create occurrence if no overlap
                 if (canCreate)
                 {
                     Occurrence newOcc = new Occurrence(false, eachStartTime, eachStartTime.Add(OccurrenceLength), m_parent);
@@ -283,7 +282,14 @@ namespace Span
             m_needUpdate = false;
         }
 
-        //TODO: document
+        /**
+         * Removes this Period from the schedule completely.
+         * 
+         * Removes the Period object as well as all chained
+         * Occurrences.
+         * 
+         * @date April 27, 2016
+         */
         public void WipeOut()
         {
             //delete all chained occurrences. non-chained ones will remain elsewhere.
@@ -301,12 +307,16 @@ namespace Span
             Event.All[ParentId].Rules.Remove(this);
         }
 
+        /**
+         * Gets a written, intelligible description of the Period as a string.
+         */
         [ScriptIgnore]
         public string Describe
         {
             get
             {
-                string outputter = "FROM: " + StartTime.ToShortDateString() + " at " + StartTime.ToShortTimeString()
+                string outputter = Excluded ? "NEVER " : "";
+                outputter += "FROM: " + StartTime.ToShortDateString() + " at " + StartTime.ToShortTimeString()
                     + " TO: " + EndTime.ToShortDateString() + " at " + EndTime.ToShortTimeString()
                     + " EVERY: " + PeriodicFrequency + " " + TimeUnit.ToString().ToLower() 
                     + " for " + OccurrenceLength.TotalMinutes + " minutes";
@@ -331,11 +341,11 @@ namespace Span
          * 
          * @date March 16, 2016
          */
-        //TODO: make nextOcr only defined when there is one, and add prevOcr to handle days better
         public void DeChain(Occurrence ocr)
         {
             if (!(ocr.ChainId != null) || ocr.ChainId != Id) throw new ArgumentException("Occurrence not part of this Period chain");
-            updateOccurrences();
+            UpdateOccurrences();
+            //find next occurrence
             m_occurrences.Sort((x, y) => x.StartActual.CompareTo(y.StartActual));
             int ocrPos = m_occurrences.IndexOf(ocr);
             if (ocrPos == -1) throw new KeyNotFoundException("Occurrence not found");
@@ -349,10 +359,7 @@ namespace Span
             ocr.ChainId = null;
             Event.All[ParentId].ManualOccurrences.Add(ocr);
 
-            //adjust Period accordingly
-
-           
-
+            //adjust Period accordingly:
             //single occurrence, rule is not needed
             if (ocrPos == 0 && nextOcr == null)
             {
@@ -378,8 +385,6 @@ namespace Span
                
             }
             m_needUpdate = true;
-            //updateOccurrences();
-            //update?
             Event.All[ParentId].Occurrences();
         }
 
@@ -388,10 +393,8 @@ namespace Span
          */
         public ReadOnlyCollection<Occurrence> Occurrences()
         {
-            
-            updateOccurrences();
+            UpdateOccurrences();
             return new ReadOnlyCollection<Occurrence>(m_occurrences);
-            
         }
 
         /**
@@ -401,7 +404,6 @@ namespace Span
         public uint PeriodicFrequency
         {
             get { return m_frequency; }
-
             set 
             { 
                 m_frequency = Math.Max(value, 1);
@@ -424,17 +426,13 @@ namespace Span
             }
         }
 
-       
-
         /**
-         * Gets or sets a DateTime struct specifying the earliest
-         * time the Occurrences may occur every day. This is also the time
+         * Gets or sets a DateTime struct specifying the day and time
          * at which the first Occurrence will start.
          */
         public DateTime StartTime
         {
             get { return m_startTime; }
-
             set 
             { 
                 m_startTime = value;
@@ -442,7 +440,17 @@ namespace Span
             }
         }
 
-
+        /**
+         * Forces the Period to update when possible.
+         * 
+         * The Period will update before it returns
+         * its list of Occurrences(), even if nothing
+         * has changed. This allows it to update when
+         * other Period objects have changed, eg, when
+         * an Excluded period is added or removed.
+         * 
+         * @date May 7, 2016
+         */
         public void ForceUpdate()
         {
             m_needUpdate = true;
@@ -450,13 +458,11 @@ namespace Span
 
 
         /**
-         * Gets or sets a DateTime struct specifying the latest
-         * time the Occurrences may occur every day.
+         * Gets or sets a DateTime struct specifying the date and time at which the Period must end.
          */
         public DateTime EndTime
         {
             get { return m_endTime; }
-
             set 
             { 
                 m_endTime = value;
@@ -471,7 +477,6 @@ namespace Span
         public TimeSpan OccurrenceLength
         {
             get { return m_length; }
-
             set 
             { 
                 m_length = value;
@@ -484,7 +489,6 @@ namespace Span
          * the occurrence belongs.
          */
         public string ParentId { get { return m_parent; } }
-
 
         /**
          * Gets the id of the Period.
@@ -508,33 +512,73 @@ namespace Span
          * exists in order to allow proper serialization
          * of the object.
          */
-        public uint Number
-        {
-            get { return m_numId; }
-        }
+        public uint Number { get { return m_numId; } }
 
-        //TODO: document
+        /**
+         * Gets a bool denoting if the Period is Excluded or not.
+         * 
+         * If it is excluded, the Period's Occurrences will never
+         * occur, but instead prevent other periodic Occurrences from occurring.
+         * This is useful to, for example, specify a periodic meal break
+         * or sleeping hours when the user would not expect to be doing other
+         * things.
+         * 
+         * This only affects other Period chained Occurrences, not manual
+         * Occurrences.
+         */
         public bool Excluded
         {
             get { return m_exclude; }
-
             set { m_exclude = value; }
         }
 
+        /**
+         * The id of the Period. See also Id.
+         */
         protected string m_id;
+        /**
+         * This counter is used to give each new Period a distinct Number.
+         */
         protected static uint num = 1;
+        /**
+         * The number of the Period. See also Number.
+         */
         protected uint m_numId;
+        /**
+         * The frequency at which the Event will occur. See also PeriodicFrequency.
+         */
         private uint m_frequency;
+        /**
+         * The time unit of the frequency at which the Event will occur. See also TimeUnit.
+         */
         private Frequency m_timeUnit;
-        
+        /**
+         * The time at which the Period starts. See also StartTime.
+         */
         private DateTime m_startTime;
+        /**
+         * The time at which the Period must have ended. See also EndTime.
+         */
         private DateTime m_endTime;
+        /**
+         * The length of each Occurrence in the Period. See also OccurrenceLength.
+         */
         private TimeSpan m_length;
+        /**
+         * The id of the parent Event. See also ParentId.
+         */
         private string m_parent;
+        /**
+         * The list of Occurrences in this Period. See also Occurrences().
+         */
         private List<Occurrence> m_occurrences;
+        /**
+         * Denotes if the Occurrences in this Period need to be updated.
+         */
         private bool m_needUpdate;
+        /**
+         * Denotes if this Period is to be excluded. See also Excluded.
+         */
         private bool m_exclude;
-
-       
     }
 }

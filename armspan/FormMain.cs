@@ -262,7 +262,7 @@ namespace Span.GUI
 
         public static void CheckOverlapping(Event p)
         {
-            Tuple<uint, List<string>> overlapping = p.getOverlapping();
+            Tuple<uint, List<string>> overlapping = p.GetOverlapping();
             if (overlapping.Item1 > 1)
             {
                 FormConflictMultiple popup = new FormConflictMultiple();

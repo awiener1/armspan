@@ -37,16 +37,12 @@ namespace Span
                 m_begin = m_now.AddDays(-1.0);
                 m_end = m_now.AddDays(1.0);
             }
-            //get all occurrences
+            //get all occurrences in date range
             IEnumerable<KeyValuePair<string, Occurrence>> partial = Occurrence.All.Where
                 (x => x.Value.StartActual >= m_begin.ToLocalTime() && x.Value.StartActual <= m_end.ToLocalTime() ||
                 x.Value.EndActual >= m_begin.ToLocalTime() && x.Value.EndActual <= m_end.ToLocalTime());
-            ////UNCOMMENT THE FOLLOWING LINE AND CHANGE THE DATA MEMBER NAME
-            ////TO GET ALL OCCURRENCES IN A 48-HOUR RADIUS.
             m_inDate = partial.ToDictionary(x => x.Key, x => x.Value).Keys.ToList();
-            ////TODO:POSSIBLY CHANGE THIS BACK TO 48 HOURS
-            ////AND THEN USE Occurrence.All for all of them
-            ////instead
+            //get all occurrences
             m_occurrences = Occurrence.All.Keys.ToList();
             //get all alarms for the occurrences
             m_alarms = new Dictionary<DateTime, Occurrence>();
@@ -54,6 +50,7 @@ namespace Span
             {
                 Occurrence val = Occurrence.All[occurrence];
                 Event e = val.Parent();
+                //include NextAlarmTimeToSave alarms or the parent id won't be set properly
                 if (e.Alarms.ParentId == occurrence || (e.Alarms.HasNextAlarm.Length > 0 && e.Alarms.NextAlarmTimeToSave.ToLocalTime().Equals(val.StartActual)))
                 {
                     foreach (DateTime alarmtime in val.AlarmTimes())
@@ -62,14 +59,13 @@ namespace Span
                     }
                 }
             }
-            //get all occurrences happening now
+            //get all occurrences happening now, but not the canceled/deleted/excluded ones
             OccurrenceStatus[] noInclude = { OccurrenceStatus.Canceled, OccurrenceStatus.Deleted, OccurrenceStatus.Excluded };
             partial = Occurrence.All.Where
                 (x => x.Value.StartActual <= m_now.ToLocalTime() && x.Value.EndActual > m_now.ToLocalTime());
             Dictionary<string, Occurrence> tempp = partial.ToDictionary(x => x.Key, x => x.Value);
             m_current = partial.Select(x => x.Key).ToList();
-
-            int removed = m_current.RemoveAll(x => noInclude.Contains(Occurrence.All[x].Status) || !Occurrence.All[x].Parent().Exists);
+            m_current.RemoveAll(x => noInclude.Contains(Occurrence.All[x].Status) || !Occurrence.All[x].Parent().Exists);
         }
 
         /**
@@ -89,32 +85,21 @@ namespace Span
         /**
          * Gets the list of alarms currently pending.
          */
-        public static Dictionary<DateTime, Occurrence> Alarms 
-        {
-            get
-            {
-                return m_alarms;
-            }
-        }
+        public static Dictionary<DateTime, Occurrence> Alarms { get { return m_alarms; } }
 
-        //TODO: document
-        public static ReadOnlyCollection<string> InDate
-        {
-            get
-            {
-                return new ReadOnlyCollection<string>(m_inDate);
-            }
-        }
+        /**
+         * Gets a read only collection of strings that contains the ids of Occurrences found between Begin and End.
+         */
+        public static ReadOnlyCollection<string> InDate { get { return new ReadOnlyCollection<string>(m_inDate); } }
 
-        //TODO: document
-        public static ReadOnlyCollection<string> Current
-        {
-            get
-            {
-                return new ReadOnlyCollection<string>(m_current);
-            }
-        }
+        /**
+         * Gets a read only collection of strings that contains the ids of Occurrences occurring now.
+         */
+        public static ReadOnlyCollection<string> Current { get { return new ReadOnlyCollection<string>(m_current); } }
 
+        /**
+         * Gets or sets the beginning of the time when the Occurrences being displayed can occur.
+         */
         public static DateTime Begin
         {
             get

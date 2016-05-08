@@ -150,9 +150,11 @@ namespace Span
          */
         public static AlarmSettings FromJSON(string json)
         {
+            //json to object types
             Dictionary<string, object> jsd = JSONDictionary(AlarmSettings.FromString(json));
             List<Alarm> alarms = jss.ConvertToType<List<Alarm>>(jsd["Alarms"]);
             string parentid = (string)jsd["ParentId"];
+            //loose objects to AlarmSettings
             AlarmSettings loaded = new AlarmSettings(parentid, alarms);
             bool hsexists = jsd.ContainsKey("HasNextAlarm");
             if (hsexists)
@@ -173,6 +175,16 @@ namespace Span
             return loaded;
         }
 
+        /**
+         * Updates the ParentId of the specified AlarmSettings.
+         * 
+         * Uses the NextAlarmToSave property to find
+         * the correct Occurrence, which
+         * may not be the saved ParentId. Once this has
+         * been found, the function does nothing.
+         * 
+         * @date May 7, 2016
+         */
         private void updateParent()
         {
             if (m_hasSavedTime.Length > 0)
@@ -181,7 +193,6 @@ namespace Span
                 DateTime timeadjust = NextAlarmTimeToSave.ToLocalTime();
                 //find occurrence owned by this event with this time as one of its alarms
                 Occurrence newparent = Occurrence.All.Values.FirstOrDefault(x => x.StartActual.Equals(timeadjust));
-                // Occurrence newparent = gparent.Occurrences().FirstOrDefault(x => x.AlarmTimes().FirstOrDefault(y => y.Equals(timeadjust)) != null);
                 ParentId = newparent.Id;
                 m_hasSavedTime = "";
             }
@@ -221,17 +232,10 @@ namespace Span
         /**
          * Gets or sets the list of alarm settings to use.
          */
-        public List<Alarm> Alarms{
-            get 
-            {
-                return m_alarms;
-            }
-
-            set
-            {
-                m_alarms = value;
-            }
-
+        public List<Alarm> Alarms
+        {
+            get { return m_alarms; }
+            set { m_alarms = value; }
         }
 
         /**
@@ -243,14 +247,13 @@ namespace Span
          * 
          * @date April 2, 2016
          */
-        //TODO: change updateAlarms() to use this function instead
         public DateTime SingleAlarmTime(Alarm single){
             updateParent();
             Occurrence parent = Occurrence.All[ParentId];
             DateTime target = new DateTime();
             TimeSpan offset = new TimeSpan();
-            //convert Length units into TimeSpan units
 
+            //convert Length units into TimeSpan units
             switch (single.m_timeUnit)
             {
                 case Length.Minutes:
@@ -270,7 +273,7 @@ namespace Span
             switch (single.m_relativePlace)
             {
                 case When.Before:
-                    //should happen **before** start time
+                    //should happen **before** start time, so go backwards in time
                     offset = offset.Negate();
                     goto case When.During;
                 case When.During:
@@ -280,6 +283,7 @@ namespace Span
                     target = parent.EndActual;
                     break;
             }
+            //convert relative time to absolute time
             target = target.Add(offset);
             return target;
         }
@@ -293,39 +297,72 @@ namespace Span
          */
         public ReadOnlyCollection<DateTime> AlarmTimes()
         {
-         
             updateAlarms();
             return new ReadOnlyCollection<DateTime>(m_alarmTimes);
-            
         }
 
         /**
          * Gets or sets the id of the parent Occurrence to which
          * the alarm settings currently apply.
+         * 
+         * Note: this is the parent Occurrence, not the parent
+         * Event.
          */
         public string ParentId { 
             get { return m_parent; }
             set { m_parent = value; }
         }
 
-
+        /**
+         * Gets or sets the time, in universal time,
+         * when the Occurrence specified in ParentId
+         * is set to start. 
+         * 
+         * This value is only used
+         * during serialization and deserialization.
+         */
         public DateTime NextAlarmTimeToSave
         {
             get { return m_serializedNext; }
             set { m_serializedNext = value; }
         }
 
+        /**
+         * Gets or sets the id of the Event
+         * to which these alarm settings apply.
+         * 
+         * This value is only used during
+         * serialization and deserialization. If
+         * it is set to an empty string, the
+         * NextAlarmTimeToSave property should be
+         * ignored.
+         */
         public string HasNextAlarm
         {
             get { return m_hasSavedTime; }
             set { m_hasSavedTime = value; }
         }
 
+        /**
+         * The list of Alarm structs. See also Alarms.
+         */
         private List<Alarm> m_alarms;
+        /**
+         * The list of alarm times in DateTime structs. See also AlarmTimes().
+         */
         private List<DateTime> m_alarmTimes;
+        /**
+         * The id of the parent Occurrence. See also ParentId.
+         */
         private string m_parent;
+        /**
+         * The DateTime when the parent Occurrence will start. See also NextAlarmTimeToSave.
+         */
         private DateTime m_serializedNext;
-        private string m_hasSavedTime; //PARENT EVENT ID
+        /**
+         * The id of the parent Event. See also HasNextAlarm.
+         */
+        private string m_hasSavedTime; 
     }
 
     /**

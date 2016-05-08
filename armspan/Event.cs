@@ -97,19 +97,20 @@ namespace Span
          */
         public static Event FromJSON(string json)
         {
+            //json to object types
             Dictionary<string, object> jsd = JSONDictionary(Event.FromString(json));
             bool exists = (bool)jsd["Exists"];
             if (!exists) return null;
             string name = (string)jsd["Name"];
-            
+            //manual occurrences
             List<Occurrence> manualoccurrences = new List<Occurrence>();
-            
             List<Dictionary<string, object>> moraw = jss.ConvertToType<List<Dictionary<string, object>>>(jsd["ManualOccurrences"]);
             foreach (Dictionary<string, object> ocrraw in moraw)
             {
                 Occurrence ocr = Occurrence.FromJSON(jss.Serialize(ocrraw));
                 manualoccurrences.Add(ocr);
             }
+            //periodic occurrences
             List<Period> rules = new List<Period>();
             List<Dictionary<string, object>> ruraw = jss.ConvertToType<List<Dictionary<string, object>>>(jsd["Rules"]);
             foreach (Dictionary<string, object> perraw in ruraw)
@@ -117,6 +118,7 @@ namespace Span
                 Period per = Period.FromJSON(jss.Serialize(perraw));
                 rules.Add(per);
             }
+            //remaining objects
             string loc = (string)jsd["Location"];
             List<string> cats = jss.ConvertToType<List<string>>(jsd["Categories"]);
             AlarmSettings als = AlarmSettings.FromJSON(jss.Serialize(jsd["Alarms"]));
@@ -125,9 +127,8 @@ namespace Span
            
             uint thisnum = (uint)(int)jsd["Number"];
             string id = (string)jsd["Id"];
-           
+            //loose objects to Event
             Event loaded = new Event();
-
             loaded.m_id = id;
             loaded.m_exists = true;
             loaded.m_alarms = als;
@@ -181,7 +182,7 @@ namespace Span
          * 0, and the ids of the overlapping Occurrences for this
          * Event and the other Event at indices 1 and 2, respectively.
          */
-        public Tuple<uint, List<string>> getOverlapping()
+        public Tuple<uint, List<string>> GetOverlapping()
         {
             List<string> overlapping = new List<string>();
             Occurrence myOccurrence = null;
@@ -195,6 +196,7 @@ namespace Span
                 //must have overlapping categories
                 if (new List<string>(other.Categories.Intersect(Categories)).Count == 0) continue;
                 bool noOver = true;
+                //every valid occurrence of this event against every valid occurrence of every other event
                 foreach (Occurrence ocr in Occurrences())
                 {
                     if (noInclude.Contains(ocr.Status)) continue;
@@ -270,13 +272,16 @@ namespace Span
          * 
          * @date March 14, 2016
          */
-        private void updateOccurrences()
+        private void UpdateOccurrences()
         {
+            //just copy manual occ's
             m_allOccurrences = new List<Occurrence>(m_manualOccurrences);
+            //update periodic occurrences
             foreach (Period per in m_allRules)
             {
                 foreach (Occurrence ocr in per.Occurrences())
                 {
+                    //dechained occurrences have become manual
                     if (!ocr.IsChained())
                     {
                         if (!m_allOccurrences.Contains(ocr))
@@ -291,9 +296,9 @@ namespace Span
                     {OccurrenceStatus.Canceled, OccurrenceStatus.Deleted, OccurrenceStatus.Ignored, OccurrenceStatus.Excluded};
                     if (noInclude.Contains(ocr.Status)) continue;
                     bool unused = true;
+                    //manual occurrences take precedence over periodic
                     foreach (Occurrence manualOcr in m_allOccurrences)
                     {
-                        
                         if (noInclude.Contains(manualOcr.Status)) continue;
                         if (ocr.Overlaps(manualOcr))
                         {
@@ -314,10 +319,8 @@ namespace Span
          */
         public List<Occurrence> Occurrences()
         {
-            
-            updateOccurrences();
+            UpdateOccurrences();
             return m_allOccurrences; 
-            
         }
 
         /**
@@ -402,6 +405,7 @@ namespace Span
         {
             get 
             {
+                //just return Categories without 1st element
                 List<string> copy = new List<string>(Categories);
                 copy.RemoveAt(0);
                 return copy;
@@ -412,6 +416,7 @@ namespace Span
                 {
                     throw new ArgumentException("Secondary categories cannot include primary category");
                 }
+                //updating Categories list indirectly updates SecondaryCategories
                 List<string> copy = new List<string>(value);
                 copy.Insert(0, PrimaryCategory);
                 Categories = copy;
@@ -481,19 +486,61 @@ namespace Span
          */
         public bool IsTask { get { return m_isTask; } }
 
+        /**
+         * The list of all Occurrences. See also Occurrences().
+         */
         protected List<Occurrence> m_allOccurrences;
+        /**
+         * The list of all manual Occurrences. See also ManualOccurrences.
+         */
         protected List<Occurrence> m_manualOccurrences;
+        /**
+         * The list of all Periods. See also Rules.
+         */
         protected List<Period> m_allRules;
+        /**
+         * The id of this Event. See also Id.
+         */
         protected string m_id;
+        /**
+         * This counter is used to give each new Event a distinct Number.
+         */
         protected static uint num = 1;
+        /**
+         * The number of this Event. See also Number.
+         */
         protected uint m_numId;
+        /**
+         * The list of Category ids this Event belongs to. See also Categories, PrimaryCategory and SecondaryCategories.
+         */
         protected List<string> m_categories;
+        /**
+         * The name of this Event. See also Name.
+         */
         protected string m_name;
+        /**
+         * The description of this Event. See also Description.
+         */
         protected string m_desc;
+        /**
+         * The location of this Event. See also Location.
+         */
         protected string m_loc;
+        /**
+         * The AlarmSettings associated with this Event. See also Alarms.
+         */
         protected AlarmSettings m_alarms;
+        /**
+         * Denotes whether this Event is a TaskEvent. See also IsTask.
+         */
         protected bool m_isTask;
+        /**
+         * Denotes whether this Event exists. See also Exists.
+         */
         protected bool m_exists;
+        /**
+         * Contains all Event objects as values, with their Id strings as keys. See also All.
+         */
         protected static Dictionary<string, Event> all = new Dictionary<string, Event>();
 
     }
