@@ -84,6 +84,11 @@ namespace Span
 
         /**
          * Gets the list of alarms currently pending.
+         * 
+         * The Alarm structs themselves are not very useful, so
+         * the dictionary contains each alarm's time as a key and
+         * parent Occurrence as a value. The Alarm struct can be
+         * retrieved using both of these components if necessary.
          */
         public static Dictionary<DateTime, Occurrence> Alarms { get { return m_alarms; } }
 
@@ -102,35 +107,28 @@ namespace Span
          */
         public static DateTime Begin
         {
-            get
-            {
-                return m_begin;
-            }
-            set
-            {
-                m_begin = value;
-            }
+            get { return m_begin; }
+            set { m_begin = value; }
         }
 
+        /**
+         * Gets or sets the end of the time when the Occurrences being displayed can occur.
+         */
         public static DateTime End
         {
-            get
-            {
-                return m_end;
-            }
-            set
-            {
-                m_end = value;
-            }
+            get { return m_end; }
+            set { m_end = value; }
         }
 
+        /**
+         * Gets or sets the fraction at which to zoom in on the Occurrences being displayed.
+         * 
+         * A value of 1 will not zoom in at all, while a value of 2 will
+         * zoom everything in to be twice as large, etc. The accepted range is 1 through 60.
+         */
         public static int ZoomFactor
         {
-            get 
-            {
-                return m_zoomFactor;
-            }
-
+            get { return m_zoomFactor; }
             set
             {
                 m_zoomFactor = Math.Min(60, Math.Max(1, value));
@@ -138,26 +136,53 @@ namespace Span
 
         }
 
+        /**
+         * Denotes if the displayed range of time is centered at Now.
+         * 
+         * If false, Begin and End can be changed to any value. If true,
+         * they remain 24 hours before and after Now, while Now advances in time.
+         */
         public static bool ViewingNow
         {
-            get
-            {
-                return m_viewingNow;
-            }
-            set
-            {
-                m_viewingNow = value;
-            }
+            get { return m_viewingNow; }
+            set { m_viewingNow = value; }
         }
 
+        /**
+         * The start of the displayed time. See also Begin.
+         */
         private static DateTime m_begin;
+        /**
+         * The end of the displayed time. See also End.
+         */
         private static DateTime m_end;
+        /**
+         * The current time rounded to minutes. See also Now.
+         */
         private static DateTime m_now;
+        /**
+         * A list of all pending "alarms", with their time as keys and their parent Occurrences as values.
+         */
         private static Dictionary<DateTime, Occurrence> m_alarms = new Dictionary<DateTime, Occurrence>();
+        /**
+         * A list of all Occurrence ids.
+         */
         private static List<string> m_occurrences = new List<string>();
+        /**
+         * A list of the ids of Occurrences happening now. See also Current.
+         */
         private static List<string> m_current = new List<string>();
+        /**
+         * A list of the ids of Occurrences within the displayed time. See also InDate.
+         */
         private static List<string> m_inDate = new List<string>();
+        /**
+         * The factor at which to zoom in on the displayed time. See also ZoomFactor.
+         */
         private static int m_zoomFactor = 1;
+        /**
+         * Denotes if the displayed time centers on Now. See also ViewingNow.
+         */
         private static bool m_viewingNow = true;
     }
 

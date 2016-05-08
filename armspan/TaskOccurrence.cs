@@ -7,6 +7,9 @@
  * The TaskOccurrence class defines one single, reoccurring occurrence
  * of a task.
  * 
+ * @deprecated This class has been deprecated, 
+ * as tasks have been removed from this version of the program.
+ * 
  */
 using System;
 using System.Collections.Generic;
@@ -48,7 +51,6 @@ namespace Span
         public uint Times
         {
             get { return m_times; }
-
             set 
             { 
                 //parent exists, assume task for now
@@ -77,6 +79,9 @@ namespace Span
             Times++;
         }
 
+        /**
+         * The number of times the task should occur in this Occurrence. See also Times.
+         */
         private uint m_times;
     }
 }

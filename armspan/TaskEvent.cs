@@ -7,6 +7,9 @@
  * The TaskOccurrence class defines one single task Event
  * occurring on the timeline.
  * 
+ * @deprecated This class has been deprecated, 
+ * as tasks have been removed from this version of the program.
+ * 
  */
 using System;
 using System.Collections.Generic;
@@ -71,6 +74,9 @@ namespace Span
             set { m_times = Math.Max(value, 1); }
         }
 
+        /**
+         * The minimum number of times the task may occur. See also Occurrence.
+         */
         private uint m_times;
 
 

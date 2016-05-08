@@ -122,7 +122,7 @@
             this.toolStrip1.Stretch = true;
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
-            this.toolStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStrip1_ItemClicked);
+           
             // 
             // btnNewAppt
             // 
@@ -248,7 +248,7 @@
             this.btnCancelTasks.Text = "Cancel All Tasks";
             this.btnCancelTasks.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnCancelTasks.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnCancelTasks.Click += new System.EventHandler(this.btnCancelTasks_Click);
+            
             // 
             // toolStripSeparator3
             // 
@@ -575,7 +575,6 @@
             this.btnRepeatTask.TabIndex = 8;
             this.ttNonMenu.SetToolTip(this.btnRepeatTask, "Do Task Again");
             this.btnRepeatTask.UseVisualStyleBackColor = true;
-            this.btnRepeatTask.Click += new System.EventHandler(this.btnRepeatTask_Click);
             // 
             // btnDeleteOcc
             // 
