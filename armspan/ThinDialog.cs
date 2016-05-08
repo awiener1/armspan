@@ -1,4 +1,18 @@
-﻿using System;
+﻿/**
+ * @file
+ * @author Allan Wiener
+ * 
+ * @section DESCRIPTION
+ * 
+ * The ThinDialog class is a custom form class
+ * that allows for forms with titlebars
+ * that have no buttons or captions on them.
+ * They can be dragged or resized just like
+ * regular forms, but they have no close
+ * buttons, so that must be implemented separately.
+ * 
+ */
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,12 +31,14 @@ namespace Span.GUI
             InitializeComponent();
         }
 
-        //CITE: http://stackoverflow.com/a/3162167
-        //Allows form to have button-like edges,
-        //and eliminates the title bar while keeping
-        //the caption when viewed in the desktop
-        //taskbar.
-        //cite start
+
+        /**
+         * Allows form to have button-like edges,
+         * and eliminates the title bar while keeping
+         * the caption when viewed in the desktop
+         * taskbar.
+         */
+        //taken from http://stackoverflow.com/a/3162167
         protected override CreateParams CreateParams
         {
             get
@@ -33,15 +49,23 @@ namespace Span.GUI
                 return parms;
             }
         }
-        //cite end
 
 
-        //CITE: http://stackoverflow.com/a/2384459
-        //Allows a control (PictureBox here) to
-        //be used to drag the form around,
-        //since there is no longer a title bar.
-        //cite start
+
+        /**
+         * Allows a control (PictureBox here) to
+         * be used to drag the form around,
+         * since there is no longer a title bar. 
+         */
+        //taken from http://stackoverflow.com/a/2384459
         Point dragOffset;
+
+        /**
+         * Allows a control (PictureBox here) to
+         * be used to drag the form around,
+         * since there is no longer a title bar. 
+         */
+        //taken from http://stackoverflow.com/a/2384459
         protected void dragBox_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -53,6 +77,12 @@ namespace Span.GUI
             }
         }
 
+        /**
+         * Allows a control (PictureBox here) to
+         * be used to drag the form around,
+         * since there is no longer a title bar. 
+         */
+        //taken from http://stackoverflow.com/a/2384459
         protected void dragBox_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -64,7 +94,6 @@ namespace Span.GUI
                 FindForm().Location = newLocation;
             }
         }
-        //cite end
 
         private void ThinDialog_Load(object sender, EventArgs e)
         {

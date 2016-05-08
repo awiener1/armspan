@@ -1,4 +1,15 @@
-﻿using System;
+﻿/**
+ * @file
+ * @author Allan Wiener
+ * 
+ * @section DESCRIPTION
+ * 
+ * The FormConflictTwo class provides a form
+ * asking the user to resolve a conflict between
+ * two Events.
+ * 
+ */
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,8 +27,14 @@ namespace Span.GUI
             InitializeComponent();
         }
 
+        /**
+         * Initializes the display.
+         * 
+         * @date April 29, 2016
+         */
         private void FormConflictTwo_Load(object sender, EventArgs e)
         {
+            //adding title
             Event newEv = m_newOcc.Parent();
             Event oldEv = m_oldOcc.Parent();
             rtbConflict.Text = "";
@@ -33,6 +50,7 @@ namespace Span.GUI
             rtbConflict.AppendText(".");
             //in case font changes
             rtbBold = new Font(rtbNew.Font, FontStyle.Bold);
+            //adding new event
             rtbNew.Text = "";
             rtbNew.SelectionFont = rtbBold;
             rtbNew.AppendText(newEv.Name);
@@ -49,9 +67,9 @@ namespace Span.GUI
             Color newColor = Category.All[newEv.PrimaryCategory].Color;
             rtbNew.BackColor = ControlPaint.LightLight(newColor);
             pnlNew.BackColor = newColor;
-
             //in case font changes
             rtbBold = new Font(rtbOld.Font, FontStyle.Bold);
+            //adding old event
             rtbOld.Text = "";
             rtbOld.SelectionFont = rtbBold;
             rtbOld.AppendText(oldEv.Name);
@@ -68,14 +86,23 @@ namespace Span.GUI
             Color oldColor = Category.All[oldEv.PrimaryCategory].Color;
             rtbOld.BackColor = ControlPaint.LightLight(oldColor);
             pnlOld.BackColor = oldColor;
-
         }
 
+        /**
+         * Allows the conflict to persist.
+         * 
+         * @date April 29, 2016
+         */
         private void btnOK_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        /**
+         * Cancels the new Occurrence.
+         * 
+         * @date April 29, 2016
+         */
         private void btnCancelNew_Click(object sender, EventArgs e)
         {
             
@@ -87,6 +114,11 @@ namespace Span.GUI
             this.Close();
         }
 
+        /**
+        * Ignores the new Occurrence.
+        * 
+        * @date April 29, 2016
+        */
         private void btnIgnoreNew_Click(object sender, EventArgs e)
         {
             if (!FormMain.DeChainIfChained(NewOccurrence))
@@ -97,6 +129,11 @@ namespace Span.GUI
             this.Close();
         }
 
+        /**
+        * Deletes the new Occurrence.
+        * 
+        * @date April 29, 2016
+        */
         private void btnDeleteNew_Click(object sender, EventArgs e)
         {
             if (!FormMain.DeChainIfChained(NewOccurrence))
@@ -112,6 +149,11 @@ namespace Span.GUI
             this.Close();
         }
 
+        /**
+        * Cancels the old Occurrence.
+        * 
+        * @date April 29, 2016
+        */
         private void btnCancelOld_Click(object sender, EventArgs e)
         {
             if (!FormMain.DeChainIfChained(OldOccurrence))
@@ -122,6 +164,11 @@ namespace Span.GUI
             this.Close();
         }
 
+        /**
+        * Ignores the old Occurrence.
+        * 
+        * @date April 29, 2016
+        */
         private void btnIgnoreOld_Click(object sender, EventArgs e)
         {
             if (!FormMain.DeChainIfChained(OldOccurrence))
@@ -132,6 +179,11 @@ namespace Span.GUI
             this.Close();
         }
 
+        /**
+        * Deletes the old Occurrence.
+        * 
+        * @date April 29, 2016
+        */
         private void btnDeleteOld_Click(object sender, EventArgs e)
         {
             if (!FormMain.DeChainIfChained(OldOccurrence))
@@ -147,6 +199,11 @@ namespace Span.GUI
             this.Close();
         }
 
+        /**
+        * Reschedules the new Occurrence.
+        * 
+        * @date April 29, 2016
+        */
         private void btnReschedNew_Click(object sender, EventArgs e)
         {
             FormOccurrenceScheduler popup = new FormOccurrenceScheduler();
@@ -155,6 +212,11 @@ namespace Span.GUI
             this.Close();
         }
 
+        /**
+        * Reschedules the old Occurrence.
+        * 
+        * @date April 29, 2016
+        */
         private void btnReschedOld_Click(object sender, EventArgs e)
         {
             FormOccurrenceScheduler popup = new FormOccurrenceScheduler();
@@ -163,34 +225,31 @@ namespace Span.GUI
             this.Close();
         }
 
+        /**
+         * The old Occurrence.
+         */
         public Occurrence OldOccurrence
         {
-            get
-            {
-                return m_oldOcc;
-            }
-
-            set
-            {
-                m_oldOcc = value;
-            }
+            get { return m_oldOcc; }
+            set { m_oldOcc = value; }
         }
 
+        /**
+         * The new Occurrence.
+         */
         public Occurrence NewOccurrence
         {
             get { return m_newOcc; }
-
             set { m_newOcc = value; }
         }
 
+        /**
+         * The old Occurrence. See also OldOccurrence.
+         */
         private Occurrence m_oldOcc;
+        /**
+         * The new Occurrence. See also NewOccurrence.
+         */
         private Occurrence m_newOcc;
-
-
-        
-
-    
-
-    
     }
 }

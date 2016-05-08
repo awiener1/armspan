@@ -311,7 +311,7 @@
             this.MinimumSize = new System.Drawing.Size(474, 452);
             this.Name = "FormAddEvent";
             this.Text = "FormAddEvent";
-            this.Load += new System.EventHandler(this.FormAddEvent_Load);
+         
             this.Controls.SetChildIndex(this.lblType, 0);
             this.Controls.SetChildIndex(this.cbType, 0);
             this.Controls.SetChildIndex(this.lblName, 0);

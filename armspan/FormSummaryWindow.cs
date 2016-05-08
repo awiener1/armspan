@@ -1,4 +1,15 @@
-﻿using System;
+﻿/**
+ * @file
+ * @author Allan Wiener
+ * 
+ * @section DESCRIPTION
+ * 
+ * The FormSummaryWindow class allows the user
+ * to view a summary of the Events in specific
+ * categories and at specific times.
+ * 
+ */
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -31,35 +42,47 @@ namespace Span.GUI
             this.Close();
         }
 
+        /**
+        * The start of the summarized time. See also Begin.
+        */
         private static DateTime m_begin;
+        /**
+        * The end of the summarized time. See also End.
+        */
         private static DateTime m_end;
+        /**
+         * Specifies if Begin and End have been changed from the default.
+         */
         private static bool m_dateChanged = false;
+        /**
+         * The list of ids of the Categories to use. See also Categories.
+         */
         private List<string> m_catsToUse;
 
+        /**
+         * The list of ids of the Categories to use.
+         */
         public List<string> Categories
         {
-            get
-            {
-                return m_catsToUse;
-            }
-            set
-            {
-                m_catsToUse = value;
-            }
+            get { return m_catsToUse; }
+            set { m_catsToUse = value; }
         }
 
         private void dtpFrom_ValueChanged(object sender, EventArgs e)
         {
-            
             UpdateSummary();
         }
 
         private void dtpTo_ValueChanged(object sender, EventArgs e)
         {
-            
             UpdateSummary();
         }
 
+        /**
+         * Updates the summary itself.
+         * 
+         * @date April 30, 2016
+         */
         private void UpdateSummary()
         {
             //prevent string bugs
@@ -73,6 +96,7 @@ namespace Span.GUI
             {
                 Category cat = Category.All[catid];
                 tbSummary.AppendText(cat.Name + "\n");
+                //determine statistics for each category
                 List<string> gottenEvents = Category.GetEvents(catid);
                 var catevents = gottenEvents.Select(x => Event.All[x]);
                 var catoccs = Occurrence.All.Values.Where(x => gottenEvents.Contains(x.ParentId));

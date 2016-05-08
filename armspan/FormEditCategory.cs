@@ -1,4 +1,14 @@
-﻿using System;
+﻿/**
+ * @file
+ * @author Allan Wiener
+ * 
+ * @section DESCRIPTION
+ * 
+ * The FormEditCategory class allows the user
+ * to edit one Category.
+ * 
+ */
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -23,6 +33,11 @@ namespace Span.GUI
             gbCategory.Text = "Category #" + Number.ToString();
         }
 
+        /**
+         * Applies the user's changes to the Category.
+         * 
+         * @date May 1, 2016
+         */
         private void btnOK_Click(object sender, EventArgs e)
         {
             NameCategory = tbName.Text.Trim();
@@ -31,40 +46,63 @@ namespace Span.GUI
                 MessageBox.Show("Please enter a name");
                 return;
             }
-            //TODO: check if color or name is the same as any other category
+            
             if (Category.All.Count > Number - 1)
             {
+                //edit category
                 Category dest = Category.All.Values.ElementAt((int)Number - 1);
                 dest.Name = NameCategory;
                 dest.Color = Color;
             }
             else
             {
+                //make new category instead
                 Category dest = new Category(NameCategory, Color);
             }
             this.Close();
         }
 
+        /**
+         * The name of the Category.
+         * 
+         * Not to be confused with the name property
+         * of the form itself.
+         */
         public string NameCategory
         {
             get { return m_name; }
             set { m_name = value; }
         }
 
+        /**
+         * The Color of the Category.
+         */
         public Color Color
         {
             get { return m_color; }
             set { m_color = value; }
         }
 
+        /**
+         * The Number of the Category.
+         */
         public uint Number
         {
             get { return m_num; }
             set { m_num = value; }
         }
 
+        /**
+         * The name of the Category. See also NameCategory.
+         */
         private string m_name = "";
+        /**
+         * The Color of the Category. See also Color.
+         */
         private Color m_color;
+        /**
+         * The number of the Category. See also Number.
+         */
         private uint m_num;
 
         private void btnColor_Click(object sender, EventArgs e)
@@ -75,7 +113,5 @@ namespace Span.GUI
                 pnlColor.BackColor = Color;
             }
         }
-
-
     }
 }
