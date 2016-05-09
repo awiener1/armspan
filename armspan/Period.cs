@@ -415,10 +415,16 @@ namespace Span
          * 
          * @date March 16, 2016
          */
-        public void DeChain(Occurrence ocr)
+        public void DeChain(Occurrence ocl)
         {
+            Occurrence ocr = ocl;
             if (!(ocr.ChainId != null) || ocr.ChainId != Id) throw new ArgumentException("Occurrence not part of this Period chain");
             UpdateOccurrences();
+            //if Period has replaced all its occurrences due to an alarm or conflict
+            if (ocr.Status == OccurrenceStatus.Deleted)
+            {
+                ocr = Occurrences().FirstOrDefault(x => x.StartActual.Equals(ocr.StartActual));
+            }
             //find next occurrence
             m_occurrences.Sort((x, y) => x.StartActual.CompareTo(y.StartActual));
             int ocrPos = m_occurrences.IndexOf(ocr);

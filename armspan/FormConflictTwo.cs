@@ -46,6 +46,33 @@ namespace Span.GUI
         }
 
         /**
+         * Checks OldOccurrence to see if it has been deleted and replaced.
+         * 
+         * @date May 9, 2016
+         */
+        private void CheckOld()
+        {
+            if (OldOccurrence.Status == OccurrenceStatus.Deleted)
+            {
+                OldOccurrence = OldOccurrence.Parent().Rules.First(y => y.Id.Equals(OldOccurrence.ChainId)).Occurrences().FirstOrDefault(x => x.StartActual.Equals(OldOccurrence.StartActual));
+            }
+        }
+
+        /**
+         * Checks NewOccurrence to see if it has been deleted and replaced.
+         * 
+         * @date May 9, 2016
+         */
+        private void CheckNew()
+        {
+            if (NewOccurrence.Status == OccurrenceStatus.Deleted)
+            {
+                NewOccurrence = NewOccurrence.Parent().Occurrences()
+                    .FirstOrDefault(x => x.StartActual.Equals(NewOccurrence.StartActual) && x.EndActual.Equals(NewOccurrence.EndActual));
+            }
+        }
+
+        /**
          * Initializes the display.
          * 
          * @date April 29, 2016
@@ -123,11 +150,12 @@ namespace Span.GUI
          */
         private void btnCancelNew_Click(object sender, EventArgs e)
         {
-            
+            CheckNew();
             if (!FormMain.DeChainIfChained(NewOccurrence))
             {
                 return;
             }
+            CheckNew();
             NewOccurrence.Cancel();
             this.Close();
         }
@@ -139,10 +167,12 @@ namespace Span.GUI
         */
         private void btnIgnoreNew_Click(object sender, EventArgs e)
         {
+            CheckNew();
             if (!FormMain.DeChainIfChained(NewOccurrence))
             {
                 return;
             }
+            CheckNew();
             NewOccurrence.Ignore();
             this.Close();
         }
@@ -154,6 +184,7 @@ namespace Span.GUI
         */
         private void btnDeleteNew_Click(object sender, EventArgs e)
         {
+            CheckNew();
             if (!FormMain.DeChainIfChained(NewOccurrence))
             {
                 return;
@@ -163,6 +194,7 @@ namespace Span.GUI
             {
                 return;
             }
+            CheckNew();
             NewOccurrence.Delete();
             this.Close();
         }
@@ -174,10 +206,12 @@ namespace Span.GUI
         */
         private void btnCancelOld_Click(object sender, EventArgs e)
         {
+            CheckOld();
             if (!FormMain.DeChainIfChained(OldOccurrence))
             {
                 return;
             }
+            CheckOld();
             OldOccurrence.Cancel();
             this.Close();
         }
@@ -189,10 +223,12 @@ namespace Span.GUI
         */
         private void btnIgnoreOld_Click(object sender, EventArgs e)
         {
+            CheckOld();
             if (!FormMain.DeChainIfChained(OldOccurrence))
             {
                 return;
             }
+            CheckOld();
             OldOccurrence.Ignore();
             this.Close();
         }
@@ -204,6 +240,7 @@ namespace Span.GUI
         */
         private void btnDeleteOld_Click(object sender, EventArgs e)
         {
+            CheckOld();
             if (!FormMain.DeChainIfChained(OldOccurrence))
             {
                 return;
@@ -213,6 +250,7 @@ namespace Span.GUI
             {
                 return;
             }
+            CheckOld();
             OldOccurrence.Delete();
             this.Close();
         }
@@ -225,6 +263,7 @@ namespace Span.GUI
         private void btnReschedNew_Click(object sender, EventArgs e)
         {
             FormOccurrenceScheduler popup = new FormOccurrenceScheduler();
+            CheckNew();
             popup.Single = NewOccurrence;
             popup.ShowDialog();
             this.Close();
@@ -238,6 +277,7 @@ namespace Span.GUI
         private void btnReschedOld_Click(object sender, EventArgs e)
         {
             FormOccurrenceScheduler popup = new FormOccurrenceScheduler();
+            CheckOld();
             popup.Single = OldOccurrence;
             popup.ShowDialog();
             this.Close();
